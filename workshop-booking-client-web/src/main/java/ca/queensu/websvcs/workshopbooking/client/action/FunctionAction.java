@@ -38,11 +38,14 @@ public class FunctionAction extends ActionSupport implements Preparable{
     List<String> statusList;
     List<String> locationList;
 
+    public FunctionAction() {
+        System.out.println("### FunctionAction constructor running");
+    }
 
     @Override
     public void prepare() throws Exception {
         try {
-            System.out.println("### StudentEditAction prepare running");
+            System.out.println("### FunctionAction prepare running");
             statusList = ejb.findstatusList();
             locationList = ejb.findlocationList();
         } 
@@ -63,12 +66,11 @@ public class FunctionAction extends ActionSupport implements Preparable{
         catch (Exception e) {
             StringWriter out = new StringWriter();
             e.printStackTrace(new PrintWriter(out));
-            addActionError(createErrorMessage("Exception occurred while loading student edit screen."));
+            addActionError(createErrorMessage("Exception occurred while loading workshop function screen."));
             log.error("***************Exception occurred in load method " + e.getMessage());
             log.error(out);
             return ERROR;
         }
-        
         return SUCCESS;
     }
     
@@ -127,10 +129,6 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
     public void setStatusList(List<String> statusList) {
         this.statusList = statusList;
-    }
-    
-    public FunctionAction() {
-        System.out.println("### FunctionAction constructor running");
     }
     
     public List<String> getLocationList() {

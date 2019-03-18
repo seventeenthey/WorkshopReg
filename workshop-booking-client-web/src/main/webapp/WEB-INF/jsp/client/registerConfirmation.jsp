@@ -1,3 +1,8 @@
+<%-- 
+    Document   : registerConfirmation
+    Created on : 18-Mar-2019, 4:36:22 PM
+    Author     : dwesl
+--%>
 <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
     response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
@@ -9,17 +14,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
-
-<!DOCTYPE struts PUBLIC
-    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
-    "http://struts.apache.org/dtds/struts-2.5.dtd">
-<html lang="en">
-    <head> 
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!DOCTYPE html>
+<html>
+    <head>
+         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta charset="utf-8">  
         <%--<meta http-equiv="X-UA-Compatible" content="IE=edge">--%>
         <meta name="viewport" content="width=device-width, initial-scale=1">                
-        <title>Archetype UIS JSP</title>  
+        <title>Register Confirmation JSP</title>  
         <!-- Bootstrap core CSS -->
         <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom styles for this template -->
@@ -49,7 +51,7 @@
     </head>
     <body>
         <div class="jumbotron text-center banner-row mb-0">
-            <h1>Workshop Calendar</h1>
+            <h1>Workshop Registration Confirmation</h1>
             <p class="h3"> <s:property value="getText('general.title.h3')" /> </p>
         </div>
 
@@ -78,23 +80,11 @@
         </nav>
 
         <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <s:url action="studentHomeLoadAction" var="studentHomeUrl" />
-                    <a href='<s:property value="studentHomeUrl"/>'>Go To Student Home Page ========= This is just a few examples from Glenn</a>
-                </div>
-            </div>
-
-            <h5> This will be the login page / redirect to and from the login page.</h5>
-
+            <p>You have successfully registered for """"Workshop Name""""" on """""Date""""" at """"Time"""""</p>
+            <p>An email confirmation has also been sent to you.</p>
             <div>
-                <s:url action="listViewLoadAction" var="listViewUrl" />
-                <a href='<s:property value="listViewUrl"/>'>Go To Workshop List View Page </a>
-            </div>
-
-            <div>
-                <s:url action="questionnaireAction" var="questionnaireUrl" />
-                <a class="nav-link" href='<s:property value="questionnaireUrl"/>'>Register for ______ workshop!</a>
+                 <s:url action="detailsLoadAction" var="detailUrl" />
+                <a href='<s:property value="detailUrl"/>'>View workshop details</a>
             </div>
         </div>
 

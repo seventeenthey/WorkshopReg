@@ -92,8 +92,11 @@
                 <a href='<s:property value="listViewUrl"/>'>Go To Workshop List View Page </a>
             </div>
 
+            <div>
+                <s:url action="questionnaireAction" var="questionnaireUrl" />
+                <a class="nav-link" href='<s:property value="questionnaireUrl"/>'>Register for ______ workshop!</a>
+            </div>
         </div>
-
 
         <footer class="footer" id="footer">
             <div class="container-fluid copyright navbar fixed-bottom">

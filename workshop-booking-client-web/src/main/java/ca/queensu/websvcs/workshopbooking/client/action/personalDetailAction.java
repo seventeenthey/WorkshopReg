@@ -36,11 +36,13 @@ public class personalDetailAction extends ActionSupport implements Preparable {
     List<String> departmentList;
     List<String> roleList;
 
-
+    public personalDetailAction(){
+        System.out.println("### personalDetailAction constructor running");
+    }
     @Override
     public void prepare() throws Exception {
         try {
-            System.out.println("### StudentEditAction prepare running");
+            System.out.println("### personalDetailAction prepare running");
             departmentList = ejb.finddepartmentList();
             roleList = ejb.findroleList();
 
@@ -57,7 +59,7 @@ public class personalDetailAction extends ActionSupport implements Preparable {
     @SkipValidation
     public String load() throws Exception{
         try {
-            System.out.println("### FunctionAction load running");
+            System.out.println("### personalDetailAction load running");
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();

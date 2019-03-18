@@ -173,6 +173,20 @@
             <type>war</type>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- Structs2 Bootstrap Plugin -->
+        <dependency>
+            <groupId>com.jgeppert.struts2.bootstrap</groupId>
+            <artifactId>struts2-bootstrap-plugin</artifactId>
+            <version>2.5.2</version>
+        </dependency>      
+        
+        <!-- https://mvnrepository.com/artifact/org.apache.struts/struts2-dojo-plugin -->
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-dojo-plugin</artifactId>
+            <version>2.3.37</version>
+        </dependency>
     </dependencies>
 
 </project>

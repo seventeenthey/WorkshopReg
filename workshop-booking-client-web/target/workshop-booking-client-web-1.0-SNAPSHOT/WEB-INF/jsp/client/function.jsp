@@ -87,7 +87,7 @@
                 </div>
             </div>
         </div>
-                        
+           
         <div class="col-md-9">
             <s:form id="workshopEditForm" action="functionLoadAction" 
                     theme="bootstrap" method="post" cssClass="form-vertical">
