@@ -11,8 +11,8 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <!DOCTYPE struts PUBLIC
-        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
-        "http://struts.apache.org/dtds/struts-2.5.dtd">
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
 <html lang="en">
     <head> 
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,93 +42,64 @@
             if (self === top) {
                 var antiClickjack = document.getElementById("antiClickjack");
                 antiClickjack.parentNode.removeChild(antiClickjack);
-            } 
-            else {
+            } else {
                 top.location = self.location;
             }
         </script>
     </head>
     <body>
-        <div class="container banner-row"> <!-- banner row -->
+        <div class="jumbotron text-center banner-row mb-0">
+            <h1>Workshop Calendar</h1>
             <p class="h3"> <s:property value="getText('general.title.h3')" /> </p>
-            <p class="h1"> <s:property value="getText('general.title.h1')" /> </p>
-        </div> <!-- /banner row -->
-        <div class="container main-container"> <!-- main container -->
+        </div>
 
-            <nav class="navbar navbar-toggleable navbar-light justify-content-center" style="background-color: #fff;">
-                <button class="navbar-toggler navbar-toggle-left" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span> <s:property value="Nav Bar" /> 
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav mx-auto w-100 justify-content-around">
-                            <strong>This is just a sample JSP</strong>
-                        <s:url action="logoutAction" var="logout"></s:url>
-                        <a class="nav-item nav-link hover-focus-border" id="nav-logout" href="<s:property value="#logout"/>"><s:property value="getText('general.btn.logout')" /></a>
+        <!-- Navigation Bar - INCLUDED IN EVERY .JSP FILE -->
+        <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
+            <div class='navbar-brand'>Queen's ITS Workshop Registration</div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <s:url action="dashboard" var="dashboardUrl" />
+                    <a class="nav-link" href='<s:property value="dashboardUrl"/>'>Workshop Calendar</a>
+                    <!--<a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>-->
+                </li>
+                <li class="nav-item">
+                    <s:url action="listViewLoadAction" var="listViewUrl" />
+                    <a class="nav-link" href='<s:property value="listViewUrl"/>'>My Workshops</a>
+                </li>
+                <li class="nav-item">
+                    <div class="active-cyan-3 active-cyan-4">
+                        <input class="form-control" type="text" placeholder="Search" aria-label="Search"/>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Logout</a>
+                </li>
+            </ul>              
+        </nav>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <s:url action="studentHomeLoadAction" var="studentHomeUrl" />
+                    <a href='<s:property value="studentHomeUrl"/>'>Go To Student Home Page ========= This is just a few examples from Glenn</a>
                 </div>
-            </nav>
-            <div class="row"> <!-- body row -->
-                <div class="col-sm-4 col-md-3 col-xl-2 info-col"> <!-- info col -->
+            </div>
 
-                </div> <!-- /info col -->
+            <h5> This will be the login page / redirect to and from the login page.</h5>
 
-                <div class="col-sm-8 col-md-9  col-xl-10 body-col">  <!--body col -->
-                    <div id="archetypeDiv">
-                        <h2 class="text-center"><s:property value="The Title" /></h2>
-                        <s:if test="PersonDetails.isEmpty()">
-                            <!--then display the messages saying the student does not have any requests
-                            and that they can click +new to start one -->
-                            <div class="text-center">
-                                <s:if test="!instrReqs.isEmpty()">
-                                    <p class='col-md-8 offset-md-2'> <s:property value="List Empty" /> </p>
-                                </s:if>
-                                <s:else>
-                                    <p class='col-md-8 offset-md-2'> <s:property value="The List" /> </p>
-                                </s:else>
-                            </div>
-                        </s:if>
-                        <s:else>
-                            <div class="col-lg-10 offset-lg-1">
-                                <hr>
-                                <div id="archetypeBody">
-                                        <div class="row row-hover">
-                                            <div class="col-3">
-                                                <s:property value="person.commonName"/>  <s:property value="person.email"/>
-                                            </div>
-                                            <div class="col-9">
-                                                <s:iterator value="person.detailList" var="persDeets" status="detailStat">  <!-- iterate through ArrayList<A11nRequest> -->
-                                                    <div class="row">
-                                                        <div class="col-4">
-                                                            <s:property value="#persDeets.attr"/><br>
-                                                        </div>
-                                                    </div>
-                                                    <s:if test="%{!#detailStat.last}">
-                                                        <!-- only add this <hr> if this is NOT the last persDeets in the list. Otherwise we'd have two <hr> elements
-                                                        stacked on top of each other because we add another one below -->
-                                                        <hr>
-                                                    </s:if>
-                                                </s:iterator>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <hr>
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
-                        </s:else>
-                    </div> <!--/submitted-->
-                    
-                </div> <!-- /body col -->
-            </div> <!-- /body row -->
+            <div>
+                <s:url action="listViewLoadAction" var="listViewUrl" />
+                <a href='<s:property value="listViewUrl"/>'>Go To Workshop List View Page </a>
+            </div>
 
-        </div> <!-- /main container -->
+        </div>
+
+
         <footer class="footer" id="footer">
-            <div class="container-fluid copyright">
-                <div class="row justify-content-end">
-                    
-
+            <div class="container-fluid copyright navbar fixed-bottom">
+                <div class="container text-right">
+                    <p>Report an Issue</p>
+                    <p>Queen's Information & Technology Services</p>
                 </div>
             </div>
         </footer>

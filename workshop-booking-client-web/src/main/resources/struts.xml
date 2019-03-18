@@ -134,5 +134,42 @@
             <result name="input">/WEB-INF/jsp/client/newRequest.jsp</result>
         </action>
         
+        <action name="listViewLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.ListViewAction" method="execute">
+            <interceptor-ref name="baseStack"></interceptor-ref>
+            <result name="success">WEB-INF/jsp/client/listview.jsp</result>
+        </action>
+        
+        <!--Function Page-->
+        <action name="functionLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.FunctionAction" method="load">
+            <interceptor-ref name="baseStack"></interceptor-ref>
+            <result name="success">WEB-INF/jsp/client/function.jsp</result>
+        </action>
+        
+        <action name="attendanceLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.AttendanceAction" method="execute">
+            <interceptor-ref name="baseStack"></interceptor-ref>
+            <result name="success">WEB-INF/jsp/client/attendance.jsp</result>
+        </action>
+        
+        <action name="detailsLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.DetailsAction" method="execute">
+            <interceptor-ref name="baseStack"></interceptor-ref>
+            <result name="success">WEB-INF/jsp/client/details.jsp</result>
+        </action>
+        
+        <!-- Email Edit Page-->
+        <action name="emaileditLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.EmailEditAction" method="execute">
+            <interceptor-ref name="baseStack"></interceptor-ref>
+            <result name="success">WEB-INF/jsp/client/emailedit.jsp</result>
+        </action>
+        
+        <!--Facilitator Page-->
+        <action name="facilitatorLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.EmailEditAction" method="execute">
+            <interceptor-ref name="baseStack"></interceptor-ref>
+            <result name="success">WEB-INF/jsp/client/facilitator.jsp</result>
+        </action>
+        
+        <action name="personalDetailAction" class="ca.queensu.websvcs.workshopbooking.client.action.personalDetailAction" method="execute">
+            <interceptor-ref name="baseStack"></interceptor-ref>
+            <result name="success">WEB-INF/jsp/client/personaldetail.jsp</result>
+        </action>
     </package>
 </struts>
