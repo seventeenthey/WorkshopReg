@@ -82,7 +82,6 @@
             </div>
         </div>
 
-
         <h1>Need to add workshop attendance functionality here</h1>
         <p>This is where workshop holder and facilitator can check attendance and print out attendance sheet</p>
         <p>Attendance</p>

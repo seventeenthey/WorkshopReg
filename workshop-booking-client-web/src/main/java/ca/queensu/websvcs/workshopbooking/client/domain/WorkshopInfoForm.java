@@ -24,7 +24,8 @@ public class WorkshopInfoForm implements Serializable{
     private String rgEndTime;   
     private String eventStDate; //Event Start Date & Time
     private String eventStTime;
-
+    private int workshopNumber;
+    
     public String getStatus() {
         return status;
     }
@@ -121,7 +122,13 @@ public class WorkshopInfoForm implements Serializable{
         this.eventStTime = eventStTime;
     }
 
-
+    public void setWorkshopNumber(int num){
+        workshopNumber = num;
+    }
+    
+    public int getWorkshopNumber(){
+        return workshopNumber;
+    }
 
 
 

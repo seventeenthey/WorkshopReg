@@ -1,6 +1,7 @@
 package ca.queensu.websvcs.workshopbooking.client.facade;
 
 import ca.queensu.websvcs.workshopbooking.client.domain.StudentDataBean;
+import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.core.entity.Detail;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.uis.services.email.ws.QueensEmailInterface;
@@ -186,5 +187,40 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         roleList.add("Faculty");
         roleList.add("Staff");
         return roleList;
+    }
+    
+    //actually just creates a new list
+    public List<WorkshopInfoForm> findWorkshopList() {
+        try {
+            List<WorkshopInfoForm> workshopBeanList = new ArrayList<>();
+            for(int i = 0; i < 20; i++) {
+                WorkshopInfoForm workshop = generateWorkshopInfo(i);
+                workshopBeanList.add(workshop);
+            }
+            return workshopBeanList;
+        }
+        catch(Exception e) {
+            throw  new EJBException(e);
+        }
+    }
+    
+    //to create dummy workshop data
+    private WorkshopInfoForm generateWorkshopInfo(int num) {
+        WorkshopInfoForm workshop = new WorkshopInfoForm();
+        workshop.setEventTitle("How to be Cool " + num);
+        workshop.setWorkshopNumber(num);
+        
+        return workshop;
+    }
+    
+    //does not actually search, simply creates a new one
+    public WorkshopInfoForm findWorkshopByNum(String workshopNum){
+        try {
+            WorkshopInfoForm workshop = generateWorkshopInfo(Integer.valueOf(workshopNum));
+            return workshop;
+        }
+        catch(Exception e) {
+            throw  new EJBException(e);
+        }
     }
 }

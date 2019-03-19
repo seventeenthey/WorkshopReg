@@ -22,8 +22,10 @@
         <title>Archetype UIS JSP</title>  
         <!-- Bootstrap core CSS -->
         <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <!-- Custom styles for this template -->
         <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">
+        <link href="<%=request.getContextPath()%>/css/calendar.css" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/css?family=Arvo|Playfair+Display|Raleway|Roboto" rel="stylesheet">
 
@@ -78,28 +80,186 @@
         </nav>
 
         <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <s:url action="studentHomeLoadAction" var="studentHomeUrl" />
-                    <a href='<s:property value="studentHomeUrl"/>'>Go To Student Home Page ========= This is just a few examples from Glenn</a>
-                </div>
+           
+            <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+            <script
+                src="https://code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+
+
+            <div class="container theme-showcase" id="holder">
             </div>
 
-            <h5> This will be the login page / redirect to and from the login page.</h5>
+
+            <script type="text/tmpl" id="tmpl">
+                {{ 
+                var date = date || new Date(),
+                month = date.getMonth(), 
+                year = date.getFullYear(), 
+                first = new Date(year, month, 1), 
+                last = new Date(year, month + 1, 0),
+                startingDay = first.getDay(), 
+                thedate = new Date(year, month, 1 - startingDay),
+                dayclass = lastmonthcss,
+                today = new Date(),
+                i, j; 
+                if (mode === 'week') {
+                thedate = new Date(date);
+                thedate.setDate(date.getDate() - date.getDay());
+                first = new Date(thedate);
+                last = new Date(thedate);
+                last.setDate(last.getDate()+6);
+                } else if (mode === 'day') {
+                thedate = new Date(date);
+                first = new Date(thedate);
+                last = new Date(thedate);
+                last.setDate(thedate.getDate() + 1);
+                }
+
+                }}
+                <table class="border calendar-table table table-condensed table-tight">
+                <thead>
+                <tr>
+                <td colspan="7" style="text-align: center">
+                <table style="white-space: nowrap; width: 100%">
+                <tr>
+                <td style="text-align: left;">
+                <span class="btn-group">
+                <button class="js-cal-prev btn btn-default"><</button>
+                <button class="js-cal-next btn btn-default">></button>
+                </span>
+                <button class="js-cal-option btn btn-default {{: first.toDateInt() <= today.toDateInt() && today.toDateInt() <= last.toDateInt() ? 'active':'' }}" data-date="{{: today.toISOString()}}" data-mode="month">{{: todayname }}</button>
+                </td>
+                <td>
+                <span class="btn-group btn-group-lg">
+                {{ if (mode !== 'day') { }}
+                {{ if (mode === 'month') { }}<button class="js-cal-option btn btn-link" data-mode="year">{{: months[month] }}</button>{{ } }}
+                {{ if (mode ==='week') { }}
+                <button class="btn btn-link disabled">{{: shortMonths[first.getMonth()] }} {{: first.getDate() }} - {{: shortMonths[last.getMonth()] }} {{: last.getDate() }}</button>
+                {{ } }}
+                <button class="js-cal-years btn btn-link">{{: year}}</button> 
+                {{ } else { }}
+                <button class="btn btn-link disabled">{{: date.toDateString() }}</button> 
+                {{ } }}
+                </span>
+                </td>
+                <td style="text-align: right">
+                <span class="btn-group">
+                <button class="js-cal-option btn btn-default {{: mode==='year'? 'active':'' }}" data-mode="year">Year</button>
+                <button class="js-cal-option btn btn-default {{: mode==='month'? 'active':'' }}" data-mode="month">Month</button>
+                <button class="js-cal-option btn btn-default {{: mode==='week'? 'active':'' }}" data-mode="week">Week</button>
+                <button class="js-cal-option btn btn-default {{: mode==='day'? 'active':''}}" data-mode="day">Day</button>
+                </span>
+                </td>
+                </tr>
+                </table>
+
+                </td>
+                </tr>
+                </thead>
+                {{ if (mode ==='year') {
+                month = 0;
+                }}
+                <tbody>
+                {{ for (j = 0; j < 3; j++) { }}
+                <tr>
+                {{ for (i = 0; i < 4; i++) { }}
+                <td class="calendar-month month-{{:month}} js-cal-option" data-date="{{: new Date(year, month, 1).toISOString() }}" data-mode="month">
+                {{: months[month] }}
+                {{ month++;}}
+                </td>
+                {{ } }}
+                </tr>
+                {{ } }}
+                </tbody>
+                {{ } }}
+                {{ if (mode ==='month' || mode ==='week') { }}
+                <thead>
+                <tr class="c-weeks">
+                {{ for (i = 0; i < 7; i++) { }}
+                <th class="c-name" style="width:150px">
+                {{: days[i] }}
+                </th>
+                {{ } }}
+                </tr>
+                </thead>
+                <tbody>
+                {{ for (j = 0; j < 6 && (j < 1 || mode === 'month'); j++) { }}
+                <tr>
+                {{ for (i = 0; i < 7; i++) { }}
+                {{ if (thedate > last) { dayclass = nextmonthcss; } else if (thedate >= first) { dayclass = thismonthcss; } }}
+                <td class="calendar-day {{: dayclass }} {{: thedate.toDateCssClass() }} {{: date.toDateCssClass() === thedate.toDateCssClass() ? 'selected':'' }} {{: daycss[i] }} js-cal-option" data-date="{{: thedate.toISOString() }}">
+                <div class="date">{{: thedate.getDate() }}</div>
+                {{ thedate.setDate(thedate.getDate() + 1);}}
+                </td>
+                {{ } }}
+                </tr>
+                {{ } }}
+                </tbody>
+                {{ } }}
+                {{ if (mode ==='day') { }}
+                <tbody>
+                <tr>
+                <td colspan="7">
+                <table class="table table-striped table-condensed table-tight-vert" >
+                <thead>
+                <tr>
+                <th> </th>
+                <th style="text-align: center; width: 100%">{{: days[date.getDay()] }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <th class="timetitle" >All Day</th>
+                <td class="{{: date.toDateCssClass() }}">  </td>
+                </tr>
+                <tr>
+                <th class="timetitle" >Before 6 AM</th>
+                <td class="time-0-0"> </td>
+                </tr>
+                {{for (i = 6; i < 22; i++) { }}
+                <tr>
+                <th class="timetitle" >{{: i <= 12 ? i : i - 12 }} {{: i < 12 ? "AM" : "PM"}}</th>
+                <td class="time-{{: i}}-0"> </td>
+                </tr>
+                <tr>
+                <th class="timetitle" >{{: i <= 12 ? i : i - 12 }}:30 {{: i < 12 ? "AM" : "PM"}}</th>
+                <td class="time-{{: i}}-30"> </td>
+                </tr>
+                {{ } }}
+                <tr>
+                <th class="timetitle" >After 10 PM</th>
+                <td class="time-22-0"> </td>
+                </tr>
+                </tbody>
+                </table>
+                </td>
+                </tr>
+                </tbody>
+                {{ } }}
+                </table>
+            </script>
+
 
             <div>
                 <s:url action="listViewLoadAction" var="listViewUrl" />
                 <a href='<s:property value="listViewUrl"/>'>Go To Workshop List View Page </a>
             </div>
 
+            <s:url action="questionnaireAction" var="questionnaireUrl" />
             <div>
-                <s:url action="questionnaireAction" var="questionnaireUrl" />
                 <a class="nav-link" href='<s:property value="questionnaireUrl"/>'>Register for ______ workshop!</a>
             </div>
-        </div>
 
+       
         <footer class="footer" id="footer">
-            <div class="container-fluid copyright navbar fixed-bottom">
+            <div class="container-fluid copyright navbar">
                 <div class="container text-right">
                     <p>Report an Issue</p>
                     <p>Queen's Information & Technology Services</p>
@@ -110,6 +270,7 @@
         <script src="js/tether.min.js"></script>
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/calendar.js"></script>
         <script src="js/dashboard.js"></script>
         <!-- End JS -->
     </body>

@@ -5,6 +5,8 @@
  */
 package ca.queensu.websvcs.workshopbooking.client.action;
 
+import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
+import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
@@ -23,6 +25,11 @@ public class DetailsAction extends ActionSupport {
     private static final long serialVersionUID = 1L;
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.client.action.DetailsAction.class);
 
+    private WorkshopBookingSessionBeanLocal ejb;
+
+    private String workshopNumber;
+    private WorkshopInfoForm workshop;
+    
     public DetailsAction() {
         System.out.println("### DetailsAction constructor running");
     }
@@ -37,6 +44,22 @@ public class DetailsAction extends ActionSupport {
             e.printStackTrace(new PrintWriter(out));
             addActionError(createErrorMessage("Exception occurred while granting access to the application. Please contact the Archetype Client for assistance."));
             log.error("***************Exception occurred in execute method " + e.getMessage());
+            log.error(out);
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+    
+    public String load() throws Exception{
+        try {
+            System.out.println("### DetailsAction load running");
+            workshop = ejb.findWorkshopByNum(workshopNumber);
+        } 
+        catch (Exception e) {
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
+            addActionError(createErrorMessage("Exception occurred while loading student edit screen."));
+            log.error("***************Exception occurred in load method " + e.getMessage());
             log.error(out);
             return ERROR;
         }

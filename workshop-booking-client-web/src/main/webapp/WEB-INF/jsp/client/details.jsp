@@ -55,7 +55,7 @@
 
         <div class="container"> 
             <div class="text-center">
-                <h3> Workshop Name </h3>
+                <h3> <s:property value="workshop.eventTitle"/> </h3>
                 <p width="1"> Description........... Description........... Description........... Description........... Description...........</p>
             </div>
             <div class="row">

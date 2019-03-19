@@ -1,6 +1,6 @@
 package ca.queensu.websvcs.workshopbooking.client.action;
 
-
+import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.uis.sso.tools.common.SSOConstants;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
-import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
+import ca.queensu.websvcs.workshopbooking.client.facade.*;
 import ca.queensu.websvcs.workshopbooking.core.entity.Detail;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import java.util.ArrayList;
@@ -29,12 +29,15 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.client.action.ArchetypeAction.class);
      
     
+    
     //TODO these are entity objects from EASi  make archetype entities
     private Person person;
+   
     
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
     
+    List<WorkshopInfoForm> workshopBeanList;
     /**
      * <p>Constructor for DashboardAction.</p>
      */
@@ -57,18 +60,27 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     @Override
     public String execute() throws Exception {
         
+        System.out.println("EXECUTING");
+        
         log.info("Entering execute of ArchetypeAction");
         
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpSession session = request.getSession();
+        
         try {
+            
+            workshopBeanList = ejb.findWorkshopList();
+            System.out.println("workshop bean list length: "+workshopBeanList.size());
+            System.out.println(workshopBeanList.get(5).getEventTitle());
+            System.out.println("Should've printed some BS");
+            
             String studentId = (String) session.getAttribute(SSOConstants.EMPL_ID);
             
             String studentNetId = (String) session.getAttribute(SSOConstants.NET_ID);
             
             log.debug("Log level debug");
-            
-            setPerson(ejb.archetypeBusinessMethodGetPerson(studentId));
+            System.out.println("executing");
+            //setPerson(ejb.archetypeBusinessMethodGetPerson(studentId));
 
 
         } catch (Exception e) {
@@ -99,5 +111,11 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
         this.person = person;
     }
 
+    public List<WorkshopInfoForm> getWorkshops(){
+        return workshopBeanList;
+    }
     
+    public void setWorkshops(List<WorkshopInfoForm> workshopList){
+        workshopBeanList = workshopList;
+    }
 }
