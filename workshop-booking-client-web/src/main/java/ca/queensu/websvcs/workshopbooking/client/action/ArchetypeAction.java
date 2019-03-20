@@ -38,6 +38,7 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     private WorkshopBookingSessionBeanLocal ejb;
     
     List<WorkshopInfoForm> workshopBeanList;
+    String searchKey;
     /**
      * <p>Constructor for DashboardAction.</p>
      */

@@ -257,7 +257,40 @@
                 <a class="nav-link" href='<s:property value="questionnaireUrl"/>'>Register for ______ workshop!</a>
             </div>
 
-       
+        </div>
+            
+            <div class="container">
+                <table class="table table-bordered table-striped table-hover">
+                        <th>
+                            Workshop Name
+                        </th>
+                        <th>
+                            Workshop Number
+                        </th>
+                        <th>
+                            Link
+                        </th>
+                        <s:iterator value="workshopBeanList">
+                            <tr>
+                                <td>
+                                    <p> test </p>
+                                    <s:property value="eventTitle" />
+                                </td>
+                                <td>
+                                    <s:property value="workshopNumber" />
+                                </td>
+                                
+                                <td>
+                                    <s:url action="detailsLoadActionREAL" var="detailsUrl">
+                                        <s:param name="workshopNumber" value="workshopNumber" />
+                                    </s:url>
+                                    <a href='<s:property value="detailsUrl"/>'>Workshop Details</a>
+                                </td>
+                            </tr>
+                        </s:iterator>
+                    </table>
+            </div>            
+            
         <footer class="footer" id="footer">
             <div class="container-fluid copyright navbar">
                 <div class="container text-right">

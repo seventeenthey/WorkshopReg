@@ -46,6 +46,9 @@ public class Person implements Serializable {
     private String email;
     @OneToMany(mappedBy = "personFk")
     private List<Detail> detailList;
+    
+    
+    private List<Role> roleList;
 
     public Person() {
     }
@@ -59,6 +62,14 @@ public class Person implements Serializable {
         this.commonName = commonName;
     }
 
+    public List<Role> getRoleList(){
+        return roleList;
+    }
+    
+    public void setRoleList(List<Role> roles){
+        roleList = roles;
+    }
+    
     public BigDecimal getPersonPk() {
         return personPk;
     }

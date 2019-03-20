@@ -35,7 +35,7 @@
                 <div class="col-sm-10"></div>
                 <div class="col-sm-1">
                     <div class="active-cyan-3 active-cyan-4 mb-4">
-                        <input class="form-control" type="text" placeholder="Search" aria-label="Search"> <!-- This is causing awkward spacing below, this needs to be fixed -->
+                        <input class="form-control" type="text" placeholder="Search" aria-label="Search">
                     </div>
                 </div>
                 <div class="col-sm-1">

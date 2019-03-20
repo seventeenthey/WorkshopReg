@@ -134,5 +134,10 @@
             <result name="input">/WEB-INF/jsp/admin/newRequest.jsp</result>
         </action>
         
+        <action name="assignRolesAction" class="ca.queensu.websvcs.workshopbooking.admin.action.AssignRolesAction" method="execute">
+            <interceptor-ref name="baseAuthValidationStack"></interceptor-ref>
+            <result name="success">/WEB-INF/jsp/admin/assignRoles.jsp</result>   
+        </action>
+        
     </package>
 </struts>
