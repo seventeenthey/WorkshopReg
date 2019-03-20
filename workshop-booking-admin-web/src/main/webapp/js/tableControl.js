@@ -68,6 +68,9 @@ function filterTable() {
     input = document.getElementById("searchKey");
     filter = input.value.toUpperCase();
     table = document.getElementById("userTable");
+    if(table == null)
+        table = document.getElementById("workshopTable");
+    
     tr = table.getElementsByTagName("tr");
 
     for (i = 0; i < tr.length; i++) {

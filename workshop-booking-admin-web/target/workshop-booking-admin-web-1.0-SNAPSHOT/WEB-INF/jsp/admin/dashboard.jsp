@@ -50,6 +50,7 @@
     <body>
         <div class="jumbotron text-center banner-row mb-0">
             <h1>Admin Console</h1>
+            <h3>All Workshops</h3>
         </div>
 
         <!-- Navigation Bar - INCLUDED IN EVERY .JSP FILE -->
@@ -58,18 +59,13 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <s:url action="dashboard" var="dashboardUrl" />
-                    <a class="nav-link" href='<s:property value="dashboardUrl"/>'>Workshop Calendar</a>
+                    <a class="nav-link" href='<s:property value="dashboardUrl"/>'>View Workshops</a>
                     <!--<a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>-->
                 </li>
                 <li class="nav-item">
                     <s:url action="assignRolesAction" var="assignRolesUrl" />
                     <a class="nav-link" href='<s:property value="assignRolesUrl"/>'>Assign Roles</a>
-                </li>
-                <li class="nav-item">
-                    <div class="active-cyan-3 active-cyan-4">
-                        <input class="form-control" type="text" placeholder="Search" aria-label="Search"/>
-                    </div>
-                </li>
+                </li>                
                 <li class="nav-item">
                     <a class="nav-link" href="#">Logout</a>
                 </li>
@@ -77,7 +73,13 @@
         </nav>
 
         <div class="container">
+            <p>Will be very similar to workshop list view, except showing all workshops.</p>
+            <div class="active-cyan-3 active-cyan-4 mb-4 nav-item col-sm-12">
+                <input id="searchKey" class="form-control" type="text" placeholder="Search" aria-label="Search" onkeyup="filterTable()">
+            </div>
             
+            <p>If list view table has: id="workshopTable"</p>
+            <p>Then the search bar SHOULD work</p>
         </div>
 
 
@@ -91,6 +93,7 @@
             </div>
         </footer>
         <!-- JS -->
+        <script src="js/tableControl.js"></script>
         <script src="js/tether.min.js"></script>
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>

@@ -68,17 +68,12 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <s:url action="dashboard" var="dashboardUrl" />
-                    <a class="nav-link" href='<s:property value="dashboardUrl"/>'>Workshop Calendar</a>
+                    <a class="nav-link" href='<s:property value="dashboardUrl"/>'>View Workshops</a>
                     <!--<a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>-->
                 </li>
                 <li class="nav-item">
                     <s:url action="assignRolesAction" var="assignRolesUrl" />
                     <a class="nav-link" href='<s:property value="assignRolesUrl"/>'>Assign Roles</a>
-                </li>
-                <li class="nav-item">
-                    <div class="active-cyan-3 active-cyan-4">
-                        <input class="form-control" type="text" placeholder="Search" aria-label="Search"/>
-                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Logout</a>
@@ -220,12 +215,8 @@
                             <th></th>
                             <th></th>
                             <tr>
-                                <td>
-                                    <p>Physics</p>
-                                </td>
-                                <td>
-                                    <p>Workshop Creator</p>
-                                </td>
+                                <td><p>Physics</p></td>
+                                <td><p>Workshop Creator</p></td>
                                 <td>
                                     <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                                     <a class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
@@ -256,12 +247,8 @@
                             <th></th>
                             <th></th>
                             <tr>
-                                <td>
-                                    <p>Computing</p>
-                                </td>
-                                <td>
-                                    <p>Attendee</p>
-                                </td>
+                                <td><p>Computing</p></td>
+                                <td><p>Attendee</p></td>
                                 <td>
                                     <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                                     <a class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
