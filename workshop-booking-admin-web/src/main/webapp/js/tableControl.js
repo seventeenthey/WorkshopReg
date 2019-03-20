@@ -3,7 +3,7 @@
  */
 
 
-$(document).ready(function () {     
+$(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
     var actions = $("table td:last-child").html();
     // Append table with add row form on add new button click
@@ -20,8 +20,10 @@ $(document).ready(function () {
         $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
         $('[data-toggle="tooltip"]').tooltip();
     });
-    // Add row on add button click
-    $(document).on("click", ".add", function () {
+    //TODO -- click to add new row AND new role
+    $(".add").click(function () {});
+    // Confirm edit row on confirm button click
+    $(document).on("click", ".confirm", function () {
         var empty = false;
         var input = $(this).parents("tr").find('input[type="text"]');
         input.each(function () {
@@ -37,21 +39,47 @@ $(document).ready(function () {
             input.each(function () {
                 $(this).parent("td").html($(this).val());
             });
-            $(this).parents("tr").find(".add, .edit").toggle();
+            $(this).parents("tr").find(".confirm, .edit").toggle();
             $(".add-new").removeAttr("disabled");
         }
     });
     // Edit row on edit button click
     $(document).on("click", ".edit", function () {
-        $(this).parents("tr").find("td:not(:last-child)").each(function () {
+
+        console.log($(this).parents("tr").first().find("td:not(:last-child)"));
+        //$(this).parent("tr").find("td:not(:last-child)")
+        $(this).parents("tr").first().find("td:not(:last-child)").each(function () {
             $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
         });
-        $(this).parents("tr").find(".add, .edit").toggle();
+        $(this).parents("tr").find(".confirm, .edit").toggle();
         $(".add-new").attr("disabled", "disabled");
     });
     // Delete row on delete button click
     $(document).on("click", ".delete", function () {
-        $(this).parents("tr").remove();
-        $(".add-new").removeAttr("disabled");
+        //$(this).parents("tr").first().remove();
+        //$(".add-new").removeAttr("disabled");
     });
+
+
 });
+
+function filterTable() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchKey");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("userTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+    

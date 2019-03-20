@@ -18,14 +18,14 @@
         <%--<meta http-equiv="X-UA-Compatible" content="IE=edge">--%>
         <meta name="viewport" content="width=device-width, initial-scale=1">                
         <title>Assign Roles JSP</title>  
-        
-        
+
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <!-- Bootstrap core CSS -->
         <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
-        
+
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -33,8 +33,8 @@
         <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/css?family=Arvo|Playfair+Display|Raleway|Roboto" rel="stylesheet">
-        
-        
+
+
 
         <!-- 
         The style element below is used to prevent clickjacking. It sets the the body's display property to none. 
@@ -152,23 +152,10 @@
         </div>
         <div class="container">
             <h3>Example</h3>
-            <div class='navbar navbar-toggleable-md navbar-inverse'>
-
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <div class="active-cyan-3 active-cyan-4 mb-4 nav-item col-sm-12">
-                            <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div class='btn btn-primary nav-item' type='button'>
-                            <p>Go</p>
-                        </div>
-                    </li>
-                </ul>
+            <div class="active-cyan-3 active-cyan-4 mb-4 nav-item col-sm-12">
+                <input id="searchKey" class="form-control" type="text" placeholder="Search" aria-label="Search" onkeyup="filterTable()">
             </div>
-
-            <table class="table table-bordered table-striped">
+            <table id="userTable" class="table table-bordered table-striped">
                 <th>
                     Name
                 </th>
@@ -184,9 +171,6 @@
                 <th>
                     Workshops Registered For
                 </th>
-                <th>
-                    Link
-                </th>
 
 
 
@@ -200,16 +184,17 @@
                     <td>
 
                         <table>
-                            <th>
-                            </th>
-                            <th>
-                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                             <tr>
+                                <td>Queen's ITS</td>
+                                <td>Departmental Admin</td>
                                 <td>
-                                    <p>Queen's ITS</p>
-                                </td>
-                                <td>
-                                    <p>Departmental Admin</p>
+                                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                    <a class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
+                                    <!--<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons add">&#xe145;</i></a>-->
+                                    <!--<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>-->
                                 </td>
                             </tr>
                         </table>
@@ -219,12 +204,6 @@
                     </td>
                     <td>
                         <p>1</p>
-                    </td>
-                    <td>
-                        <div>
-                            <s:url action="assignRolesAction" var="assignRolesUrl" />
-                            <a class="nav-link" href='<s:property value="assignRolesUrl"/>'>Edit Roles</a>
-                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -237,16 +216,21 @@
                     <td>
 
                         <table>
-                            <th>
-                            </th>
-                            <th>
-                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                             <tr>
                                 <td>
                                     <p>Physics</p>
                                 </td>
                                 <td>
                                     <p>Workshop Creator</p>
+                                </td>
+                                <td>
+                                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                    <a class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
+                                    <!--<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons add">&#xe145;</i></a>-->
+                                    <!--<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>-->
                                 </td>
                             </tr>
                         </table>
@@ -256,12 +240,6 @@
                     </td>
                     <td>
                         <p>0</p>
-                    </td>
-                    <td>
-                        <div>
-                            <s:url action="assignRolesAction" var="assignRolesUrl" />
-                            <a class="nav-link" href='<s:property value="assignRolesUrl"/>'>Edit Roles</a>
-                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -274,16 +252,21 @@
                     <td>
 
                         <table>
-                            <th>
-                            </th>
-                            <th>
-                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                             <tr>
                                 <td>
                                     <p>Computing</p>
                                 </td>
                                 <td>
                                     <p>Attendee</p>
+                                </td>
+                                <td>
+                                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                    <a class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
+                                    <!--<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons add">&#xe145;</i></a>-->
+                                    <!--<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>-->
                                 </td>
                             </tr>
                         </table>
@@ -294,18 +277,9 @@
                     <td>
                         <p>15</p>
                     </td>
-                    <td>
-                        <div>
-                            <s:url action="assignRolesAction" var="assignRolesUrl" />
-                            <a class="nav-link" href='<s:property value="assignRolesUrl"/>'>Edit Roles</a>
-                        </div>
-                    </td>
                 </tr>
             </table>
         </div>        
-
-        
-                        
         <script src="js/tableControl.js"></script>
     </body>
 </html>
