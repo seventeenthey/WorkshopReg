@@ -1,7 +1,7 @@
 package ca.queensu.websvcs.workshopbooking.client.facade;
 
 import ca.queensu.websvcs.workshopbooking.client.domain.*;
-import ca.queensu.websvcs.workshopbooking.core.entity.Detail;
+import ca.queensu.websvcs.workshopbooking.core.entity.Catalogue;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import java.util.List;
 import javax.ejb.Local;
@@ -39,4 +39,9 @@ public interface WorkshopBookingSessionBeanLocal {
     //for dashboard/Events    
     public List<WorkshopInfoForm> findWorkshopList();
     public WorkshopInfoForm findWorkshopByNum(String workshopNum);
+    
+    // ADDED BY VINCENT
+    public Person getPersonByNetId(String netId);
+    public void savePerson(Person p);
+    public Catalogue findByWorkshopId(Integer id);
 }

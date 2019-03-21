@@ -1,7 +1,7 @@
 package ca.queensu.websvcs.workshopbooking.admin.facade;
 
-import ca.queensu.websvcs.workshopbooking.core.entity.Detail;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
+import ca.queensu.websvcs.workshopbooking.core.entity.Catalogue;
 import ca.queensu.uis.services.email.ws.QueensEmailInterface;
 import java.math.BigDecimal;
 import java.util.List;
@@ -34,21 +34,30 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Inject
     QueensEmailInterface emailStub;// = new CaQueensuUisWebservicesEmailStub();
     
- 
-    
     /**
      * {@inheritDoc}
      *
      * Returns a list of people in the archetype database.
      */
     @Override
-    public Person archetypeBusinessMethodGetPerson(String stuId) {
+    public Person getPersonByNetId(String netId) {
         
         //example gather data from the archetype DB
         
-        Person person = em.createNamedQuery("Person.findByPersonPk", Person.class).setParameter("personPk", new BigDecimal(stuId)).getSingleResult();
-        
+        Person person = em.createNamedQuery("Person.findByNetId", Person.class).setParameter("netId", netId).getSingleResult();
         return person;
+    }
+    
+    @Override
+    public void savePerson(Person p) {
+        em.persist(p);
+        em.flush();
+    }
+    
+    @Override
+    public Catalogue findByWorkshopId(Integer id) {
+        Catalogue catalogue = em.createNamedQuery("Catalogue.findByWorkshopId", Catalogue.class).setParameter("workshopId", id).getSingleResult();
+        return catalogue;
     }
 
 

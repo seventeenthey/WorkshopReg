@@ -25,8 +25,7 @@ public class ClientDataBean implements Serializable
     /**
      * <p>Constructor for StudentDataBean.</p>
      */
-    public ClientDataBean()
-    {
+    public ClientDataBean() {
     }
 
     /**

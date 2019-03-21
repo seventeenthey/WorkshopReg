@@ -12,7 +12,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import ca.queensu.websvcs.workshopbooking.client.facade.*;
-import ca.queensu.websvcs.workshopbooking.core.entity.Detail;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import java.util.ArrayList;
 import java.util.HashMap;

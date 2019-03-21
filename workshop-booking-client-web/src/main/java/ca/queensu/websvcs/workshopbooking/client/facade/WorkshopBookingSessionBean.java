@@ -2,9 +2,9 @@ package ca.queensu.websvcs.workshopbooking.client.facade;
 
 import ca.queensu.websvcs.workshopbooking.client.domain.StudentDataBean;
 import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
-import ca.queensu.websvcs.workshopbooking.core.entity.Detail;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.uis.services.email.ws.QueensEmailInterface;
+import ca.queensu.websvcs.workshopbooking.core.entity.Catalogue;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -222,5 +222,28 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         catch(Exception e) {
             throw  new EJBException(e);
         }
+    }
+    
+    
+    // ADDED BY VINCENT (3 ITEMS)
+    @Override
+    public Person getPersonByNetId(String netId) {
+        
+        //example gather data from the archetype DB
+        
+        Person person = em.createNamedQuery("Person.findByNetId", Person.class).setParameter("netId", netId).getSingleResult();
+        return person;
+    }
+    
+    @Override
+    public void savePerson(Person p) {
+        em.persist(p);
+        em.flush();
+    }
+    
+    @Override
+    public Catalogue findByWorkshopId(Integer id) {
+        Catalogue catalogue = em.createNamedQuery("Catalogue.findByWorkshopId", Catalogue.class).setParameter("workshopId", id).getSingleResult();
+        return catalogue;
     }
 }

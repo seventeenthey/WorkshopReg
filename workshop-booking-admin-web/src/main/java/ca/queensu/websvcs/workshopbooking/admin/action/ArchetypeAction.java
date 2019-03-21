@@ -12,7 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import ca.queensu.websvcs.workshopbooking.admin.facade.WorkshopBookingSessionBeanLocal;
-import ca.queensu.websvcs.workshopbooking.core.entity.Detail;
+import ca.queensu.websvcs.workshopbooking.core.entity.Catalogue;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +29,7 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.admin.action.ArchetypeAction.class);
      
     private Person person;
+    private Catalogue catalogue;
     
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
@@ -49,7 +50,7 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     /**
      * {@inheritDoc}
      *
-     * Grabs emplid and netid from session 
+     * Grabs student ID and net ID from session 
      * 
      */
     @Override
@@ -60,14 +61,14 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpSession session = request.getSession();
         try {
-            String studentId = (String) session.getAttribute(SSOConstants.EMPL_ID);
+            String stuId = (String) session.getAttribute(SSOConstants.EMPL_ID);
             
-            String studentNetId = (String) session.getAttribute(SSOConstants.NET_ID);
+            String netId = (String) session.getAttribute(SSOConstants.NET_ID);
             
             log.debug("Log level debug");
             
-            setPerson(ejb.archetypeBusinessMethodGetPerson(studentId));
-
+            setPerson(ejb.getPersonByNetId(netId));
+            setCatalogue(ejb.findByWorkshopId(1));
 
         } catch (Exception e) {
             
@@ -97,5 +98,18 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
         this.person = person;
     }
 
+    /**
+     * @return the person
+     */
+    public Catalogue getCatalogue() {
+        return catalogue;
+    }
+
+    /**
+     * @param catalogue the person to set
+     */
+    public void setCatalogue(Catalogue catalogue) {
+        this.catalogue = catalogue;
+    }
     
 }
