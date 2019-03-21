@@ -28,4 +28,6 @@ public interface WorkshopBookingSessionBeanLocal {
     
     public Catalogue findByWorkshopId(Integer id);
     
+    public List<Catalogue> getAllWorkshops();
+    
 }

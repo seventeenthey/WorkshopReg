@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.util.List;
 
 /**
  * <p>WorkshopBookingSessionBean class.</p>
@@ -57,6 +58,12 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     public Catalogue findByWorkshopId(Integer id) {
         Catalogue catalogue = em.createNamedQuery("Catalogue.findByWorkshopId", Catalogue.class).setParameter("workshopId", id).getSingleResult();
+        return catalogue;
+    }
+    
+    @Override
+    public List<Catalogue> getAllWorkshops() {
+        List<Catalogue> catalogue = em.createNamedQuery("Catalogue.findAll", Catalogue.class).getResultList();
         return catalogue;
     }
 
