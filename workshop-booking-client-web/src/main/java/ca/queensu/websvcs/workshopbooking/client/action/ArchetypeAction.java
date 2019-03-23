@@ -38,6 +38,7 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     
     List<WorkshopInfoForm> workshopBeanList;
     String searchKey;
+
     /**
      * <p>Constructor for DashboardAction.</p>
      */
@@ -48,7 +49,7 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
 /** {@inheritDoc} */
     @Override
     public void prepare() throws Exception{
-
+        workshopBeanList = ejb.findWorkshopList();
     } 
     
     /**
@@ -110,12 +111,29 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     public void setPerson(Person person) {
         this.person = person;
     }
+    
+        public WorkshopBookingSessionBeanLocal getEjb() {
+        return ejb;
+    }
 
-    public List<WorkshopInfoForm> getWorkshops(){
+    public void setEjb(WorkshopBookingSessionBeanLocal ejb) {
+        this.ejb = ejb;
+    }
+
+    public List<WorkshopInfoForm> getWorkshopBeanList() {
         return workshopBeanList;
     }
-    
-    public void setWorkshops(List<WorkshopInfoForm> workshopList){
-        workshopBeanList = workshopList;
+
+    public void setWorkshopBeanList(List<WorkshopInfoForm> workshopBeanList) {
+        this.workshopBeanList = workshopBeanList;
     }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
 }
