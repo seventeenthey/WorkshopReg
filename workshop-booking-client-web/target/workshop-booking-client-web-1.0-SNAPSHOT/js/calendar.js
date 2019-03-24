@@ -301,14 +301,48 @@ var $currentPopover = null;
                     end = !j ? null : new Date(y, m, d + j, h + 2, m);
                     
                     //push random data
-                    data.push({title: names[c1 % names.length], start: new Date(y, m, d, h, m), end: end, allDay: !(i % 6), text: slipsum[c % slipsum.length ]});
+                    //data.push({title: names[c1 % names.length], start: new Date(y, m, d, h, m), end: end, allDay: !(i % 6), text: slipsum[c % slipsum.length ]});
                 }
 
+                console.log($('#workshopData').find('tr'));
+                
+                var workshops = $('#workshopData').find('tr');
+                
+                for(i = 1; i < workshops.length; i++){
+                   
+                    /*currently it is :
+                     * 0 - name
+                     * 1 - number
+                     * 2 - date (y,m,d)
+                     * 3 - time (h,m)
+                     * 4 - end time (h,m)
+                     * 5 - clickable link ----- probably don't try and use that here
+                     */
+                    
+                    //console.log(workshops[i]);
+                    
+                    var workshopColumns = workshops[i].children;
+                    
+                   // console.log(workshopColumns);
+                   // console.log(workshopColumns[2]);
+                   // console.log(workshopColumns[2].innerText);
+                    var workshopTitle = workshopColumns[0].innerText;
+                    var workshopNumber = workshopColumns[1].innerText;
+                    
+                    var dateInfo = workshopColumns[2].innerText.split(",");
+                    var timeInfo = workshopColumns[3].innerText.split(",");
+                    var endTimeInfo = workshopColumns[4].innerText.split(",");
+                    var startDate = new Date(dateInfo[0], dateInfo[1], dateInfo[2], timeInfo[0], timeInfo[1]);
+                    var endDate = new Date(dateInfo[0], dateInfo[1], dateInfo[2], endTimeInfo[0], endTimeInfo[1]);
+                    //console.log("Workshop Date is: " + thisDate);
+                    
+                    data.push({title:workshopTitle, start:startDate, end: endDate, text:"some text"});
+                }
+
+//data must be sorted by start date
                 data.sort(function (a, b) {
                     return (+a.start) - (+b.start);
                 });
-
-    //data must be sorted by start date
 
     //Actually do everything
                 $('#holder').calendar({

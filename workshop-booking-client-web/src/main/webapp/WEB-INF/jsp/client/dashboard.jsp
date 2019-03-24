@@ -22,7 +22,10 @@
         <title>Archetype UIS JSP</title>  
         <!-- Bootstrap core CSS -->
         <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
+        
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
         <!-- Custom styles for this template -->
         <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">
         <link href="<%=request.getContextPath()%>/css/calendar.css" rel="stylesheet">
@@ -259,17 +262,14 @@
 
         </div>
             
-            <div class="container">
-                <table class="table table-bordered table-striped table-hover">
-                        <th>
-                            Workshop Name
-                        </th>
-                        <th>
-                            Workshop Number
-                        </th>
-                        <th>
-                            Link
-                        </th>
+            <div class="container" style="display:none">
+                <table class="table table-bordered table-striped table-hover" id="workshopData">
+                        <th>Workshop Name</th>
+                        <th>Workshop Number</th>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Link</th>
                         <s:iterator value="workshopBeanList">
                             <tr>
                                 <td>
@@ -279,7 +279,9 @@
                                 <td>
                                     <s:property value="workshopNumber" />
                                 </td>
-                                
+                                <td><s:property value="rgStDate"/></td>
+                                <td><s:property value="rgStTime"/></td>
+                                <td><s:property value="rgEndTime"/></td>
                                 <td>
                                     <s:url action="detailsLoadActionREAL" var="detailsUrl">
                                         <s:param name="workshopNumber" value="workshopNumber" />

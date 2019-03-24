@@ -107,6 +107,13 @@
                     label="Location"
                     name="workshopForm.location" 
                     list="locationList"/>
+                
+                <table>
+                    <th></th>
+                    <s:iterator value="locationList">
+                    <tr>test</tr>
+                    </s:iterator>
+                </table>
 
                 <s:textarea 
                     label="Teaser:"
