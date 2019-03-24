@@ -69,8 +69,12 @@
                     <a class="nav-link" href='<s:property value="listViewUrl"/>'>My Workshops</a>
                 </li>
                 <li class="nav-item">
+                    <s:url action="functionLoadAction" var="functionUrl" />
+                    <a class="nav-link" href='<s:property value="functionUrl"/>'>Create Workshop</a>
+                </li>
+                <li class="nav-item">
                     <div class="active-cyan-3 active-cyan-4">
-                        <input class="form-control" type="text" placeholder="Search" aria-label="Search"/>
+                        <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="searchKey"/>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -95,5 +99,7 @@
                 </div>
             </div>
         </footer>
+
+        <script src="js/searchBar.js"></script>
     </body>
 </html>

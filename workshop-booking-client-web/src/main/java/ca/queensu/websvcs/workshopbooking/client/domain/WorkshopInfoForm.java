@@ -25,6 +25,7 @@ public class WorkshopInfoForm implements Serializable{
     private String eventStDate; //Event Start Date & Time
     private String eventStTime;
     private int workshopNumber;
+    private String department;
     
     public String getStatus() {
         return status;
@@ -130,6 +131,13 @@ public class WorkshopInfoForm implements Serializable{
         return workshopNumber;
     }
 
+    public String getDepartment(){
+        return department;
+    }
+    
+    public void setDepartment(String department){
+        this.department = department;
+    }
 
 
 }//end WorkshopInfoBean Class

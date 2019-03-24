@@ -147,7 +147,7 @@ var $currentPopover = null;
                             }
 
                             if (!!time) {
-                                $event.html('<strong>' + time + '</strong> ' + $event.html());
+                                //$event.html('<strong>' + time + '</strong> ' + $event.html());
                             }
                             $event.toggleClass('begin', startint === dateint);
                             $event.toggleClass('end', endint === dateint);
@@ -177,7 +177,7 @@ var $currentPopover = null;
                             $event.toggleClass('all-day', !!event.allDay);
                                                         
                             if (!!time) {
-                                $event.html('<strong>' + time + '</strong> ' + $event.html());
+                                //$event.html('<strong>' + time + '</strong> ' + $event.html());
                             }
                             if (!event.end) {
                                 $event.addClass('begin end');
@@ -348,3 +348,19 @@ var $currentPopover = null;
                 $('#holder').calendar({
                     data: data
                 });
+                
+//TODO - add searching by department
+function filterTable() {
+    var input, filter, i;
+    input = document.getElementById("searchKey");
+    filter = input.value.toUpperCase();
+    
+    var events = $('.event')
+    for (i = 0; i < events.length; i++) {
+        if(events[i].innerText.toUpperCase().indexOf(filter) > -1)
+            events[i].style.display = "";
+        else
+            events[i].style.display = "none";
+    }
+}
+    

@@ -232,6 +232,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         hour = Integer.toString(tempHour + 2);
         workshop.setRgEndTime(hour + "," + min);
         
+        List<String> departments = finddepartmentList();
+        workshop.setDepartment(departments.get(rand.nextInt(departments.size())));
+        
         return workshop;
     }
     
