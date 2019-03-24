@@ -7,10 +7,11 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<!--Todo: test-->
-
-
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
+<%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,6 +26,12 @@
         <!--<link href="<%=request.getContextPath()%>/css/bursaryapp.css" rel="stylesheet">-->
         <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/css?family=Arvo|Playfair+Display|Raleway|Roboto" rel="stylesheet">
+
+        <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <sj:head jqueryui="true"/>
+        <sb:head includeScripts="true"/>
 
     </head>
     <body>
@@ -90,7 +97,8 @@
            
         <div class="col-md-9">
             <s:form id="workshopEditForm" action="functionLoadAction" 
-                    theme="bootstrap" method="post" cssClass="form-vertical">
+                    theme="bootstrap" method="post" cssClass="form-vertical"
+                    label="Form with jQuery UI Elements">
 
                 <s:radio 
                     label="Status:"
@@ -122,10 +130,42 @@
                     label="Wait List Limit:"
                     name="workshopForm.waitlistLimit"/>
 
-                <!--Todo: Working on datetimepicker-->
-
+                <sj:datepicker
+                        parentTheme="bootstrap"
+                        label="DateTimePicker"
+                        cssClass="form-control"
+                        elementCssClass="col-md-8"
+                        labelCssClass="col-md-4"
+                        placeholder="dd/mm/yyyy"
+                        showOn="focus"
+                        inputAppendIcon="calendar"
+                />
 
                 <s:submit cssClass="btn btn-primary"/>
+            </s:form>
+            
+            <!--JS test-->
+            <s:form action="echo" theme="bootstrap" cssClass="form-horizontal" label="Form with jQuery UI Elements">
+                <sj:datepicker
+                        id="datepicker"
+                        parentTheme="bootstrap"
+                        label="Datepicker"
+                        tooltip="Tooltip for Datepicker"
+                        cssClass="form-control"
+                        elementCssClass="col-sm-5"
+                        showOn="focus"
+                        inputAppendIcon="calendar"
+                />
+                <s:url var="languages_url" action="languages"/>
+                <sj:autocompleter
+                        id="autocompleter"
+                        parentTheme="bootstrap"
+                        label="Autocompleter"
+                        tooltip="Tooltip for Autocompleter"
+                        cssClass="form-control"
+                        href="%{languages_url}"
+	    	            loadMinimumCount="1"
+                 />
             </s:form>
         </div>
     </div>        
@@ -136,5 +176,16 @@
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <!-- End JS -->
+        
+        <!-- /container -->
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".collapse").collapse();
+                $("#code1btn").click(function () {
+                    $('#code1').collapse('toggle')
+                });
+            });
+        </script>
+        
     </body>
 </html>

@@ -6,6 +6,7 @@
 package ca.queensu.websvcs.workshopbooking.client.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 /**
  *
@@ -18,13 +19,45 @@ public class WorkshopInfoForm implements Serializable{
     private String teaser;
     private Integer maxParticipant;
     private Integer waitlistLimit;
-    private String rgStDate;    //Registration Start Date & Time
-    private String rgStTime;    
-    private String rgEndDate;   //Registration End Date & Time
-    private String rgEndTime;   
+    private Date rgStDate;    //Registration Start Date & Time
+    private Date rgStTime;    
+    private Date rgEndDate;   //Registration End Date & Time
+    private Date rgEndTime;   
     private String eventStDate; //Event Start Date & Time
     private String eventStTime;
     private int workshopNumber;
+
+    public Date getRgStDate() {
+        return rgStDate;
+    }
+
+    public void setRgStDate(Date rgStDate) {
+        this.rgStDate = rgStDate;
+    }
+
+    public Date getRgStTime() {
+        return rgStTime;
+    }
+
+    public void setRgStTime(Date rgStTime) {
+        this.rgStTime = rgStTime;
+    }
+
+    public Date getRgEndDate() {
+        return rgEndDate;
+    }
+
+    public void setRgEndDate(Date rgEndDate) {
+        this.rgEndDate = rgEndDate;
+    }
+
+    public Date getRgEndTime() {
+        return rgEndTime;
+    }
+
+    public void setRgEndTime(Date rgEndTime) {
+        this.rgEndTime = rgEndTime;
+    }
     
     public String getStatus() {
         return status;
@@ -72,38 +105,6 @@ public class WorkshopInfoForm implements Serializable{
 
     public void setWaitlistLimit(Integer waitlistLimit) {
         this.waitlistLimit = waitlistLimit;
-    }
-
-    public String getRgStDate() {
-        return rgStDate;
-    }
-
-    public void setRgStDate(String rgStDate) {
-        this.rgStDate = rgStDate;
-    }
-
-    public String getRgStTime() {
-        return rgStTime;
-    }
-
-    public void setRgStTime(String rgStTime) {
-        this.rgStTime = rgStTime;
-    }
-
-    public String getRgEndDate() {
-        return rgEndDate;
-    }
-
-    public void setRgEndDate(String rgEndDate) {
-        this.rgEndDate = rgEndDate;
-    }
-
-    public String getRgEndTime() {
-        return rgEndTime;
-    }
-
-    public void setRgEndTime(String rgEndTime) {
-        this.rgEndTime = rgEndTime;
     }
 
     public String getEventStDate() {
