@@ -18,6 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.util.Random;
 
 /**
  * <p>WorkshopBookingSessionBean class.</p>
@@ -190,6 +191,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
     
     //actually just creates a new list
+    @Override
     public List<WorkshopInfoForm> findWorkshopList() {
         try {
             List<WorkshopInfoForm> workshopBeanList = new ArrayList<>();
@@ -210,10 +212,34 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         workshop.setEventTitle("How to be Cool " + num);
         workshop.setWorkshopNumber(num);
         
+        String year, month, day, hour, min;
+        int tempHour;
+        
+        Random rand = new Random();
+        
+        
+        year = "2019";
+        month = Integer.toString(rand.nextInt(2) + 2);
+        day = Integer.toString(rand.nextInt(28));
+        
+        tempHour = rand.nextInt(24);
+        hour = Integer.toString(tempHour);
+        min = Integer.toString(rand.nextInt(4) * 15);
+        
+        workshop.setRgStDate(year + "," + month + "," + day);
+        workshop.setRgStTime(hour + "," + min);
+        
+        hour = Integer.toString(tempHour + 2);
+        workshop.setRgEndTime(hour + "," + min);
+        
+        List<String> departments = finddepartmentList();
+        workshop.setDepartment(departments.get(rand.nextInt(departments.size())));
+        
         return workshop;
     }
     
     //does not actually search, simply creates a new one
+    @Override
     public WorkshopInfoForm findWorkshopByNum(String workshopNum){
         try {
             WorkshopInfoForm workshop = generateWorkshopInfo(Integer.valueOf(workshopNum));
