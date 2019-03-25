@@ -43,8 +43,12 @@
                     <a class="nav-link" href='<s:property value="listViewUrl"/>'>My Workshops</a>
                 </li>
                 <li class="nav-item">
+                    <s:url action="functionLoadAction" var="functionUrl" />
+                    <a class="nav-link" href='<s:property value="functionUrl"/>'>Create Workshop</a>
+                </li>
+                <li class="nav-item">
                     <div class="active-cyan-3 active-cyan-4">
-                        <input class="form-control" type="text" placeholder="Search" aria-label="Search"/>
+                        <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="searchKey"/>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -76,7 +80,7 @@
                     <h4> </h4>
                 </div>
             </div>
-            
+
             <ul>
                 <li type="button" class="btn btn-primary"> 
                     <s:url action="personalDetailAction" var="personalDetailUrl" />
@@ -93,6 +97,7 @@
         <script src="js/tether.min.js"></script>
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/searchBar.js"></script>
         <!-- End JS -->
     </body>
 </html>

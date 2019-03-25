@@ -98,37 +98,27 @@
                 <th>
                     Workshops Registered For
                 </th>
-                <th>
-                    Link
-                </th>
-
 
                 <s:iterator value="people">
                     <tr>
+                        <td><s:property value="commonName" /></td>
+                        <td><s:property value="personPK" /></td>
                         <td>
-                            <s:property value="commonName" />
-                        </td>
-                        <td>
-                            <s:property value="personPK" />
-                        </td>
-                        <td>
-
                             <table>
-                                <th>
-                                    Department
-                                </th>
-                                <th>
-                                    Role
-                                </th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <s:iterator value="roleList">
-                                    <tr>
-                                        <td>
-                                            <s:property value="department"/>
-                                        </td>
-                                        <td>
-                                            <s:property value="role"/>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td><s:property value="department"/></td>
+                                    <td><s:property value="role"/></td>
+                                    <td>
+                                        <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                        <a class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
+                                        <!--<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons add">&#xe145;</i></a>-->
+                                        <!--<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>-->
+                                    </td>
+                                </tr>
                                 </s:iterator>
                             </table>
                         </td>
@@ -138,15 +128,12 @@
                         <td>
                             <p>#</p>
                         </td>
-                        <td>
-                            <p>Edit roles</p>
-                        </td>
                     </tr>
                 </s:iterator>
             </table>
         </div>
         <div class="container">
-            <h3>Example</h3>
+            <h3>Example below</h3>
             <div class="active-cyan-3 active-cyan-4 mb-4 nav-item col-sm-12">
                 <input id="searchKey" class="form-control" type="text" placeholder="Search" aria-label="Search" onkeyup="filterTable()">
             </div>
@@ -177,7 +164,6 @@
                         <p>3</p>
                     </td>
                     <td>
-
                         <table>
                             <th></th>
                             <th></th>
