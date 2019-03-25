@@ -45,6 +45,8 @@ $(document).ready(function () {
     });
     // Edit row on edit button click
     $(document).on("click", ".edit", function () {
+
+        console.log($(this).parents("tr").first().find("td:not(:last-child)"));
         //$(this).parent("tr").find("td:not(:last-child)")
         $(this).parents("tr").first().find("td:not(:last-child)").each(function () {
             $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
@@ -70,15 +72,9 @@ function filterTable() {
         table = document.getElementById("workshopTable");
     
     tr = table.getElementsByTagName("tr");
-    console.log(table.getElementsByTagName("tbody"));
 
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[0];
-        console.log("outputting TD");
-        console.log(td);
-        
-
-        
         if (td) {
             txtValue = td.textContent || td.innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {

@@ -22,10 +22,7 @@
         <title>Archetype UIS JSP</title>  
         <!-- Bootstrap core CSS -->
         <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
-
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
         <!-- Custom styles for this template -->
         <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">
         <link href="<%=request.getContextPath()%>/css/calendar.css" rel="stylesheet">
@@ -72,12 +69,8 @@
                     <a class="nav-link" href='<s:property value="listViewUrl"/>'>My Workshops</a>
                 </li>
                 <li class="nav-item">
-                    <s:url action="functionLoadAction" var="functionUrl" />
-                    <a class="nav-link" href='<s:property value="functionUrl"/>'>Create Workshop</a>
-                </li>
-                <li class="nav-item">
                     <div class="active-cyan-3 active-cyan-4">
-                        <input class="form-control" type="text" placeholder="Search" aria-label="Search" onkeyup="filterTable()" id="searchKey"/>
+                        <input class="form-control" type="text" placeholder="Search" aria-label="Search"/>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -87,7 +80,7 @@
         </nav>
 
         <div class="container">
-
+           
             <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
             <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -130,158 +123,174 @@
                 }
 
                 }}
-                <table class="calendar-table table table-condensed table-tight">
+                <table class="border calendar-table table table-condensed table-tight">
                 <thead>
-                  <tr>
-                    <td colspan="7" style="text-align: center">
-                      <table style="white-space: nowrap; width: 100%">
-                        <tr>
-                          <td style="text-align: left;">
-                            <span class="btn-group">
-                              <button class="js-cal-prev btn btn-default"><</button>
-                              <button class="js-cal-next btn btn-default">></button>
-                            </span>
-                            <button class="js-cal-option btn btn-default {{: first.toDateInt() <= today.toDateInt() && today.toDateInt() <= last.toDateInt() ? 'active':'' }}" data-date="{{: today.toISOString()}}" data-mode="month">{{: todayname }}</button>
-                          </td>
-                          <td>
-                            <span class="btn-group btn-group-lg">
-                              {{ if (mode !== 'day') { }}
-                                {{ if (mode === 'month') { }}<button class="js-cal-option btn btn-link" data-mode="year">{{: months[month] }}</button>{{ } }}
-                                {{ if (mode ==='week') { }}
-                                  <button class="btn btn-link disabled">{{: shortMonths[first.getMonth()] }} {{: first.getDate() }} - {{: shortMonths[last.getMonth()] }} {{: last.getDate() }}</button>
-                                {{ } }}
-                                <button class="js-cal-years btn btn-link">{{: year}}</button> 
-                              {{ } else { }}
-                                <button class="btn btn-link disabled">{{: date.toDateString() }}</button> 
-                              {{ } }}
-                            </span>
-                          </td>
-                          <td style="text-align: right">
-                            <span class="btn-group">
-                              <button class="js-cal-option btn btn-default {{: mode==='year'? 'active':'' }}" data-mode="year">Year</button>
-                              <button class="js-cal-option btn btn-default {{: mode==='month'? 'active':'' }}" data-mode="month">Month</button>
-                              <button class="js-cal-option btn btn-default {{: mode==='week'? 'active':'' }}" data-mode="week">Week</button>
-                              <button class="js-cal-option btn btn-default {{: mode==='day'? 'active':'' }}" data-mode="day">Day</button>
-                            </span>
-                          </td>
-                        </tr>
-                      </table>
+                <tr>
+                <td colspan="7" style="text-align: center">
+                <table style="white-space: nowrap; width: 100%">
+                <tr>
+                <td style="text-align: left;">
+                <span class="btn-group">
+                <button class="js-cal-prev btn btn-default"><</button>
+                <button class="js-cal-next btn btn-default">></button>
+                </span>
+                <button class="js-cal-option btn btn-default {{: first.toDateInt() <= today.toDateInt() && today.toDateInt() <= last.toDateInt() ? 'active':'' }}" data-date="{{: today.toISOString()}}" data-mode="month">{{: todayname }}</button>
+                </td>
+                <td>
+                <span class="btn-group btn-group-lg">
+                {{ if (mode !== 'day') { }}
+                {{ if (mode === 'month') { }}<button class="js-cal-option btn btn-link" data-mode="year">{{: months[month] }}</button>{{ } }}
+                {{ if (mode ==='week') { }}
+                <button class="btn btn-link disabled">{{: shortMonths[first.getMonth()] }} {{: first.getDate() }} - {{: shortMonths[last.getMonth()] }} {{: last.getDate() }}</button>
+                {{ } }}
+                <button class="js-cal-years btn btn-link">{{: year}}</button> 
+                {{ } else { }}
+                <button class="btn btn-link disabled">{{: date.toDateString() }}</button> 
+                {{ } }}
+                </span>
+                </td>
+                <td style="text-align: right">
+                <span class="btn-group">
+                <button class="js-cal-option btn btn-default {{: mode==='year'? 'active':'' }}" data-mode="year">Year</button>
+                <button class="js-cal-option btn btn-default {{: mode==='month'? 'active':'' }}" data-mode="month">Month</button>
+                <button class="js-cal-option btn btn-default {{: mode==='week'? 'active':'' }}" data-mode="week">Week</button>
+                <button class="js-cal-option btn btn-default {{: mode==='day'? 'active':''}}" data-mode="day">Day</button>
+                </span>
+                </td>
+                </tr>
+                </table>
 
-                    </td>
-                  </tr>
+                </td>
+                </tr>
                 </thead>
                 {{ if (mode ==='year') {
-                  month = 0;
+                month = 0;
                 }}
                 <tbody>
-                  {{ for (j = 0; j < 3; j++) { }}
-                  <tr>
-                    {{ for (i = 0; i < 4; i++) { }}
-                    <td class="calendar-month month-{{:month}} js-cal-option" data-date="{{: new Date(year, month, 1).toISOString() }}" data-mode="month">
-                      {{: months[month] }}
-                      {{ month++;}}
-                    </td>
-                    {{ } }}
-                  </tr>
-                  {{ } }}
+                {{ for (j = 0; j < 3; j++) { }}
+                <tr>
+                {{ for (i = 0; i < 4; i++) { }}
+                <td class="calendar-month month-{{:month}} js-cal-option" data-date="{{: new Date(year, month, 1).toISOString() }}" data-mode="month">
+                {{: months[month] }}
+                {{ month++;}}
+                </td>
+                {{ } }}
+                </tr>
+                {{ } }}
                 </tbody>
                 {{ } }}
                 {{ if (mode ==='month' || mode ==='week') { }}
                 <thead>
-                  <tr class="c-weeks">
-                    {{ for (i = 0; i < 7; i++) { }}
-                      <th class="c-name">
-                        {{: days[i] }}
-                      </th>
-                    {{ } }}
-                  </tr>
+                <tr class="c-weeks">
+                {{ for (i = 0; i < 7; i++) { }}
+                <th class="c-name" style="width:150px">
+                {{: days[i] }}
+                </th>
+                {{ } }}
+                </tr>
                 </thead>
                 <tbody>
-                  {{ for (j = 0; j < 6 && (j < 1 || mode === 'month'); j++) { }}
-                  <tr>
-                    {{ for (i = 0; i < 7; i++) { }}
-                    {{ if (thedate > last) { dayclass = nextmonthcss; } else if (thedate >= first) { dayclass = thismonthcss; } }}
-                    <td style="width:150px" class="calendar-day {{: dayclass }} {{: thedate.toDateCssClass() }} {{: date.toDateCssClass() === thedate.toDateCssClass() ? 'selected':'' }} {{: daycss[i] }} js-cal-option" data-date="{{: thedate.toISOString() }}">
-                      <div class="date">{{: thedate.getDate() }}</div>
-                      {{ thedate.setDate(thedate.getDate() + 1);}}
-                    </td>
-                    {{ } }}
-                  </tr>
-                  {{ } }}
+                {{ for (j = 0; j < 6 && (j < 1 || mode === 'month'); j++) { }}
+                <tr>
+                {{ for (i = 0; i < 7; i++) { }}
+                {{ if (thedate > last) { dayclass = nextmonthcss; } else if (thedate >= first) { dayclass = thismonthcss; } }}
+                <td class="calendar-day {{: dayclass }} {{: thedate.toDateCssClass() }} {{: date.toDateCssClass() === thedate.toDateCssClass() ? 'selected':'' }} {{: daycss[i] }} js-cal-option" data-date="{{: thedate.toISOString() }}">
+                <div class="date">{{: thedate.getDate() }}</div>
+                {{ thedate.setDate(thedate.getDate() + 1);}}
+                </td>
+                {{ } }}
+                </tr>
+                {{ } }}
                 </tbody>
                 {{ } }}
                 {{ if (mode ==='day') { }}
                 <tbody>
-                  <tr>
-                    <td colspan="7">
-                      <table class="table table-striped table-condensed table-tight-vert" >
-                        <thead>
-                          <tr>
-                            <th> </th>
-                            <th style="text-align: center; width: 100%">{{: days[date.getDay()] }}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th class="timetitle" >All Day</th>
-                            <td class="{{: date.toDateCssClass() }}">  </td>
-                          </tr>
-                          <tr>
-                            <th class="timetitle" >Before 6 AM</th>
-                            <td class="time-0-0"> </td>
-                          </tr>
-                          {{for (i = 6; i < 22; i++) { }}
-                          <tr>
-                            <th class="timetitle" >{{: i <= 12 ? i : i - 12 }} {{: i < 12 ? "AM" : "PM"}}</th>
-                            <td class="time-{{: i}}-0"> </td>
-                          </tr>
-                          <tr>
-                            <th class="timetitle" >{{: i <= 12 ? i : i - 12 }}:30 {{: i < 12 ? "AM" : "PM"}}</th>
-                            <td class="time-{{: i}}-30"> </td>
-                          </tr>
-                          {{ } }}
-                          <tr>
-                            <th class="timetitle" >After 10 PM</th>
-                            <td class="time-22-0"> </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
+                <tr>
+                <td colspan="7">
+                <table class="table table-striped table-condensed table-tight-vert" >
+                <thead>
+                <tr>
+                <th> </th>
+                <th style="text-align: center; width: 100%">{{: days[date.getDay()] }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <th class="timetitle" >All Day</th>
+                <td class="{{: date.toDateCssClass() }}">  </td>
+                </tr>
+                <tr>
+                <th class="timetitle" >Before 6 AM</th>
+                <td class="time-0-0"> </td>
+                </tr>
+                {{for (i = 6; i < 22; i++) { }}
+                <tr>
+                <th class="timetitle" >{{: i <= 12 ? i : i - 12 }} {{: i < 12 ? "AM" : "PM"}}</th>
+                <td class="time-{{: i}}-0"> </td>
+                </tr>
+                <tr>
+                <th class="timetitle" >{{: i <= 12 ? i : i - 12 }}:30 {{: i < 12 ? "AM" : "PM"}}</th>
+                <td class="time-{{: i}}-30"> </td>
+                </tr>
+                {{ } }}
+                <tr>
+                <th class="timetitle" >After 10 PM</th>
+                <td class="time-22-0"> </td>
+                </tr>
+                </tbody>
+                </table>
+                </td>
+                </tr>
                 </tbody>
                 {{ } }}
                 </table>
             </script>
+
+
+            <div>
+                <s:url action="listViewLoadAction" var="listViewUrl" />
+                <a href='<s:property value="listViewUrl"/>'>Go To Workshop List View Page </a>
+            </div>
+
+            <s:url action="questionnaireAction" var="questionnaireUrl" />
+            <div>
+                <a class="nav-link" href='<s:property value="questionnaireUrl"/>'>Register for ______ workshop!</a>
+            </div>
+
         </div>
-
-        <div class="container" style="display:none">
-            <table class="table table-bordered table-striped table-hover" id="workshopData">
-                <th>Workshop Name</th>
-                <th>Workshop Number</th>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Department</th>
-                <th>Link</th>
-                    <s:iterator value="workshopBeanList">
-                    <tr>
-                        <td><s:property value="eventTitle" /></td>
-                        <td><s:property value="workshopNumber" /></td>
-                        <td><s:property value="rgStDate"/></td>
-                        <td><s:property value="rgStTime"/></td>
-                        <td><s:property value="rgEndTime"/></td>
-                        <td><s:property value="department"/></td>
-                        <td>
-                            <s:url action="detailsLoadActionREAL" var="detailsUrl">
-                                <s:param name="workshopNumber" value="workshopNumber" />
-                            </s:url>
-                            <a href='<s:property value="detailsUrl"/>'>Workshop Details</a>
-                        </td>
-                    </tr>
-                </s:iterator>
-            </table>
-        </div>            
-
+            
+            <div class="container">
+                <table class="table table-bordered table-striped table-hover">
+                        <th>
+                            Workshop Name
+                        </th>
+                        <th>
+                            Workshop Number
+                        </th>
+                        <th>
+                            Link
+                        </th>
+                        <s:iterator value="workshopBeanList">
+                            <tr>
+                                <td>
+                                    <p> test </p>
+                                    <s:property value="eventTitle" />
+                                </td>
+                                <td>
+                                    <s:property value="workshopNumber" />
+                                </td>
+                                
+                                <td>
+                                    <s:url action="detailsLoadActionREAL" var="detailsUrl">
+                                        <s:param name="workshopNumber" value="workshopNumber" />
+                                    </s:url>
+                                    <a href='<s:property value="detailsUrl"/>'>Workshop Details</a>
+                                </td>
+                            </tr>
+                        </s:iterator>
+                    </table>
+            </div>            
+            
         <footer class="footer" id="footer">
             <div class="container-fluid copyright navbar">
                 <div class="container text-right">

@@ -1,7 +1,5 @@
 
 .calendar-day {
-  position:relative;
-  overflow:hidden;
   width: 100px;
   min-width: 100px;
   max-width: 100px;
@@ -33,7 +31,6 @@
 }
 
 .event {
-  position: absolute;
   border-top: 1px solid #b2dba1;
   border-bottom: 1px solid #b2dba1;
   background-image: linear-gradient(to bottom, #dff0d8 0px, #c8e5bc 100%);
@@ -44,7 +41,7 @@
   padding: 0 .75em;
   line-height: 2em;
   white-space: nowrap;
-  overflow: auto;
+  overflow: hidden;
   text-overflow: ellipsis;
   margin-bottom: 1px;
 }

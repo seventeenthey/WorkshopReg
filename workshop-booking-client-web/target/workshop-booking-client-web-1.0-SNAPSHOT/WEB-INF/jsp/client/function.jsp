@@ -1,17 +1,22 @@
 <%-- 
-    Document   : attendance
-    Created on : 1-Mar-2019, 7:59:02 PM
+    Document   : function
+    Created on : 1-Mar-2019, 7:59:08 PM
     Author     : dwesl
+    Event Setup Page for Workshop Registration System
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sj" uri="/struts-jquery-tags" %>
+<%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
+
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Attendance</title>
+        <title>Function</title>
         
         <!-- Bootstrap core CSS -->
         <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
@@ -22,10 +27,16 @@
         <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/css?family=Arvo|Playfair+Display|Raleway|Roboto" rel="stylesheet">
 
+        <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <sj:head jqueryui="true"/>
+        <sb:head includeScripts="true"/>
+
     </head>
     <body>
         <div class="jumbotron text-center banner-row mb-0">
-            <h1>Workshop Attendance</h1>
+            <h1>Workshop Functions</h1>
         </div>
         
         <!-- Navigation Bar - INCLUDED IN EVERY .JSP FILE -->
@@ -51,7 +62,8 @@
                     </li>
                 </ul>              
         </nav>
-                    
+    
+    
     <div class="row">
         <!--Nav bar for Function, included in every workshop function .jsp file-->
         <div class="col-md-3">
@@ -68,7 +80,7 @@
                         <li class="nav-item">
                             <s:url action="facilitatorLoadAction" var="facilitatorUrl" />
                             <a href='<s:property value="facilitatorUrl"/>'>Facilitators</a>
-                        </li>    
+                        </li>
                         <li class="nav-item">
                             <s:url action="emaileditLoadAction" var="emaileditUrl" />
                             <a href='<s:property value="emaileditUrl"/>'>Message Center</a>
@@ -77,21 +89,103 @@
                             <s:url action="attendanceLoadAction" var="attendanceUrl" />
                             <a href='<s:property value="attendanceUrl"/>'>Attendance</a>
                         </li>
+
                     </ul>
                 </div>
             </div>
         </div>
+           
+        <div class="col-md-9">
+            <s:form id="workshopEditForm" action="functionLoadAction" 
+                    theme="bootstrap" method="post" cssClass="form-vertical"
+                    label="Form with jQuery UI Elements">
 
-        <h1>Need to add workshop attendance functionality here</h1>
-        <p>This is where workshop holder and facilitator can check attendance and print out attendance sheet</p>
-        <p>Attendance</p>
-        
-    </div>
-        
+                <s:radio 
+                    label="Status:"
+                    name="workshopForm.status" 
+                    list="statusList" />
+
+                <s:textfield 
+                    label="Event Title:"
+                    placeholder="Event Title"
+                    name="workshopForm.eventTitle"
+                    tooltip="Enter Workshop Title Here"/>
+
+                <s:select 
+                    label="Location"
+                    name="workshopForm.location" 
+                    list="locationList"/>
+
+                <s:textarea 
+                    label="Teaser:"
+                    name="workshopForm.teaser"
+                    emptyOption="true"/>
+                
+
+                <s:textfield 
+                    label="Maximum Participants:"
+                    name="workshopForm.maxParticipant"/>
+
+                <s:textfield 
+                    label="Wait List Limit:"
+                    name="workshopForm.waitlistLimit"/>
+
+                <sj:datepicker
+                        parentTheme="bootstrap"
+                        label="DateTimePicker"
+                        cssClass="form-control"
+                        elementCssClass="col-md-8"
+                        labelCssClass="col-md-4"
+                        placeholder="dd/mm/yyyy"
+                        showOn="focus"
+                        inputAppendIcon="calendar"
+                />
+
+                <s:submit cssClass="btn btn-primary"/>
+            </s:form>
+            
+            <!--JS test-->
+            <s:form action="echo" theme="bootstrap" cssClass="form-horizontal" label="Form with jQuery UI Elements">
+                <sj:datepicker
+                        id="datepicker"
+                        parentTheme="bootstrap"
+                        label="Datepicker"
+                        tooltip="Tooltip for Datepicker"
+                        cssClass="form-control"
+                        elementCssClass="col-sm-5"
+                        showOn="focus"
+                        inputAppendIcon="calendar"
+                />
+                <s:url var="languages_url" action="languages"/>
+                <sj:autocompleter
+                        id="autocompleter"
+                        parentTheme="bootstrap"
+                        label="Autocompleter"
+                        tooltip="Tooltip for Autocompleter"
+                        cssClass="form-control"
+                        href="%{languages_url}"
+	    	            loadMinimumCount="1"
+                 />
+            </s:form>
+        </div>
+    </div>        
+            
+            
         <!-- JS -->
         <script src="js/tether.min.js"></script>
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <!-- End JS -->
+        
+        <!-- /container -->
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".collapse").collapse();
+                $("#code1btn").click(function () {
+                    $('#code1').collapse('toggle')
+                });
+            });
+        </script>
+        
     </body>
 </html>
