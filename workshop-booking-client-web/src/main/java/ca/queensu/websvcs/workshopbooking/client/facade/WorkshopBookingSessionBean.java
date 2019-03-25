@@ -8,6 +8,7 @@ import ca.queensu.websvcs.workshopbooking.core.entity.Catalogue;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 import javax.ejb.EJBException;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -212,25 +213,29 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         workshop.setEventTitle("How to be Cool " + num);
         workshop.setWorkshopNumber(num);
         
-        String year, month, day, hour, min;
+        int year, month, day, hour, min;
         int tempHour;
         
         Random rand = new Random();
         
         
-        year = "2019";
-        month = Integer.toString(rand.nextInt(2) + 2);
-        day = Integer.toString(rand.nextInt(28));
+        year = 2019;
+        month = rand.nextInt(2) + 2;
+        day = rand.nextInt(28);
         
         tempHour = rand.nextInt(24);
-        hour = Integer.toString(tempHour);
-        min = Integer.toString(rand.nextInt(4) * 15);
+        hour = tempHour;
+        min = rand.nextInt(4) * 15;
         
-        workshop.setRgStDate(year + "," + month + "," + day);
-        workshop.setRgStTime(hour + "," + min);
+        Date d = new Date();
+        d.setYear(year);
+        d.setMonth(month);
+        d.setDate(day);
+        d.setHours(hour);
+        d.setMinutes(min);
         
-        hour = Integer.toString(tempHour + 2);
-        workshop.setRgEndTime(hour + "," + min);
+        workshop.setRgStDate(d);
+        workshop.setRgEndDate(d);
         
         List<String> departments = finddepartmentList();
         workshop.setDepartment(departments.get(rand.nextInt(departments.size())));

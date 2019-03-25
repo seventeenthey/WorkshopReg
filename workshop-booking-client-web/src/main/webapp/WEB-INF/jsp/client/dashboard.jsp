@@ -258,27 +258,25 @@
             <table class="table table-bordered table-striped table-hover" id="workshopData">
                 <th>Workshop Name</th>
                 <th>Workshop Number</th>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
+                <th>Date</th
+                <th>End Date</th>
                 <th>Department</th>
                 <th>Link</th>
                     <s:iterator value="workshopBeanList">
-                    <tr>
-                        <td><s:property value="eventTitle" /></td>
-                        <td><s:property value="workshopNumber" /></td>
-                        <td><s:property value="rgStDate"/></td>
-                        <td><s:property value="rgStTime"/></td>
-                        <td><s:property value="rgEndTime"/></td>
-                        <td><s:property value="department"/></td>
-                        <td>
-                            <s:url action="detailsLoadActionREAL" var="detailsUrl">
-                                <s:param name="workshopNumber" value="workshopNumber" />
-                            </s:url>
-                            <a href='<s:property value="detailsUrl"/>'>Workshop Details</a>
-                        </td>
-                    </tr>
-                </s:iterator>
+                        <tr>
+                            <td><s:property value="eventTitle" /></td>
+                            <td><s:property value="workshopNumber" /></td>
+                            <td><s:property value="rgStDate"/></td>
+                            <td><s:property value="rgEndDate"/></td>
+                            <td><s:property value="department"/></td>
+                            <td>
+                                <s:url action="detailsLoadActionREAL" var="detailsUrl">
+                                    <s:param name="workshopNumber" value="workshopNumber" />
+                                </s:url>
+                                <a href='<s:property value="detailsUrl"/>'>Workshop Details</a>
+                            </td>
+                        </tr>
+                    </s:iterator>
             </table>
         </div>            
 

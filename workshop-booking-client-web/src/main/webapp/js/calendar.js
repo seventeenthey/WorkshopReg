@@ -313,30 +313,20 @@ var $currentPopover = null;
                     /*currently it is :
                      * 0 - name
                      * 1 - number
-                     * 2 - date (y,m,d)
-                     * 3 - time (h,m)
-                     * 4 - end time (h,m)
+                     * 2 - Date
+                     * 3 - Endtime -- not used right now
+                     * 4 - Department
                      * 5 - clickable link ----- probably don't try and use that here
                      */
                     
-                    //console.log(workshops[i]);
-                    
                     var workshopColumns = workshops[i].children;
-                    
-                   // console.log(workshopColumns);
-                   // console.log(workshopColumns[2]);
-                   // console.log(workshopColumns[2].innerText);
                     var workshopTitle = workshopColumns[0].innerText;
                     var workshopNumber = workshopColumns[1].innerText;
+                    var startDate = new Date(workshopColumns[2].innerText);
+                    var endDate = new Date(workshopColumns[3].innerText); 
+                    var department = workshopColumns[4].innerText;
                     
-                    var dateInfo = workshopColumns[2].innerText.split(",");
-                    var timeInfo = workshopColumns[3].innerText.split(",");
-                    var endTimeInfo = workshopColumns[4].innerText.split(",");
-                    var startDate = new Date(dateInfo[0], dateInfo[1], dateInfo[2], timeInfo[0], timeInfo[1]);
-                    var endDate = new Date(dateInfo[0], dateInfo[1], dateInfo[2], endTimeInfo[0], endTimeInfo[1]);
-                    //console.log("Workshop Date is: " + thisDate);
-                    
-                    data.push({title:workshopTitle, start:startDate, end: endDate, text:"some text"});
+                    data.push({title:workshopTitle, start:startDate, end: startDate, text:"some text"});
                 }
 
 //data must be sorted by start date
