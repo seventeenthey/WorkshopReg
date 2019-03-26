@@ -50,7 +50,6 @@ public class DetailsAction extends ActionSupport implements Preparable {
         try {
             System.out.println("### DetailsAction execute running");
 
-            System.out.println("### DetailsAction load running");
             System.out.println(workshopNumber);
             workshop = ejb.findWorkshopByNum(workshopNumber);
             System.out.println(workshop.getEventTitle());
@@ -60,25 +59,6 @@ public class DetailsAction extends ActionSupport implements Preparable {
             e.printStackTrace(new PrintWriter(out));
             addActionError(createErrorMessage("Exception occurred while loading student edit screen."));
             log.error("***************Exception occurred in load method " + e.getMessage());
-            log.error(out);
-            return ERROR;
-        }
-        return SUCCESS;
-    }
-
-    @Override
-    public String execute() throws Exception {
-        try {
-            System.out.println("### DetailsAction load running");
-            System.out.println(workshopNumber);
-            workshop = ejb.findWorkshopByNum(workshopNumber);
-            System.out.println(workshop.getEventTitle());
-        }
-        catch (Exception e) {
-            StringWriter out = new StringWriter();
-            e.printStackTrace(new PrintWriter(out));
-            addActionError(createErrorMessage("Exception occurred while granting access to the application. Please contact the Archetype Client for assistance."));
-            log.error("***************Exception occurred in execute method " + e.getMessage());
             log.error(out);
             return ERROR;
         }
