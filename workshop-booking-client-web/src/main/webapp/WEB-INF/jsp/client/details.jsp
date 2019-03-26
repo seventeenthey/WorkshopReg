@@ -58,39 +58,43 @@
         </nav>
 
         <div class="container"> 
-            <div class="text-center">
-                <h3> <s:property value="workshop.eventTitle"/> </h3>
-                <p width="1"> Description........... Description........... Description........... Description........... Description...........</p>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <h4> Location: </h4>
-                    <h4> </h4>
+                <div class="text-center">
+                    <h3><s:property value="workshop.eventTitle"/></h3>
+                    <p width="1"><s:property value="workshop.teaser"/></p>
                 </div>
-                <div class="col-sm-4">
-                    <h4> Time & Date: </h4>
-                    <h4> </h4>
+                <div class="row">
+                    <div class="row col-sm-4">
+                        <h4> Workshop Number:  </h4>
+                        <h4> <s:property value="workshopNumber"/> </h4>
+                    </div>
+                    <div class="col-sm-4">
+                        <h4> Location: </h4>
+                        <h4> <s:property value="workshop.location"/></h4>
+                    </div>
+                    <div class="col-sm-4">
+                        <h4> Start Time & Date: </h4>
+                        <h4> <s:property value="workshop.eventStDate"/> <s:property value="workshop.eventStTime"/></h4>
+                    </div>
+                    <div class="col-sm-4">
+                        <h4> Facilitator: </h4>
+                        <h4> <s:property value="workshop.facilitator"/> </h4>
+                    </div>
+                    <div class="col-sm-4">
+                        <h4> Status: </h4>
+                        <h4> <s:property value="workshop.status"/></h4>
+                    </div>
                 </div>
-                <div class="col-sm-4">
-                    <h4> Facilitator: </h4>
-                    <h4> </h4>
-                </div>
-                <div class="col-sm-4">
-                    <h4> Status (Will be hidden depending on user class): </h4>
-                    <h4> </h4>
-                </div>
-            </div>
 
-            <ul>
-                <li type="button" class="btn btn-primary"> 
-                    <s:url action="personalDetailAction" var="personalDetailUrl" />
-                    <a href='<s:property value="personalDetailUrl"/>' style="color:white">Register</a>
-                </li>
-                <li type="button" class="btn btn-primary">
-                    <s:url action="functionLoadAction" var="functionUrl" />
-                    <a href='<s:property value="functionUrl"/>' style="color:white">Advanced Options (Will be hidden depending on user class)</a>
-                </li>
-            </ul>
+                <ul>
+                    <li type="button" class="btn btn-primary"> 
+                        <s:url action="personalDetailAction" var="personalDetailUrl" />
+                        <a href='<s:property value="personalDetailUrl"/>' style="color:white">Register</a>
+                    </li>
+                    <li type="button" class="btn btn-primary">
+                        <s:url action="functionLoadAction" var="functionUrl" />
+                        <a href='<s:property value="functionUrl"/>' style="color:white">Advanced Options (Will be hidden depending on user class)</a>
+                    </li>
+                </ul>
         </div>
 
         <!-- JS -->
