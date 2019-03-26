@@ -89,6 +89,39 @@
             <h1>Need to add workshop attendance functionality here</h1>
             <p>This is where workshop holder and facilitator can check attendance and print out attendance sheet</p>
             <p>Attendance</p>
+            
+                        
+            <div class="col-md-9">
+                <table class="table table-striped col-md-8">
+                    <thead>
+                        <tr>
+                            <th>Student-ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Attendance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <s:iterator value="studentBeanList">
+                            <tr>
+                                <td>
+                                    <s:property value="studentID" />
+                                </td>
+                                <td>
+                                    <s:property value="studentFirstName" />
+                                </td>
+                                <td>
+                                    <s:property value="studentLastName" />
+                                </td>
+                                
+                                <td><s:checkbox
+                                    name="studentBeanList.attendance"/></td>
+                            </tr>
+                        </s:iterator>
+                    </tbody>
+                </table>
+                
+            </div>
 
         </div>
 

@@ -4,6 +4,7 @@ import ca.queensu.websvcs.workshopbooking.client.domain.StudentDataBean;
 import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.uis.services.email.ws.QueensEmailInterface;
+import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
 import ca.queensu.websvcs.workshopbooking.core.entity.Catalogue;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -72,15 +73,11 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
     }
     
-    private StudentDataBean generateStudentBean(int studentPk) {
+    private StudentDataBean generateStudentBean(int studentNum) {
         StudentDataBean studBean = new StudentDataBean();
-        studBean.setStudentPk(String.valueOf(studentPk));
-        studBean.setFirstName("Jane");
-        studBean.setLastName("Doe" + studentPk);
-        studBean.setAge(String.valueOf(20 + studentPk));
-        studBean.setCountry(findCountries().get(studentPk));
-        studBean.setHairColour("Pink");
-        studBean.setOrganDonor(true);
+        studBean.setStudentID(String.valueOf(studentNum));
+        studBean.setStudentFirstName("Jane");
+        studBean.setStudentLastName("Doe" + studentNum);
         return studBean;
     }
 
@@ -277,4 +274,31 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         Catalogue catalogue = em.createNamedQuery("Catalogue.findByWorkshopId", Catalogue.class).setParameter("workshopId", id).getSingleResult();
         return catalogue;
     }
+    
+    
+    @Override
+    public List<facilitatorDataBean> findFacilitatorList() {
+        try {
+            List<facilitatorDataBean> facilitatorList = new ArrayList<>();
+            for(int i = 0; i < 5; i++) {
+                facilitatorDataBean facilBean = generateFacilBean(i);
+                facilitatorList.add(facilBean);
+            }
+            return facilitatorList;
+        }
+        catch(Exception e) {
+            throw  new EJBException(e);
+        }
+    }
+    
+    private facilitatorDataBean generateFacilBean(int facilNum) {
+        facilitatorDataBean facilBean = new facilitatorDataBean();
+        facilBean.setFacilID(String.valueOf(facilNum));
+        facilBean.setFacilFirstName("Be");
+        facilBean.setFacilLastName("Cool" + facilNum);
+       
+        return facilBean;
+    }
+    
+    
 }

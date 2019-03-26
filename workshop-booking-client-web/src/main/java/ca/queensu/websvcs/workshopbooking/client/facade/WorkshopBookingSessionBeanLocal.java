@@ -44,4 +44,6 @@ public interface WorkshopBookingSessionBeanLocal {
     public Person getPersonByNetId(String netId);
     public void savePerson(Person p);
     public Catalogue findByWorkshopId(Integer id);
+    
+    public List<facilitatorDataBean> findFacilitatorList();
 }

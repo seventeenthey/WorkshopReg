@@ -91,13 +91,58 @@
                     </div>
                 </div>
             </div>
+                            
+            <div class="col-md-9">
+                <table class="table table-striped col-md-8">
+                    <thead>
+                        <tr>
+                            <th>Facilitator-ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <s:iterator value="facilBeanList">
+                            <tr>
+                                <td>
+                                    <s:property value="facilID" />
+                                </td>
+                                <td>
+                                    <s:property value="facilFirstName" />
+                                </td>
+                                <td>
+                                    <s:property value="facilLastName" />
+                                </td>
+                            </tr>
+                        </s:iterator>
+                    </tbody>
+                </table>
+                
+                
+                <s:form id="workshopEditForm" action="functionLoadAction" 
+                        theme="bootstrap" method="post" cssClass="form-vertical">
 
+                    <h4>Add a facilitator:</h4>
+                    
+                    <s:textfield 
+                        label="Facilitator ID:"
+                        name="facilBeanList.facilID"/>
 
-            <div class="col-md-3">
+                    <s:textfield 
+                        label="First Name:"
+                        name="facilBeanList.facilFirstName"/>
+
+                    <s:textfield 
+                        label="Last Name:"
+                        name="facilBeanList.facilLastName"/>
+                    
+                </s:form>
                 
             </div>
 
         </div>
+                            
+                            
 
         <!-- JS -->
         <script src="js/tether.min.js"></script>
