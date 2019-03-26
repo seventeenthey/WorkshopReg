@@ -31,6 +31,7 @@ public interface WorkshopBookingSessionBeanLocal {
     // function.jsp
     public List<String> findstatusList();
     public List<String> findlocationList();
+    public boolean updateWorkshopForm(WorkshopInfoForm workshopForm);
     
     //personalDetai.jsp
     public List<String> finddepartmentList();

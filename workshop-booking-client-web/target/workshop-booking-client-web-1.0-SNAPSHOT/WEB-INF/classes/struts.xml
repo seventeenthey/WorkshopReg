@@ -144,7 +144,12 @@
             <interceptor-ref name="baseStack"></interceptor-ref>
             <result name="success">WEB-INF/jsp/client/function.jsp</result>
         </action>
-        <!--Todo: Need Add Function Execute Action Here-->
+        
+        <action name="functionExeAction" class="ca.queensu.websvcs.workshopbooking.client.action.FunctionAction" method="execute">
+            <interceptor-ref name="baseValidationStack"></interceptor-ref>
+            <result name="input">WEB-INF/jsp/client/function.jsp</result>
+            <result name="success">WEB-INF/jsp/client/function.jsp</result>
+        </action>
         
         <!--Attendance Page-->
         <action name="attendanceLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.AttendanceAction" method="execute">

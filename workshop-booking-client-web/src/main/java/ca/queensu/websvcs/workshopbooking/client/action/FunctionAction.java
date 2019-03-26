@@ -60,8 +60,9 @@ public class FunctionAction extends ActionSupport implements Preparable{
     
     @SkipValidation
     public String load() throws Exception{
+        addActionMessage("Save Successful!");
         try {
-            System.out.println("### FunctionAction load running");
+            System.out.println("### FunctionAction load running");            
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -82,6 +83,14 @@ public class FunctionAction extends ActionSupport implements Preparable{
         catch (Exception e) {
             StringWriter out = new StringWriter();
             e.printStackTrace(new PrintWriter(out));
+            boolean saveSuccessful = ejb.updateWorkshopForm(workshopForm);
+            addActionMessage("Save Successful!");
+            if(saveSuccessful){
+                addActionMessage("Save Successful!");
+            }
+            else {
+                addActionError("Data was not saved.");
+            }
             
             
             addActionError(createErrorMessage("Exception occurred while granting access to the application. Please contact the Archetype Client for assistance."));
@@ -90,6 +99,33 @@ public class FunctionAction extends ActionSupport implements Preparable{
             return ERROR;
         }
         return SUCCESS;
+    }
+    
+    
+    @Override
+    public void validate() {
+        try {
+            
+            System.out.println("### StudentEditAction validate running");
+            
+            if(workshopForm.getStatus().isEmpty()) {
+                addFieldError("status", "Status is required.");
+            }
+            
+            if(workshopForm.getEventTitle().isEmpty()) {
+                addFieldError("eventTitle", "eventTitle is required.");
+            }
+            if(workshopForm.getTeaser().isEmpty()) {
+                addFieldError("teaser", "Workshop Teaser is required.");
+            }
+        } 
+        catch (Exception e) { 
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
+            addActionError(createErrorMessage("Exception occurred while validating student data."));
+            log.error("***************Exception occurred in validate method " + e.getMessage());
+            log.error(out);
+        }
     }
     
     /**

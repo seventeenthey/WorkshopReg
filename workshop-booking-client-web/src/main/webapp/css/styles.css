@@ -8,19 +8,19 @@ input[type=checkbox]
   padding: 10px;
 }
 
-h1 {
+/*h1 {
     font-family: 'Arvo', serif;
     font-size: 40px;
-}
+}*/
 h2,th {
     font-family: 'Raleway', sans-serif;
     font-size: 26px;
 }
-body {
+/*body {
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
     height:100%;
-}
+}*/
 
 html {
     height:100%;
@@ -156,9 +156,10 @@ legend {
     color: white;
 }
 
-a {
+/*a {
     text-decoration: underline;
-}
+}*/
+
 .exams-office-foot a:hover {
     color: #ffff99;
 }
@@ -296,4 +297,26 @@ a {
         position:relative;
     }
     
+}
+
+/*Function Page Css*/
+.function{
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
+    font-size:20px;
+}
+
+.card-body .nav-item{
+    padding-left: 30px;
+}
+
+.datetimepicker{
+    display: box;
+    padding-top: 1%;
+}
+
+/*Navbar Css*/
+.navbar{
+    font-size: 1.2rem;
 }

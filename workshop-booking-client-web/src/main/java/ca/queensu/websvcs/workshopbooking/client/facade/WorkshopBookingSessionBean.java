@@ -150,6 +150,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
     }
     
+/*
+    Function Page
+    */
     @Override
     public List<String> findstatusList(){
 //      List of possible status for workshops
@@ -168,6 +171,15 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         locationList.add("WalterLight Hall");
         locationList.add("Stauffer Lib");
         return locationList;
+    }
+    
+    @Override
+    public boolean updateWorkshopForm(WorkshopInfoForm workshopForm){
+        try{
+            return true;
+        }catch(Exception e) {
+            throw  new EJBException(e);
+        }
     }
     
     @Override

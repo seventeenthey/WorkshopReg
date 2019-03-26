@@ -95,7 +95,7 @@
 
                 <!--Workshop Information Gathering-->
                 <div class="col-md-9">
-                    <s:form id="workshopEditForm" action="functionLoadAction" 
+                    <s:form id="workshopEditForm" action="functionExeAction" 
                             theme="bootstrap" method="post" cssClass="form-vertical">
 
                         <s:radio 
@@ -181,7 +181,9 @@
                                 type="time"/>  
                         </div>
 
-                        <s:submit cssClass="btn btn-primary"/>
+                        <s:submit 
+                            value="Save"
+                            cssClass="btn btn-primary"/>
                     </s:form>
                 </div>
             </div>
