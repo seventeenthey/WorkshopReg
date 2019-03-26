@@ -162,11 +162,6 @@
             <result name="success">WEB-INF/jsp/client/details.jsp</result>
         </action>
         
-        <action name="detailsLoadActionREAL" class="ca.queensu.websvcs.workshopbooking.client.action.DetailsAction" method="load">
-            <interceptor-ref name="baseStack"></interceptor-ref>
-            <result name="success">WEB-INF/jsp/client/details.jsp</result>
-        </action>
-        
         <!-- Email Edit Page-->
         <action name="emaileditLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.EmailEditAction" method="execute">
             <interceptor-ref name="baseStack"></interceptor-ref>

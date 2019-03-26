@@ -108,7 +108,7 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
         this.person = person;
     }
     
-        public WorkshopBookingSessionBeanLocal getEjb() {
+    public WorkshopBookingSessionBeanLocal getEjb() {
         return ejb;
     }
 

@@ -36,7 +36,9 @@ public class WorkshopInfoForm implements Serializable{
 
     private int workshopNumber;
     private String department;
-
+    private facilitatorDataBean facilitator;
+    
+    
     public String getRgStDate() {
         return rgStDate;
     }
@@ -172,6 +174,12 @@ public class WorkshopInfoForm implements Serializable{
         this.department = department;
     }
 
-
+    public facilitatorDataBean getFacilitator(){
+        return facilitator;
+    }
+    
+    public void setFacilitator(facilitatorDataBean facilitator){
+        this.facilitator = facilitator;
+    }
     
 }//end WorkshopInfoBean Class

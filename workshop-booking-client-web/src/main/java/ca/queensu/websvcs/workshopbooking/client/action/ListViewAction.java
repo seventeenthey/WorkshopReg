@@ -55,9 +55,7 @@ public class ListViewAction extends ActionSupport implements Preparable{
         person = new Person();  //TODO - Remove this and fix this ^
         
         workshopsRegistered = ejb.findRegisteredWorkshops(person);
-        System.out.println(workshopsRegistered.size());
         workshopsCreated = ejb.findCreatedWorkshops(person);
-        System.out.println(workshopsRegistered.size());
     } 
     
     @Override

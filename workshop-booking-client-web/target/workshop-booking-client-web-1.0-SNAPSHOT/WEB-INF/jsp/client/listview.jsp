@@ -86,7 +86,7 @@
                             <td><s:property value="rgEndDate"/></td>
                             <td><s:property value="department"/></td>
                             <td>
-                                <s:url action="detailsLoadActionREAL" var="detailsUrl">
+                                <s:url action="detailsLoadAction" var="detailsUrl">
                                     <s:param name="workshopNumber" value="workshopNumber" />
                                 </s:url>
                                 <a href='<s:property value="detailsUrl"/>'>Workshop Details</a>
@@ -122,7 +122,7 @@
                             <td><s:property value="rgEndDate"/></td>
                             <td><s:property value="department"/></td>
                             <td>
-                                <s:url action="detailsLoadActionREAL" var="detailsUrl">
+                                <s:url action="detailsLoadAction" var="detailsUrl">
                                     <s:param name="workshopNumber" value="workshopNumber" />
                                 </s:url>
                                 <a href='<s:property value="detailsUrl"/>'>Workshop Details</a>

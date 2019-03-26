@@ -10,9 +10,11 @@ import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBe
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.Preparable;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
+import javax.ejb.EJB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,11 +22,12 @@ import org.apache.logging.log4j.Logger;
  *
  * @author dwesl
  */
-public class DetailsAction extends ActionSupport {
+public class DetailsAction extends ActionSupport implements Preparable {
 
     private static final long serialVersionUID = 1L;
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.client.action.DetailsAction.class);
 
+    @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
 
     private String workshopNumber;
@@ -34,10 +37,22 @@ public class DetailsAction extends ActionSupport {
         System.out.println("### DetailsAction constructor running");
     }
     
+    @Override 
+    public void prepare() throws Exception {
+        System.out.println("### DetailsAction Prepare running");
+        System.out.println("wkrshop # : " + workshopNumber);
+        //workshop = ejb.findWorkshopByNum(workshopNumber);
+    }
+     
     @Override
     public String execute() throws Exception {
         try {
             System.out.println("### DetailsAction execute running");
+            
+            System.out.println("### DetailsAction load running");
+            System.out.println(workshopNumber);
+            workshop = ejb.findWorkshopByNum(workshopNumber);
+            System.out.println(workshop.getEventTitle());
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -53,7 +68,9 @@ public class DetailsAction extends ActionSupport {
     public String load() throws Exception{
         try {
             System.out.println("### DetailsAction load running");
+            System.out.println(workshopNumber);
             workshop = ejb.findWorkshopByNum(workshopNumber);
+            System.out.println(workshop.getEventTitle());
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -78,5 +95,29 @@ public class DetailsAction extends ActionSupport {
         String msgAppend = " This error occurred at: " + now.toString() + ". Please note the date and time that this error occurred and take a screenshot of this message. Thank you.";
 
         return customMessage + msgAppend;
+    }
+    
+    public WorkshopBookingSessionBeanLocal getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(WorkshopBookingSessionBeanLocal ejb) {
+        this.ejb = ejb;
+    }
+    
+    public WorkshopInfoForm getWorkshop(){
+        return workshop;
+    }
+    
+    public void setWorkshop(WorkshopInfoForm workshop){
+        this.workshop = workshop;
+    }
+    
+    public String getWorkshopNumber(){
+        return workshopNumber;
+    }
+    
+    public void setWorkshopNumber(String workshopNumber){
+        this.workshopNumber = workshopNumber;
     }
 }
