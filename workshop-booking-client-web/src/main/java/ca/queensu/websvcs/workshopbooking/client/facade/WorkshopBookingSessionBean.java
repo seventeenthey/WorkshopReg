@@ -213,32 +213,49 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         workshop.setEventTitle("How to be Cool " + num);
         workshop.setWorkshopNumber(num);
         
-        int year, month, day, hour, min;
+        String year, month, day, hour, min;
         int tempHour;
         
         Random rand = new Random();
         
+        //Commented out code is for using if dates are java Date objects
         
-        year = 2019;
-        month = rand.nextInt(2) + 2;
-        day = rand.nextInt(28);
+        //year = 2019;
+        //month = rand.nextInt(2) + 2;
+        //day = rand.nextInt(28);
+        
+        year = "2019";
+        month = Integer.toString(rand.nextInt(2) + 2);
+        day = Integer.toString(rand.nextInt(28));
         
         tempHour = rand.nextInt(24);
-        hour = tempHour;
-        min = rand.nextInt(4) * 15;
+        //hour = tempHour;
+        //min = rand.nextInt(4) * 15;
+        hour = Integer.toString(tempHour);
+        min = Integer.toString(rand.nextInt(4) * 15);
         
+        /*
         Date d = new Date();
         d.setYear(year);
         d.setMonth(month);
         d.setDate(day);
         d.setHours(hour);
         d.setMinutes(min);
+        */
         
+        workshop.setRgStDate(year + "," + month + "," + day);
+        workshop.setRgStTime(hour + "," + min);
+        
+        /*
         workshop.setRgStDate(d);
         workshop.setRgEndDate(d);
+        */
+        
+        hour = Integer.toString(tempHour + 2);
+        workshop.setRgEndTime(hour + "," + min);
         
         List<String> departments = finddepartmentList();
-        workshop.setDepartment(departments.get(rand.nextInt(departments.size())));
+        workshop.setDepartment(departments.get(rand.nextInt(departments.size()-1)+1));
         
         return workshop;
     }
@@ -276,5 +293,28 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public Catalogue findByWorkshopId(Integer id) {
         Catalogue catalogue = em.createNamedQuery("Catalogue.findByWorkshopId", Catalogue.class).setParameter("workshopId", id).getSingleResult();
         return catalogue;
+    }
+    
+    //TODO - Vincent or Taylor
+    //make this find all workshops that person is attending
+    @Override
+    public List<WorkshopInfoForm> findRegisteredWorkshops(Person person){
+        List<WorkshopInfoForm> output = new ArrayList();
+        
+        for(int i = 0; i < 10; i++)
+            output.add(generateWorkshopInfo(i));
+        
+        return output;
+    }
+    
+    //TODO - Vincent or Taylor
+    //make this find all workshops that person has created
+    @Override public List<WorkshopInfoForm> findCreatedWorkshops(Person person){
+        List<WorkshopInfoForm> output = new ArrayList();
+        
+        for(int i = 0; i < 5; i++)
+            output.add(generateWorkshopInfo(i));
+        
+        return output;
     }
 }

@@ -71,16 +71,12 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
         try {
             
             workshopBeanList = ejb.findWorkshopList();
-            System.out.println("workshop bean list length: "+workshopBeanList.size());
-            System.out.println(workshopBeanList.get(5).getEventTitle());
-            System.out.println("Should've printed some BS");
             
             String studentId = (String) session.getAttribute(SSOConstants.EMPL_ID);
             
             String studentNetId = (String) session.getAttribute(SSOConstants.NET_ID);
             
             log.debug("Log level debug");
-            System.out.println("executing");
             //setPerson(ejb.archetypeBusinessMethodGetPerson(studentId));
 
 

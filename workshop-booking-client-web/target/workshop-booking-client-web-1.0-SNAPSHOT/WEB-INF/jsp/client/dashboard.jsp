@@ -258,7 +258,8 @@
             <table class="table table-bordered table-striped table-hover" id="workshopData">
                 <th>Workshop Name</th>
                 <th>Workshop Number</th>
-                <th>Date</th
+                <th>Date</th>
+                <th>Start Time</th>
                 <th>End Date</th>
                 <th>Department</th>
                 <th>Link</th>
@@ -267,6 +268,7 @@
                             <td><s:property value="eventTitle" /></td>
                             <td><s:property value="workshopNumber" /></td>
                             <td><s:property value="rgStDate"/></td>
+                            <td><s:property value="rgStTime"/></td>
                             <td><s:property value="rgEndDate"/></td>
                             <td><s:property value="department"/></td>
                             <td>
