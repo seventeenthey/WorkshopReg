@@ -30,7 +30,7 @@
 
     <body>
         <div class="jumbotron text-center banner-row mb-0">
-                <h1>Workshop Functions</h1>
+                <h1>Workshop Management</h1>
         </div>
 
         <!-- Navigation Bar - INCLUDED IN EVERY .JSP FILE -->

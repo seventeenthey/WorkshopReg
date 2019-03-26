@@ -58,89 +58,89 @@
                 </li>
             </ul>
         </nav>
+                
+        <div class="function">
+            <!--Main Content-->
+            <div class="row">
 
-        <!--Main Content-->
-        <div class="row">
-
-            <!--Nav bar for Function, included in every workshop function .jsp file-->
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header">
-                        Workshop Edit
-                    </div>
-                    <div class="card-body">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <s:url action="functionLoadAction" var="functionUrl" />
-                                <a href='<s:property value="functionUrl"/>'>Event Setup</a>
-                            </li>
-                            <li class="nav-item">
-                                <s:url action="facilitatorLoadAction" var="facilitatorUrl" />
-                                <a href='<s:property value="facilitatorUrl"/>'>Facilitators</a>
-                            </li>
-                            <li class="nav-item">
-                                <s:url action="emaileditLoadAction" var="emaileditUrl" />
-                                <a href='<s:property value="emaileditUrl"/>'>Message Center</a>
-                            </li>
-                            <li class="nav-item">
-                                <s:url action="attendanceLoadAction" var="attendanceUrl" />
-                                <a href='<s:property value="attendanceUrl"/>'>Attendance</a>
-                            </li>
-                        </ul>
+                <!--Nav bar for Function, included in every workshop function .jsp file-->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            Workshop Edit
+                        </div>
+                        <div class="card-body">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <s:url action="functionLoadAction" var="functionUrl" />
+                                    <a href='<s:property value="functionUrl"/>'>Event Setup</a>
+                                </li>
+                                <li class="nav-item">
+                                    <s:url action="facilitatorLoadAction" var="facilitatorUrl" />
+                                    <a href='<s:property value="facilitatorUrl"/>'>Facilitators</a>
+                                </li>
+                                <li class="nav-item">
+                                    <s:url action="emaileditLoadAction" var="emaileditUrl" />
+                                    <a href='<s:property value="emaileditUrl"/>'>Message Center</a>
+                                </li>
+                                <li class="nav-item">
+                                    <s:url action="attendanceLoadAction" var="attendanceUrl" />
+                                    <a href='<s:property value="attendanceUrl"/>'>Attendance</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-9">
-                <table class="table table-striped col-md-8">
-                    <thead>
-                        <tr>
-                            <th>Facilitator-ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <s:iterator value="facilBeanList">
+                <div class="col-md-9">
+                    <table class="table table-striped col-md-8">
+                        <thead>
                             <tr>
-                                <td>
-                                    <s:property value="facilID" />
-                                </td>
-                                <td>
-                                    <s:property value="facilFirstName" />
-                                </td>
-                                <td>
-                                    <s:property value="facilLastName" />
-                                </td>
+                                <th>Facilitator-ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
                             </tr>
-                        </s:iterator>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <s:iterator value="facilBeanList">
+                                <tr>
+                                    <td>
+                                        <s:property value="facilID" />
+                                    </td>
+                                    <td>
+                                        <s:property value="facilFirstName" />
+                                    </td>
+                                    <td>
+                                        <s:property value="facilLastName" />
+                                    </td>
+                                </tr>
+                            </s:iterator>
+                        </tbody>
+                    </table>
 
 
-                <s:form id="workshopEditForm" action="functionLoadAction"
-                        theme="bootstrap" method="post" cssClass="form-vertical">
+                    <s:form id="workshopEditForm" action="functionLoadAction"
+                            theme="bootstrap" method="post" cssClass="form-vertical">
 
-                    <h4>Add a facilitator:</h4>
+                        <h4>Add a facilitator:</h4>
 
-                    <s:textfield
-                        label="Facilitator ID:"
-                        name="facilBeanList.facilID"/>
+                        <s:textfield
+                            label="Facilitator ID:"
+                            name="facilBeanList.facilID"/>
 
-                    <s:textfield
-                        label="First Name:"
-                        name="facilBeanList.facilFirstName"/>
+                        <s:textfield
+                            label="First Name:"
+                            name="facilBeanList.facilFirstName"/>
 
-                    <s:textfield
-                        label="Last Name:"
-                        name="facilBeanList.facilLastName"/>
+                        <s:textfield
+                            label="Last Name:"
+                            name="facilBeanList.facilLastName"/>
 
-                </s:form>
+                    </s:form>
 
+                </div>
             </div>
-
         </div>
-
 
 
         <!-- JS -->

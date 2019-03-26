@@ -88,17 +88,6 @@
                 </div>
 
             <div class="col-md-9">
-                <h1>Need to add workshop attendance functionality here</h1>
-                <p>This is where workshop holder and facilitator can check attendance and print out attendance sheet</p>
-                <p>Attendance</p>
-            </div>
-
-            <h1>Need to add workshop attendance functionality here</h1>
-            <p>This is where workshop holder and facilitator can check attendance and print out attendance sheet</p>
-            <p>Attendance</p>
-
-
-            <div class="col-md-9">
                 <table class="table table-striped col-md-8">
                     <thead>
                         <tr>

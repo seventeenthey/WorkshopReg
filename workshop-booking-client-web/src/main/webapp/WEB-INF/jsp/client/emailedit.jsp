@@ -26,7 +26,7 @@
     
     <body>
         <div class="jumbotron text-center banner-row mb-0">
-            <h1>Email Edit</h1>
+            <h1>Message Center</h1>
         </div>
 
         <!-- Navigation Bar - INCLUDED IN EVERY .JSP FILE -->
