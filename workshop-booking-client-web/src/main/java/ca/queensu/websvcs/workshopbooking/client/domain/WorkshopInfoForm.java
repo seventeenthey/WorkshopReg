@@ -19,62 +19,23 @@ public class WorkshopInfoForm implements Serializable{
     private String teaser;
     private Integer maxParticipant;
     private Integer waitlistLimit;
-    private String rgStDate;    //Registration Start Date & Time
-    private String rgStTime;    
-    private String rgEndDate;   //Registration End Date & Time
-    private String rgEndTime;   
+
+    // private Date rgStDate;    //Registration Start Date & Time
+    // private Date rgStTime;    
+    // private Date rgEndDate;   //Registration End Date & Time
+    // private Date rgEndTime;   
+    // private Date eventStDate; //Event Start Date & Time
+    // private Date eventStTime;
+
+    private String rgStDate;    //Registration Start Date & Time - year,month,day
+    private String rgStTime;                                       //hour,minute
+    private String rgEndDate;   //Registration End Date & Time   - year,month,day
+    private String rgEndTime;                                       //hour,minnute
     private String eventStDate; //Event Start Date & Time
     private String eventStTime;
+
     private int workshopNumber;
     private String department;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getEventTitle() {
-        return eventTitle;
-    }
-
-    public void setEventTitle(String eventTitle) {
-        this.eventTitle = eventTitle;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getTeaser() {
-        return teaser;
-    }
-
-    public void setTeaser(String teaser) {
-        this.teaser = teaser;
-    }
-
-    public Integer getMaxParticipant() {
-        return maxParticipant;
-    }
-
-    public void setMaxParticipant(Integer maxParticipant) {
-        this.maxParticipant = maxParticipant;
-    }
-
-    public Integer getWaitlistLimit() {
-        return waitlistLimit;
-    }
-
-    public void setWaitlistLimit(Integer waitlistLimit) {
-        this.waitlistLimit = waitlistLimit;
-    }
 
     public String getRgStDate() {
         return rgStDate;
@@ -124,6 +85,77 @@ public class WorkshopInfoForm implements Serializable{
         this.eventStTime = eventStTime;
     }
 
+    public String startTimeToString(){
+        String output = "";
+        String[] startTime = rgStTime.split(",");
+        
+        int hours = Integer.parseInt(startTime[0]);
+        int minutes = Integer.parseInt(startTime[1]);
+        
+        if(minutes == 0)
+            output += " : 00";
+        else
+            output += " : " + minutes;
+        
+        
+        if (hours > 12){
+            hours -= 12;
+            output = hours + output + " PM";
+        }
+        else
+            output = hours + output + " AM";
+
+        return output;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getEventTitle() {
+        return eventTitle;
+    }
+
+    public void setEventTitle(String eventTitle) {
+        this.eventTitle = eventTitle;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getTeaser() {
+        return teaser;
+    }
+
+    public void setTeaser(String teaser) {
+        this.teaser = teaser;
+    }
+
+    public Integer getMaxParticipant() {
+        return maxParticipant;
+    }
+
+    public void setMaxParticipant(Integer maxParticipant) {
+        this.maxParticipant = maxParticipant;
+    }
+
+    public Integer getWaitlistLimit() {
+        return waitlistLimit;
+    }
+
+    public void setWaitlistLimit(Integer waitlistLimit) {
+        this.waitlistLimit = waitlistLimit;
+    }
+
     public int getWorkshopNumber() {
         return workshopNumber;
     }
@@ -140,4 +172,6 @@ public class WorkshopInfoForm implements Serializable{
         this.department = department;
     }
 
+
+    
 }//end WorkshopInfoBean Class

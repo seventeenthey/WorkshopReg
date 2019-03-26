@@ -5,27 +5,60 @@
  */
 package ca.queensu.websvcs.workshopbooking.client.action;
 
+import ca.queensu.uis.sso.tools.common.SSOConstants;
+import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
+import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
+import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.Preparable;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 
 /**
  *
  * @author dwesl
  */
-public class ListViewAction extends ActionSupport{
+public class ListViewAction extends ActionSupport implements Preparable{
     
     private static final long serialVersionUID = 1L;
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.client.action.ListViewAction.class);
 
+    @EJB(mappedName = "WorkshopBookingSessionBean")
+    private WorkshopBookingSessionBeanLocal ejb;
+    
+    private Person person;
+    private List<WorkshopInfoForm> workshopsRegistered;
+    private List<WorkshopInfoForm> workshopsCreated;
+    
     public ListViewAction() {
         System.out.println("### ListViewLoadAction constructor running");
     }
+    
+    @Override
+    public void prepare() throws Exception{
+        HttpServletRequest request = ServletActionContext.getRequest();
+        HttpSession session = request.getSession();
+        
+        //set person based on NetID
+        String userNetId = (String) session.getAttribute(SSOConstants.NET_ID);
+        //setPerson(ejb.archetypeBusinessMethodGetPerson(userNetId));           //This will only work if they are in the database, otherwise it will error
+        person = new Person();  //TODO - Remove this and fix this ^
+        
+        workshopsRegistered = ejb.findRegisteredWorkshops(person);
+        System.out.println(workshopsRegistered.size());
+        workshopsCreated = ejb.findCreatedWorkshops(person);
+        System.out.println(workshopsRegistered.size());
+    } 
     
     @Override
     public String execute() throws Exception {
@@ -55,5 +88,37 @@ public class ListViewAction extends ActionSupport{
         String msgAppend = " This error occurred at: " + now.toString() + ". Please note the date and time that this error occurred and take a screenshot of this message. Thank you.";
 
         return customMessage + msgAppend;
+    }
+    
+    public Person getPerson(){
+        return person;
+    }
+    
+    public void setPerson(Person person){
+        this.person = person;
+    }
+    
+    public List<WorkshopInfoForm> getWorkshopsRegistered(){
+        return workshopsRegistered;
+    }
+    
+    public void setWorkshopsRegistered(List<WorkshopInfoForm> workshops){
+        workshopsRegistered = workshops;
+    }
+    
+    public List<WorkshopInfoForm> getWorkshopsCreated(){
+        return workshopsCreated;
+    }
+    
+    public void setWorkshopsCreated(List<WorkshopInfoForm> workshops){
+        workshopsCreated = workshops;
+    }
+    
+    public WorkshopBookingSessionBeanLocal getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(WorkshopBookingSessionBeanLocal ejb) {
+        this.ejb = ejb;
     }
 }

@@ -1,32 +1,31 @@
-<%-- 
+<%--
     Document   : facilitators
     Created on : 11-Mar-2019, 8:44:20 PM
     Author     : sylvi
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Facilitator</title>
+        <title>FacilitatorManagement</title>
 
         <!-- Bootstrap core CSS -->
         <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom styles for this template -->
-        <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">       
+        <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">
         <!-- Bursary styles -->
         <!--<link href="<%=request.getContextPath()%>/css/bursaryapp.css" rel="stylesheet">-->
         <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/css?family=Arvo|Playfair+Display|Raleway|Roboto" rel="stylesheet">
     </head>
-    
-    
+
+
     <body>
         <div class="jumbotron text-center banner-row mb-0">
             <h1>Workshop Facilitator</h1>
@@ -57,12 +56,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Logout</a>
                 </li>
-            </ul>              
+            </ul>
         </nav>
 
-                
+        <!--Main Content-->
         <div class="row">
-            
+
             <!--Nav bar for Function, included in every workshop function .jsp file-->
             <div class="col-md-3">
                 <div class="card">
@@ -91,7 +90,7 @@
                     </div>
                 </div>
             </div>
-                            
+
             <div class="col-md-9">
                 <table class="table table-striped col-md-8">
                     <thead>
@@ -117,32 +116,32 @@
                         </s:iterator>
                     </tbody>
                 </table>
-                
-                
-                <s:form id="workshopEditForm" action="functionLoadAction" 
+
+
+                <s:form id="workshopEditForm" action="functionLoadAction"
                         theme="bootstrap" method="post" cssClass="form-vertical">
 
                     <h4>Add a facilitator:</h4>
-                    
-                    <s:textfield 
+
+                    <s:textfield
                         label="Facilitator ID:"
                         name="facilBeanList.facilID"/>
 
-                    <s:textfield 
+                    <s:textfield
                         label="First Name:"
                         name="facilBeanList.facilFirstName"/>
 
-                    <s:textfield 
+                    <s:textfield
                         label="Last Name:"
                         name="facilBeanList.facilLastName"/>
-                    
+
                 </s:form>
-                
+
             </div>
 
         </div>
-                            
-                            
+
+
 
         <!-- JS -->
         <script src="js/tether.min.js"></script>
