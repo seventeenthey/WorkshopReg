@@ -314,17 +314,22 @@ var $currentPopover = null;
                      * 0 - name
                      * 1 - number
                      * 2 - Date
-                     * 3 - Endtime -- not used right now
-                     * 4 - Department
-                     * 5 - clickable link ----- probably don't try and use that here
+                     * 3 - Start Time
+                     * 4 - Endtime -- not used right now
+                     * 5 - Department
+                     * 6 - clickable link ----- probably don't try and use that here
                      */
                     
                     var workshopColumns = workshops[i].children;
                     var workshopTitle = workshopColumns[0].innerText;
                     var workshopNumber = workshopColumns[1].innerText;
-                    var startDate = new Date(workshopColumns[2].innerText);
-                    var endDate = new Date(workshopColumns[3].innerText); 
-                    var department = workshopColumns[4].innerText;
+                    
+                    var startDateInfo = workshopColumns[2].innerText.split(",");
+                    var startTimeInfo = workshopColumns[3].innerText.split(",");
+                    
+                    var startDate = new Date(startDateInfo[0], startDateInfo[1], startDateInfo[2], startTimeInfo[0], startTimeInfo[1]);
+                    var endDate = new Date(); //currently not used
+                    var department = workshopColumns[4].innerText;  //currently not used
                     
                     data.push({title:workshopTitle, start:startDate, end: startDate, text:"some text"});
                 }

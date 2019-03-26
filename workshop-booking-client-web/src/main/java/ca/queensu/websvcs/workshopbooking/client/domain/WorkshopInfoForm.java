@@ -19,10 +19,10 @@ public class WorkshopInfoForm implements Serializable{
     private String teaser;
     private Integer maxParticipant;
     private Integer waitlistLimit;
-    private String rgStDate;    //Registration Start Date & Time
-    private String rgStTime;    
-    private String rgEndDate;   //Registration End Date & Time
-    private String rgEndTime;   
+    private String rgStDate;    //Registration Start Date & Time - year,month,day
+    private String rgStTime;                                       //hour,minute
+    private String rgEndDate;   //Registration End Date & Time   - year,month,day
+    private String rgEndTime;                                       //hour,minnute
     private String eventStDate; //Event Start Date & Time
     private String eventStTime;
     private int workshopNumber;
@@ -30,8 +30,10 @@ public class WorkshopInfoForm implements Serializable{
 
     public String startTimeToString(){
         String output = "";
-        int minutes = rgStDate.getMinutes();
-        int hours = rgStDate.getHours();
+        String[] startTime = rgStTime.split(",");
+        
+        int hours = Integer.parseInt(startTime[0]);
+        int minutes = Integer.parseInt(startTime[1]);
         
         if(minutes == 0)
             output += " : 00";
@@ -45,42 +47,10 @@ public class WorkshopInfoForm implements Serializable{
         }
         else
             output = hours + output + " AM";
-            
+
         return output;
     }
     
-    public Date getRgStDate() {
-        return rgStDate;
-    }
-
-    public void setRgStDate(Date rgStDate) {
-        this.rgStDate = rgStDate;
-    }
-
-    public Date getRgStTime() {
-        return rgStTime;
-    }
-
-    public void setRgStTime(Date rgStTime) {
-        this.rgStTime = rgStTime;
-    }
-
-    public Date getRgEndDate() {
-        return rgEndDate;
-    }
-
-    public void setRgEndDate(Date rgEndDate) {
-        this.rgEndDate = rgEndDate;
-    }
-
-    public Date getRgEndTime() {
-        return rgEndTime;
-    }
-
-    public void setRgEndTime(Date rgEndTime) {
-        this.rgEndTime = rgEndTime;
-    }
-   
     public String getStatus() {
         return status;
     }
