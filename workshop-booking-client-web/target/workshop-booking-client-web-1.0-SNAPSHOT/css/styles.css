@@ -311,9 +311,9 @@ legend {
     padding-left: 30px;
 }
 
-.workshopdatetime{
+.datetimepicker{
     display: box;
-    padding-bottom: 2%;
+    padding-top: 1%;
 }
 
 /*Navbar Css*/

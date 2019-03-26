@@ -276,7 +276,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
             WorkshopInfoForm workshop = generateWorkshopInfo(Integer.parseInt(workshopNum));
             return workshop;
         }
-        catch(NumberFormatException e) {
+        catch(Exception e) {
             throw  new EJBException(e);
         }
     }
