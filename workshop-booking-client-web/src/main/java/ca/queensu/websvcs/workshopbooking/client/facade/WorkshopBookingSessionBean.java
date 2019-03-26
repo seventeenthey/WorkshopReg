@@ -238,7 +238,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         workshop.setRgEndDate(d);
         
         List<String> departments = finddepartmentList();
-        workshop.setDepartment(departments.get(rand.nextInt(departments.size())));
+        workshop.setDepartment(departments.get(rand.nextInt(departments.size()-1)+1));
         
         return workshop;
     }
@@ -276,5 +276,28 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public Catalogue findByWorkshopId(Integer id) {
         Catalogue catalogue = em.createNamedQuery("Catalogue.findByWorkshopId", Catalogue.class).setParameter("workshopId", id).getSingleResult();
         return catalogue;
+    }
+    
+    //TODO - Vincent or Taylor
+    //make this find all workshops that person is attending
+    @Override
+    public List<WorkshopInfoForm> findRegisteredWorkshops(Person person){
+        List<WorkshopInfoForm> output = new ArrayList();
+        
+        for(int i = 0; i < 10; i++)
+            output.add(generateWorkshopInfo(i));
+        
+        return output;
+    }
+    
+    //TODO - Vincent or Taylor
+    //make this find all workshops that person has created
+    @Override public List<WorkshopInfoForm> findCreatedWorkshops(Person person){
+        List<WorkshopInfoForm> output = new ArrayList();
+        
+        for(int i = 0; i < 5; i++)
+            output.add(generateWorkshopInfo(i));
+        
+        return output;
     }
 }

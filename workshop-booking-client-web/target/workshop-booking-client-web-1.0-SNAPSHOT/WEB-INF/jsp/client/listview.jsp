@@ -17,6 +17,10 @@
         <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom styles for this template -->
         <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">       
+        
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
         <!-- Bursary styles -->
         <!--<link href="<%=request.getContextPath()%>/css/bursaryapp.css" rel="stylesheet">-->
         <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
@@ -57,20 +61,79 @@
             </ul>              
         </nav>
 
-        <h1>Need to add workshop list view functionality here.</h1>
-
-        <h3>Login/Logout</h3>
-
-        <div>
-            <s:url action="detailsLoadAction" var="detailsUrl" />
-            <a href='<s:property value="detailsUrl"/>'>Go To Workshop Details Page </a>
+        <div class="container" >
+            <table class="table table-bordered table-striped table-hover" id="registeredWorkshops">
+                <caption style="caption-side:top"><h3>Workshops You Are Registered For</h3></caption>
+                <thead>
+                    <tr>
+                        <th>Workshop Name</th>
+                        <th>Workshop Number</th>
+                        <th>Date</th
+                        <th></th>
+                        <th>Time</th>
+                        <th>End Date</th>
+                        <th>Department</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <s:iterator value="workshopsRegistered">
+                        <tr>
+                            <td><s:property value="eventTitle" /></td>
+                            <td><s:property value="workshopNumber" /></td>
+                            <td><s:property value="rgStDate"/></td>
+                            <td><s:property value="startTimeToString()"/></td>
+                            <td><s:property value="rgEndDate"/></td>
+                            <td><s:property value="department"/></td>
+                            <td>
+                                <s:url action="detailsLoadActionREAL" var="detailsUrl">
+                                    <s:param name="workshopNumber" value="workshopNumber" />
+                                </s:url>
+                                <a href='<s:property value="detailsUrl"/>'>Workshop Details</a>
+                            </td>
+                        </tr>
+                    </s:iterator>
+                </tbody>
+            </table>
+            
+            <div id="noRegWorkshopsMsg" style="display:none">You are not currently registered for any workshops.</div>
+            
+            <table class="table table-bordered table-striped table-hover" id="createdWorkshops">
+                <caption style="caption-side:top"><h3>Your Workshops</h3></caption>
+                <thead>
+                    <tr>
+                        <th>Workshop Name</th>
+                        <th>Workshop Number</th>
+                        <th>Date</th
+                        <th></th>
+                        <th>Time</th>
+                        <th>End Date</th>
+                        <th>Department</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <s:iterator value="workshopsCreated">
+                        <tr>
+                            <td><s:property value="eventTitle" /></td>
+                            <td><s:property value="workshopNumber" /></td>
+                            <td><s:property value="rgStDate"/></td>
+                            <td><s:property value="startTimeToString()"/></td>
+                            <td><s:property value="rgEndDate"/></td>
+                            <td><s:property value="department"/></td>
+                            <td>
+                                <s:url action="detailsLoadActionREAL" var="detailsUrl">
+                                    <s:param name="workshopNumber" value="workshopNumber" />
+                                </s:url>
+                                <a href='<s:property value="detailsUrl"/>'>Workshop Details</a>
+                            </td>
+                        </tr>
+                    </s:iterator>
+                </tbody>
+            </table>
+            
+            <div id="noCreatedWorkshopsMsg" style="display:none">You are not currently running any workshops.</div>
         </div>
-
-        <div>
-            <s:url action="dashboardAction" var="dashboardUrl" />
-            <a href='<s:property value="dashboardUrl"/>'>Go Back </a>
-        </div>
-
 
 
         <!-- JS -->
@@ -78,6 +141,7 @@
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/searchBar.js"></script>
+         <script src="js/listViewTableManager.js"></script>
         <!-- End JS -->
     </body>
 </html>

@@ -28,6 +28,27 @@ public class WorkshopInfoForm implements Serializable{
     private int workshopNumber;
     private String department;
 
+    public String startTimeToString(){
+        String output = "";
+        int minutes = rgStDate.getMinutes();
+        int hours = rgStDate.getHours();
+        
+        if(minutes == 0)
+            output += " : 00";
+        else
+            output += " : " + minutes;
+        
+        
+        if (hours > 12){
+            hours -= 12;
+            output = hours + output + " PM";
+        }
+        else
+            output = hours + output + " AM";
+            
+        return output;
+    }
+    
     public Date getRgStDate() {
         return rgStDate;
     }

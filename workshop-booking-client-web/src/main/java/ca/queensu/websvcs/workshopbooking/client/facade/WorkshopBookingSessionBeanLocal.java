@@ -44,4 +44,8 @@ public interface WorkshopBookingSessionBeanLocal {
     public Person getPersonByNetId(String netId);
     public void savePerson(Person p);
     public Catalogue findByWorkshopId(Integer id);
+    
+    //for listview.jsp
+    public List<WorkshopInfoForm> findRegisteredWorkshops(Person person);
+    public List<WorkshopInfoForm> findCreatedWorkshops(Person person);
 }
