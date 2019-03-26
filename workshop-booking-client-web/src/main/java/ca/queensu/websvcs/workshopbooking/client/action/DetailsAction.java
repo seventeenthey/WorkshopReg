@@ -17,6 +17,7 @@ import java.util.Date;
 import javax.ejb.EJB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 
 /**
  *
@@ -32,46 +33,27 @@ public class DetailsAction extends ActionSupport implements Preparable {
 
     private String workshopNumber;
     private WorkshopInfoForm workshop;
-    
+
     public DetailsAction() {
         System.out.println("### DetailsAction constructor running");
     }
-    
-    @Override 
+
+    @Override
     public void prepare() throws Exception {
         System.out.println("### DetailsAction Prepare running");
         System.out.println("wkrshop # : " + workshopNumber);
         //workshop = ejb.findWorkshopByNum(workshopNumber);
     }
-     
+
     @Override
     public String execute() throws Exception {
         try {
             System.out.println("### DetailsAction execute running");
-            
-            System.out.println("### DetailsAction load running");
+
             System.out.println(workshopNumber);
             workshop = ejb.findWorkshopByNum(workshopNumber);
             System.out.println(workshop.getEventTitle());
-        } 
-        catch (Exception e) {
-            StringWriter out = new StringWriter();
-            e.printStackTrace(new PrintWriter(out));
-            addActionError(createErrorMessage("Exception occurred while granting access to the application. Please contact the Archetype Client for assistance."));
-            log.error("***************Exception occurred in execute method " + e.getMessage());
-            log.error(out);
-            return ERROR;
         }
-        return SUCCESS;
-    }
-    
-    public String load() throws Exception{
-        try {
-            System.out.println("### DetailsAction load running");
-            System.out.println(workshopNumber);
-            workshop = ejb.findWorkshopByNum(workshopNumber);
-            System.out.println(workshop.getEventTitle());
-        } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
             e.printStackTrace(new PrintWriter(out));
@@ -82,10 +64,11 @@ public class DetailsAction extends ActionSupport implements Preparable {
         }
         return SUCCESS;
     }
-    
+
+
     /**
-     * Creates a custom error message to be used as an action error 
-     * 
+     * Creates a custom error message to be used as an action error
+     *
      * @param customMessage message to be used as the action error text
      * @return the created error message
      */
@@ -96,7 +79,7 @@ public class DetailsAction extends ActionSupport implements Preparable {
 
         return customMessage + msgAppend;
     }
-    
+
     public WorkshopBookingSessionBeanLocal getEjb() {
         return ejb;
     }
@@ -104,19 +87,19 @@ public class DetailsAction extends ActionSupport implements Preparable {
     public void setEjb(WorkshopBookingSessionBeanLocal ejb) {
         this.ejb = ejb;
     }
-    
+
     public WorkshopInfoForm getWorkshop(){
         return workshop;
     }
-    
+
     public void setWorkshop(WorkshopInfoForm workshop){
         this.workshop = workshop;
     }
-    
+
     public String getWorkshopNumber(){
         return workshopNumber;
     }
-    
+
     public void setWorkshopNumber(String workshopNumber){
         this.workshopNumber = workshopNumber;
     }
