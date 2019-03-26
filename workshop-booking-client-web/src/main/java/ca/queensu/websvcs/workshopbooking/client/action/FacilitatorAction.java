@@ -5,6 +5,8 @@
  */
 package ca.queensu.websvcs.workshopbooking.client.action;
 
+import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
+import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
@@ -12,6 +14,8 @@ import com.opensymphony.xwork2.Preparable;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
+import java.util.List;
+import javax.ejb.EJB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.validation.SkipValidation;
@@ -25,6 +29,12 @@ public class FacilitatorAction extends ActionSupport{
     private static final long serialVersionUID = 1L;
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.client.action.FacilitatorAction.class);
 
+    @EJB(mappedName = "WorkshopBookingSessionBean")
+    private WorkshopBookingSessionBeanLocal ejb;
+    
+    List<facilitatorDataBean> facilBeanList;
+    
+    
     public FacilitatorAction() {
         System.out.println("### FacilitatorAction constructor running");
     }
@@ -64,6 +74,7 @@ public class FacilitatorAction extends ActionSupport{
     @Override
     public String execute() throws Exception {
         try {
+            facilBeanList = ejb.findFacilitatorList();
             System.out.println("### AttendanceAction execute running");
         } 
         catch (Exception e) {
@@ -90,5 +101,15 @@ public class FacilitatorAction extends ActionSupport{
 
         return customMessage + msgAppend;
     }
+    
+    
+    public List<facilitatorDataBean> getFacilBeanList() {
+        return facilBeanList;
+    }
+
+    public void setFacilBeanList(List<facilitatorDataBean> facilBeanList) {
+        this.facilBeanList = facilBeanList;
+    }
+    
 }
 

@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : attendance
     Created on : 1-Mar-2019, 7:59:02 PM
     Author     : dwesl
@@ -16,7 +16,7 @@
         <!-- Bootstrap core CSS -->
         <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom styles for this template -->
-        <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">       
+        <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">
         <!-- Bursary styles -->
         <!--<link href="<%=request.getContextPath()%>/css/bursaryapp.css" rel="stylesheet">-->
         <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
@@ -53,7 +53,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Logout</a>
                 </li>
-            </ul>              
+            </ul>
         </nav>
 
         <div class="function">
@@ -73,7 +73,7 @@
                                 <li class="nav-item">
                                     <s:url action="facilitatorLoadAction" var="facilitatorUrl" />
                                     <a href='<s:property value="facilitatorUrl"/>'>Facilitators</a>
-                                </li>    
+                                </li>
                                 <li class="nav-item">
                                     <s:url action="emaileditLoadAction" var="emaileditUrl" />
                                     <a href='<s:property value="emaileditUrl"/>'>Message Center</a>
@@ -86,14 +86,50 @@
                         </div>
                     </div>
                 </div>
-                                
+
             <div class="col-md-9">
                 <h1>Need to add workshop attendance functionality here</h1>
                 <p>This is where workshop holder and facilitator can check attendance and print out attendance sheet</p>
                 <p>Attendance</p>
             </div>
 
+            <h1>Need to add workshop attendance functionality here</h1>
+            <p>This is where workshop holder and facilitator can check attendance and print out attendance sheet</p>
+            <p>Attendance</p>
+
+
+            <div class="col-md-9">
+                <table class="table table-striped col-md-8">
+                    <thead>
+                        <tr>
+                            <th>Student-ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Attendance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <s:iterator value="studentBeanList">
+                            <tr>
+                                <td>
+                                    <s:property value="studentID" />
+                                </td>
+                                <td>
+                                    <s:property value="studentFirstName" />
+                                </td>
+                                <td>
+                                    <s:property value="studentLastName" />
+                                </td>
+
+                                <td><s:checkbox
+                                    name="studentBeanList.attendance"/></td>
+                            </tr>
+                        </s:iterator>
+                    </tbody>
+                </table>
+
             </div>
+
         </div>
 
         <!-- JS -->

@@ -5,12 +5,17 @@
  */
 package ca.queensu.websvcs.workshopbooking.client.action;
 
+import ca.queensu.websvcs.workshopbooking.client.domain.StudentDataBean;
+import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
+import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
+import java.util.List;
+import javax.ejb.EJB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,6 +28,14 @@ public class AttendanceAction extends ActionSupport {
     private static final long serialVersionUID = 1L;
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.client.action.AttendanceAction.class);
 
+    
+    @EJB(mappedName = "WorkshopBookingSessionBean")
+    private WorkshopBookingSessionBeanLocal ejb;
+    
+    List<StudentDataBean> studentBeanList;
+
+    
+    
     public AttendanceAction() {
         System.out.println("### AttendanceAction constructor running");
     }
@@ -30,6 +43,7 @@ public class AttendanceAction extends ActionSupport {
     @Override
     public String execute() throws Exception {
         try {
+            studentBeanList = ejb.findStudentList();
             System.out.println("### AttendanceAction execute running");
         } 
         catch (Exception e) {
@@ -56,4 +70,22 @@ public class AttendanceAction extends ActionSupport {
 
         return customMessage + msgAppend;
     }
+    
+    
+    public WorkshopBookingSessionBeanLocal getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(WorkshopBookingSessionBeanLocal ejb) {
+        this.ejb = ejb;
+    }
+
+    public List<StudentDataBean> getStudentBeanList() {
+        return studentBeanList;
+    }
+
+    public void setStudentBeanList(List<StudentDataBean> studentBeanList) {
+        this.studentBeanList = studentBeanList;
+    }
+    
 }

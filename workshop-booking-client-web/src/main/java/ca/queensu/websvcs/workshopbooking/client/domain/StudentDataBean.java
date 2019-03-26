@@ -6,74 +6,49 @@
 package ca.queensu.websvcs.workshopbooking.client.domain;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  *
  * @author dan
  */
 public class StudentDataBean implements Serializable{
-    private String studentPk;
-    private String firstName;
-    private String lastName;
-    private String age;
-    private String hairColour;
-    private String country;
-    private boolean organDonor;
+    private String studentID;
+    private String studentFirstName;
+    private String studentLastName;
+    private Boolean attendance;
 
-    public String getStudentPk() {
-        return studentPk;
+    public Boolean getAttendance() {
+        return attendance;
     }
 
-    public void setStudentPk(String studentPk) {
-        this.studentPk = studentPk;
+    public void setAttendance(Boolean attendance) {
+        this.attendance = attendance;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getStudentID() {
+        return studentID;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getStudentFirstName() {
+        return studentFirstName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setStudentFirstName(String studentFirstName) {
+        this.studentFirstName = studentFirstName;
     }
 
-    public String getAge() {
-        return age;
+    public String getStudentLastName() {
+        return studentLastName;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setStudentLastName(String studentLastName) {
+        this.studentLastName = studentLastName;
     }
 
-    public String getHairColour() {
-        return hairColour;
-    }
 
-    public void setHairColour(String hairColour) {
-        this.hairColour = hairColour;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public boolean isOrganDonor() {
-        return organDonor;
-    }
-
-    public void setOrganDonor(boolean organDonor) {
-        this.organDonor = organDonor;
-    }
+   
 }
