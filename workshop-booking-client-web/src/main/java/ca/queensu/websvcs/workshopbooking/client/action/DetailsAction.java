@@ -15,6 +15,7 @@ import java.io.StringWriter;
 import java.util.Date;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 
 /**
  *
@@ -29,9 +30,26 @@ public class DetailsAction extends ActionSupport {
 
     private String workshopNumber;
     private WorkshopInfoForm workshop;
-    
+
     public DetailsAction() {
         System.out.println("### DetailsAction constructor running");
+    }
+    
+    @SkipValidation
+    public String load() throws Exception{
+        try {
+            System.out.println("### DetailsAction load running");
+            workshop = ejb.findWorkshopByNum(workshopNumber);
+        } 
+        catch (Exception e) {
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
+            addActionError(createErrorMessage("Exception occurred while loading student edit screen."));
+            log.error("***************Exception occurred in load method " + e.getMessage());
+            log.error(out);
+            return ERROR;
+        }
+        return SUCCESS;
     }
     
     @Override
@@ -50,21 +68,6 @@ public class DetailsAction extends ActionSupport {
         return SUCCESS;
     }
     
-    public String load() throws Exception{
-        try {
-            System.out.println("### DetailsAction load running");
-            workshop = ejb.findWorkshopByNum(workshopNumber);
-        } 
-        catch (Exception e) {
-            StringWriter out = new StringWriter();
-            e.printStackTrace(new PrintWriter(out));
-            addActionError(createErrorMessage("Exception occurred while loading student edit screen."));
-            log.error("***************Exception occurred in load method " + e.getMessage());
-            log.error(out);
-            return ERROR;
-        }
-        return SUCCESS;
-    }
     
     /**
      * Creates a custom error message to be used as an action error 
@@ -79,4 +82,31 @@ public class DetailsAction extends ActionSupport {
 
         return customMessage + msgAppend;
     }
+    
+    
+    public WorkshopBookingSessionBeanLocal getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(WorkshopBookingSessionBeanLocal ejb) {
+        this.ejb = ejb;
+    }
+
+    public String getWorkshopNumber() {
+        return workshopNumber;
+    }
+
+    public void setWorkshopNumber(String workshopNumber) {
+        this.workshopNumber = workshopNumber;
+    }
+
+    public WorkshopInfoForm getWorkshop() {
+        return workshop;
+    }
+
+    public void setWorkshop(WorkshopInfoForm workshop) {
+        this.workshop = workshop;
+    }
+    
+    
 }
