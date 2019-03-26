@@ -24,7 +24,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
  *
  * @author sylvi
  */
-public class FacilitatorAction extends ActionSupport{
+public class FacilitatorAction extends ActionSupport implements Preparable{
 
     private static final long serialVersionUID = 1L;
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.client.action.FacilitatorAction.class);
@@ -39,42 +39,42 @@ public class FacilitatorAction extends ActionSupport{
         System.out.println("### FacilitatorAction constructor running");
     }
     
-//    @Override
-//    public void prepare() throws Exception {
-//        try {
-//            System.out.println("### FacilitatorAction prepare running");
-//        } 
-//        catch (Exception e) {
-//            StringWriter out = new StringWriter();
-//            e.printStackTrace(new PrintWriter(out));
-//            addActionError(createErrorMessage("Exception occurred while preparing data for edit screen."));
-//            log.error("***************Exception occurred in prepare method " + e.getMessage());
-//            log.error(out);
-//        }
-//    }
-//
-//    
-//    @SkipValidation
-//    public String load() throws Exception{
-//        try {
-//            System.out.println("### FacilitatorAction load running");
-//        } 
-//        catch (Exception e) {
-//            StringWriter out = new StringWriter();
-//            e.printStackTrace(new PrintWriter(out));
-//            addActionError(createErrorMessage("Exception occurred while loading student edit screen."));
-//            log.error("***************Exception occurred in load method " + e.getMessage());
-//            log.error(out);
-//            return ERROR;
-//        }
-//        
-//        return SUCCESS;
-//    }
+    @Override
+    public void prepare() throws Exception {
+        try {
+            System.out.println("### FacilitatorAction prepare running");
+            facilBeanList = ejb.findFacilitatorList();
+        } 
+        catch (Exception e) {
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
+            addActionError(createErrorMessage("Exception occurred while preparing data for edit screen."));
+            log.error("***************Exception occurred in prepare method " + e.getMessage());
+            log.error(out);
+        }
+    }
+
+    
+    @SkipValidation
+    public String load() throws Exception{
+        try {
+            System.out.println("### FacilitatorAction load running");
+        } 
+        catch (Exception e) {
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
+            addActionError(createErrorMessage("Exception occurred while loading student edit screen."));
+            log.error("***************Exception occurred in load method " + e.getMessage());
+            log.error(out);
+            return ERROR;
+        }
+        
+        return SUCCESS;
+    }
     
     @Override
     public String execute() throws Exception {
         try {
-            facilBeanList = ejb.findFacilitatorList();
             System.out.println("### AttendanceAction execute running");
         } 
         catch (Exception e) {

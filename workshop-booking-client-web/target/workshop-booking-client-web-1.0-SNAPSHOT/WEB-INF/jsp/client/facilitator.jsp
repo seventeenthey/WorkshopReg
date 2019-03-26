@@ -93,7 +93,7 @@
                 </div>
 
                 <div class="col-md-9">
-                    <table class="table table-striped col-md-8">
+                    <table class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>Facilitator-ID</th>
@@ -118,23 +118,30 @@
                         </tbody>
                     </table>
 
-
-                    <s:form id="workshopEditForm" action="functionLoadAction"
+                    
+                    <s:form id="facilitatorEditForm" action="facilitatorExeAction"
                             theme="bootstrap" method="post" cssClass="form-vertical">
 
-                        <h4>Add a facilitator:</h4>
+                        <h2>Add a facilitator:</h2>
 
                         <s:textfield
                             label="Facilitator ID:"
-                            name="facilBeanList.facilID"/>
+                            name="facilBeanList.facilID"
+                            elementCssClass="col-sm-3"/>
 
                         <s:textfield
                             label="First Name:"
-                            name="facilBeanList.facilFirstName"/>
+                            name="facilBeanList.facilFirstName"
+                            elementCssClass="col-sm-3"/>
 
                         <s:textfield
                             label="Last Name:"
-                            name="facilBeanList.facilLastName"/>
+                            name="facilBeanList.facilLastName"
+                            elementCssClass="col-sm-3"/>
+                        
+                        <s:submit 
+                            value="Add"
+                            cssClass="btn btn-primary"/>
 
                     </s:form>
 

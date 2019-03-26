@@ -304,16 +304,21 @@ legend {
     padding-left: 5%;
     padding-right: 5%;
     padding-bottom: 5%;
-    font-size:20px;
 }
 
 .card-body .nav-item{
-    padding-left: 30px;
+    padding-left: 5%;
+    padding-bottom: 1%;
+    font-size:17px;
 }
 
 .workshopdatetime{
     display: box;
     padding-bottom: 2%;
+}
+
+.function #facilitatorEditForm{
+    padding-top:2%; 
 }
 
 /*Navbar Css*/
