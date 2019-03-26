@@ -5,16 +5,15 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Facilitator</title>
+        <title>FacilitatorManagement</title>
 
         <!-- Bootstrap core CSS -->
         <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
@@ -60,7 +59,7 @@
             </ul>              
         </nav>
 
-                
+        <!--Main Content-->
         <div class="row">
             
             <!--Nav bar for Function, included in every workshop function .jsp file-->
@@ -94,7 +93,15 @@
 
 
             <div class="col-md-3">
-                
+                <s:form id="workshopEditForm" action="facilitatorLoadAction"
+                        theme="bootstrap" method="post" cssClass="form-vertical">
+                    
+                    <s:textfield 
+                    label="Facilitator Id:"
+                    name="workshopForm.eventTitle"
+                    tooltip="Enter Workshop Title Here"/>
+                    
+                </s:form>
             </div>
 
         </div>

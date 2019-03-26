@@ -19,12 +19,12 @@ public class WorkshopInfoForm implements Serializable{
     private String teaser;
     private Integer maxParticipant;
     private Integer waitlistLimit;
-    private String rgStDate;    //Registration Start Date & Time
-    private String rgStTime;    
-    private String rgEndDate;   //Registration End Date & Time
-    private String rgEndTime;   
-    private String eventStDate; //Event Start Date & Time
-    private String eventStTime;
+    private Date rgStDate;    //Registration Start Date & Time
+    private Date rgStTime;    
+    private Date rgEndDate;   //Registration End Date & Time
+    private Date rgEndTime;   
+    private Date eventStDate; //Event Start Date & Time
+    private Date eventStTime;
     private int workshopNumber;
     private String department;
 
@@ -76,51 +76,51 @@ public class WorkshopInfoForm implements Serializable{
         this.waitlistLimit = waitlistLimit;
     }
 
-    public String getRgStDate() {
+    public Date getRgStDate() {
         return rgStDate;
     }
 
-    public void setRgStDate(String rgStDate) {
+    public void setRgStDate(Date rgStDate) {
         this.rgStDate = rgStDate;
     }
 
-    public String getRgStTime() {
+    public Date getRgStTime() {
         return rgStTime;
     }
 
-    public void setRgStTime(String rgStTime) {
+    public void setRgStTime(Date rgStTime) {
         this.rgStTime = rgStTime;
     }
 
-    public String getRgEndDate() {
+    public Date getRgEndDate() {
         return rgEndDate;
     }
 
-    public void setRgEndDate(String rgEndDate) {
+    public void setRgEndDate(Date rgEndDate) {
         this.rgEndDate = rgEndDate;
     }
 
-    public String getRgEndTime() {
+    public Date getRgEndTime() {
         return rgEndTime;
     }
 
-    public void setRgEndTime(String rgEndTime) {
+    public void setRgEndTime(Date rgEndTime) {
         this.rgEndTime = rgEndTime;
     }
 
-    public String getEventStDate() {
+    public Date getEventStDate() {
         return eventStDate;
     }
 
-    public void setEventStDate(String eventStDate) {
+    public void setEventStDate(Date eventStDate) {
         this.eventStDate = eventStDate;
     }
 
-    public String getEventStTime() {
+    public Date getEventStTime() {
         return eventStTime;
     }
 
-    public void setEventStTime(String eventStTime) {
+    public void setEventStTime(Date eventStTime) {
         this.eventStTime = eventStTime;
     }
 
@@ -140,4 +140,6 @@ public class WorkshopInfoForm implements Serializable{
         this.department = department;
     }
 
+
+    
 }//end WorkshopInfoBean Class

@@ -56,40 +56,44 @@
             </ul>              
         </nav>
 
-        <div class="row">
-            <!--Nav bar for Function, included in every workshop function .jsp file-->
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header">
-                        Workshop Edit
-                    </div>
-                    <div class="card-body">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <s:url action="functionLoadAction" var="functionUrl" />
-                                <a href='<s:property value="functionUrl"/>'>Event Setup</a>
-                            </li>
-                            <li class="nav-item">
-                                <s:url action="facilitatorLoadAction" var="facilitatorUrl" />
-                                <a href='<s:property value="facilitatorUrl"/>'>Facilitators</a>
-                            </li>    
-                            <li class="nav-item">
-                                <s:url action="emaileditLoadAction" var="emaileditUrl" />
-                                <a href='<s:property value="emaileditUrl"/>'>Message Center</a>
-                            </li>
-                            <li class="nav-item">
-                                <s:url action="attendanceLoadAction" var="attendanceUrl" />
-                                <a href='<s:property value="attendanceUrl"/>'>Attendance</a>
-                            </li>
-                        </ul>
+        <div class="function">
+            <div class="row">
+                <!--Nav bar for Function, included in every workshop function .jsp file-->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            Workshop Edit
+                        </div>
+                        <div class="card-body">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <s:url action="functionLoadAction" var="functionUrl" />
+                                    <a href='<s:property value="functionUrl"/>'>Event Setup</a>
+                                </li>
+                                <li class="nav-item">
+                                    <s:url action="facilitatorLoadAction" var="facilitatorUrl" />
+                                    <a href='<s:property value="facilitatorUrl"/>'>Facilitators</a>
+                                </li>    
+                                <li class="nav-item">
+                                    <s:url action="emaileditLoadAction" var="emaileditUrl" />
+                                    <a href='<s:property value="emaileditUrl"/>'>Message Center</a>
+                                </li>
+                                <li class="nav-item">
+                                    <s:url action="attendanceLoadAction" var="attendanceUrl" />
+                                    <a href='<s:property value="attendanceUrl"/>'>Attendance</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+                                
+            <div class="col-md-9">
+                <h1>Need to add workshop attendance functionality here</h1>
+                <p>This is where workshop holder and facilitator can check attendance and print out attendance sheet</p>
+                <p>Attendance</p>
             </div>
 
-            <h1>Need to add workshop attendance functionality here</h1>
-            <p>This is where workshop holder and facilitator can check attendance and print out attendance sheet</p>
-            <p>Attendance</p>
-
+            </div>
         </div>
 
         <!-- JS -->
