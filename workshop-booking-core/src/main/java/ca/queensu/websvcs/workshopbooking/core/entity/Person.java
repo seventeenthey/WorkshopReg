@@ -8,10 +8,12 @@ package ca.queensu.websvcs.workshopbooking.core.entity;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -46,8 +48,12 @@ public class Person implements Serializable {
     private String commonName;
     @Column(name = "email")
     private String email;
-    @OneToMany(mappedBy = "netId")
-    private Collection<Registrations> registrationsCollection;
+    @ManyToMany(mappedBy = "personCollection")
+    private Collection<Catalogue> catalogueCollection;
+    @ManyToMany(mappedBy = "personCollection1")
+    private Collection<Catalogue> catalogueCollection1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+    private Collection<Reviews> reviewsCollection;
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     @ManyToOne
     private Departments departmentId;
@@ -55,7 +61,7 @@ public class Person implements Serializable {
     @ManyToOne
     private Roles roleId;
     @OneToMany(mappedBy = "workshopHostId")
-    private Collection<Catalogue> catalogueCollection;
+    private Collection<Catalogue> catalogueCollection2;
 
     public Person() {
     }
@@ -97,12 +103,30 @@ public class Person implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Registrations> getRegistrationsCollection() {
-        return registrationsCollection;
+    public Collection<Catalogue> getCatalogueCollection() {
+        return catalogueCollection;
     }
 
-    public void setRegistrationsCollection(Collection<Registrations> registrationsCollection) {
-        this.registrationsCollection = registrationsCollection;
+    public void setCatalogueCollection(Collection<Catalogue> catalogueCollection) {
+        this.catalogueCollection = catalogueCollection;
+    }
+
+    @XmlTransient
+    public Collection<Catalogue> getCatalogueCollection1() {
+        return catalogueCollection1;
+    }
+
+    public void setCatalogueCollection1(Collection<Catalogue> catalogueCollection1) {
+        this.catalogueCollection1 = catalogueCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Reviews> getReviewsCollection() {
+        return reviewsCollection;
+    }
+
+    public void setReviewsCollection(Collection<Reviews> reviewsCollection) {
+        this.reviewsCollection = reviewsCollection;
     }
 
     public Departments getDepartmentId() {
@@ -122,12 +146,12 @@ public class Person implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Catalogue> getCatalogueCollection() {
-        return catalogueCollection;
+    public Collection<Catalogue> getCatalogueCollection2() {
+        return catalogueCollection2;
     }
 
-    public void setCatalogueCollection(Collection<Catalogue> catalogueCollection) {
-        this.catalogueCollection = catalogueCollection;
+    public void setCatalogueCollection2(Collection<Catalogue> catalogueCollection2) {
+        this.catalogueCollection2 = catalogueCollection2;
     }
 
     @Override

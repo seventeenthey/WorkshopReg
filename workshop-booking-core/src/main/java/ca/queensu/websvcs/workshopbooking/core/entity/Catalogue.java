@@ -6,21 +6,27 @@
 package ca.queensu.websvcs.workshopbooking.core.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,12 +41,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Catalogue.findByTitle", query = "SELECT c FROM Catalogue c WHERE c.title = :title")
     , @NamedQuery(name = "Catalogue.findByDetails", query = "SELECT c FROM Catalogue c WHERE c.details = :details")
     , @NamedQuery(name = "Catalogue.findByLocation", query = "SELECT c FROM Catalogue c WHERE c.location = :location")
+    , @NamedQuery(name = "Catalogue.findByMaxParticipants", query = "SELECT c FROM Catalogue c WHERE c.maxParticipants = :maxParticipants")
+    , @NamedQuery(name = "Catalogue.findByCurrentParticipants", query = "SELECT c FROM Catalogue c WHERE c.currentParticipants = :currentParticipants")
     , @NamedQuery(name = "Catalogue.findByStartTime", query = "SELECT c FROM Catalogue c WHERE c.startTime = :startTime")
     , @NamedQuery(name = "Catalogue.findByEndTime", query = "SELECT c FROM Catalogue c WHERE c.endTime = :endTime")})
 public class Catalogue implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "workshop_id")
     private Integer workshopId;
@@ -50,14 +59,28 @@ public class Catalogue implements Serializable {
     private String details;
     @Column(name = "location")
     private String location;
+    @Column(name = "max_participants")
+    private Integer maxParticipants;
+    @Column(name = "current_participants")
+    private Integer currentParticipants;
     @Column(name = "start_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
     @Column(name = "end_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "catalogue")
-    private Registrations registrations;
+    @JoinTable(name = "registrations", joinColumns = {
+        @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "net_id", referencedColumnName = "net_id")})
+    @ManyToMany
+    private Collection<Person> personCollection;
+    @JoinTable(name = "waitlist", joinColumns = {
+        @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "net_id", referencedColumnName = "net_id")})
+    @ManyToMany
+    private Collection<Person> personCollection1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogue")
+    private Collection<Reviews> reviewsCollection;
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     @ManyToOne
     private Departments departmentId;
@@ -104,6 +127,22 @@ public class Catalogue implements Serializable {
         this.location = location;
     }
 
+    public Integer getMaxParticipants() {
+        return maxParticipants;
+    }
+
+    public void setMaxParticipants(Integer maxParticipants) {
+        this.maxParticipants = maxParticipants;
+    }
+
+    public Integer getCurrentParticipants() {
+        return currentParticipants;
+    }
+
+    public void setCurrentParticipants(Integer currentParticipants) {
+        this.currentParticipants = currentParticipants;
+    }
+
     public Date getStartTime() {
         return startTime;
     }
@@ -120,12 +159,31 @@ public class Catalogue implements Serializable {
         this.endTime = endTime;
     }
 
-    public Registrations getRegistrations() {
-        return registrations;
+    @XmlTransient
+    public Collection<Person> getPersonCollection() {
+        return personCollection;
     }
 
-    public void setRegistrations(Registrations registrations) {
-        this.registrations = registrations;
+    public void setPersonCollection(Collection<Person> personCollection) {
+        this.personCollection = personCollection;
+    }
+
+    @XmlTransient
+    public Collection<Person> getPersonCollection1() {
+        return personCollection1;
+    }
+
+    public void setPersonCollection1(Collection<Person> personCollection1) {
+        this.personCollection1 = personCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Reviews> getReviewsCollection() {
+        return reviewsCollection;
+    }
+
+    public void setReviewsCollection(Collection<Reviews> reviewsCollection) {
+        this.reviewsCollection = reviewsCollection;
     }
 
     public Departments getDepartmentId() {
