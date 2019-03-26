@@ -24,6 +24,7 @@
         <link href="https://fonts.googleapis.com/css?family=Arvo|Playfair+Display|Raleway|Roboto" rel="stylesheet">
 
     </head>
+    
     <body>
         <div class="jumbotron text-center banner-row mb-0">
             <h1>Email Edit</h1>
@@ -119,11 +120,13 @@
                     <h2>Internal Notification Options</h2>
                     <s:checkboxlist 
                         label="Notify:" 
+                        labelposition="inline"
                         name="EmailInfoForm.notifyGroup"
                         list="{'Event Host','Assigned Facilitators'}"/>
 
                     <s:checkboxlist 
                         label="Receive Notifications For:" 
+                        labelposition="inline"
                         name="EmailInfoForm.notifyCondition"
                         list="{'Confirmation','Wait List','Cancellation','Event Full'}"/>                
 

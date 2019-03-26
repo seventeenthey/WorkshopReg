@@ -7,6 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="s" uri="/struts-tags" %>
+
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,9 +24,9 @@
         <!--<link href="<%=request.getContextPath()%>/css/bursaryapp.css" rel="stylesheet">-->
         <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/css?family=Arvo|Playfair+Display|Raleway|Roboto" rel="stylesheet">
-
-
     </head>
+    
+    
     <body>
         <div class="jumbotron text-center banner-row mb-0">
             <h1>Workshop Facilitator</h1>
@@ -57,7 +60,9 @@
             </ul>              
         </nav>
 
+                
         <div class="row">
+            
             <!--Nav bar for Function, included in every workshop function .jsp file-->
             <div class="col-md-3">
                 <div class="card">
@@ -88,7 +93,9 @@
             </div>
 
 
-            <h1>Need to add workshop facilitator functionality here</h1>
+            <div class="col-md-3">
+                
+            </div>
 
         </div>
 
