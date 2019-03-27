@@ -8,6 +8,7 @@ package ca.queensu.websvcs.workshopbooking.core.entity;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,6 +46,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Catalogue.findByCurrentParticipants", query = "SELECT c FROM Catalogue c WHERE c.currentParticipants = :currentParticipants")
     , @NamedQuery(name = "Catalogue.findByStartTime", query = "SELECT c FROM Catalogue c WHERE c.startTime = :startTime")
     , @NamedQuery(name = "Catalogue.findByEndTime", query = "SELECT c FROM Catalogue c WHERE c.endTime = :endTime")})
+
+
 public class Catalogue implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,11 +72,6 @@ public class Catalogue implements Serializable {
     @Column(name = "end_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
-    @JoinTable(name = "registrations", joinColumns = {
-        @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id")}, inverseJoinColumns = {
-        @JoinColumn(name = "net_id", referencedColumnName = "net_id")})
-    @ManyToMany
-    private Collection<Person> personCollection;
     @JoinTable(name = "waitlist", joinColumns = {
         @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id")}, inverseJoinColumns = {
         @JoinColumn(name = "net_id", referencedColumnName = "net_id")})
@@ -87,7 +85,13 @@ public class Catalogue implements Serializable {
     @JoinColumn(name = "workshop_host_id", referencedColumnName = "net_id")
     @ManyToOne
     private Person workshopHostId;
-
+    
+    @ManyToMany
+    @JoinTable(name = "REGISTRATIONS", joinColumns = {
+        @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "net_id", referencedColumnName = "net_id")})
+    private List<Person> myRegistrants;
+    
     public Catalogue() {
     }
 
@@ -160,12 +164,12 @@ public class Catalogue implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Person> getPersonCollection() {
-        return personCollection;
+    public List<Person> getMyRegistrants() {
+        return myRegistrants;
     }
 
-    public void setPersonCollection(Collection<Person> personCollection) {
-        this.personCollection = personCollection;
+    public void setMyRegistrants(List<Person> registrants) {
+        this.myRegistrants = registrants;
     }
 
     @XmlTransient
@@ -200,6 +204,11 @@ public class Catalogue implements Serializable {
 
     public void setWorkshopHostId(Person workshopHostId) {
         this.workshopHostId = workshopHostId;
+    }
+    
+    public void addRegistrant(Person p) {
+        this.myRegistrants.add(p);
+        p.getMyWorkshops().add(this);
     }
 
     @Override

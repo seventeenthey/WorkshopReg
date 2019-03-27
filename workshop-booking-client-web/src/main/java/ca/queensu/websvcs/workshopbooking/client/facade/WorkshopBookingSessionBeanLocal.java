@@ -15,13 +15,6 @@ import javax.ejb.Local;
 @Local
 public interface WorkshopBookingSessionBeanLocal {
 
-    /**
-     * <p>archetypeBusinessMethodGetPerson.</p>
-     *
-     * @param stuId a {@link java.lang.String} object.
-     * @return a boolean.
-     */
-    public Person archetypeBusinessMethodGetPerson(String stuId);
     public List<StudentDataBean> findStudentList();
     public StudentDataBean findStudentByPk(String studentPk);
     public List<String> findCountries();
@@ -55,4 +48,6 @@ public interface WorkshopBookingSessionBeanLocal {
     //for listview.jsp
     public List<WorkshopInfoForm> findRegisteredWorkshops(Person person);
     public List<WorkshopInfoForm> findCreatedWorkshops(Person person);
+    
+    public List<Catalogue> getWorkshopsForPerson(Person p);
 }

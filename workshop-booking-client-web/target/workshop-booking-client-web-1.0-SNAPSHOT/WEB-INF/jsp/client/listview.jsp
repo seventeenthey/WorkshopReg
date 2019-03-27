@@ -79,11 +79,11 @@
                 <tbody>
                     <s:iterator value="workshopsRegistered">
                         <tr>
-                            <td><s:property value="eventTitle" /></td>
-                            <td><s:property value="workshopNumber" /></td>
-                            <td><s:property value="rgStDate"/></td>
+                            <td><s:property value="title" /></td>
+                            <td><s:property value="workshopId" /></td>
+                            <td><s:property value="startTime"/></td>
                             <td><s:property value="startTimeToString()"/></td>
-                            <td><s:property value="rgEndDate"/></td>
+                            <td><s:property value="endTime"/></td>
                             <td><s:property value="department"/></td>
                             <td>
                                 <s:url action="detailsLoadAction" var="detailsUrl">

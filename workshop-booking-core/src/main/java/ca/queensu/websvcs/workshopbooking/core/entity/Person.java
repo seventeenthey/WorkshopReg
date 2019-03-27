@@ -7,14 +7,17 @@ package ca.queensu.websvcs.workshopbooking.core.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -35,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Person.findByEmplId", query = "SELECT p FROM Person p WHERE p.emplId = :emplId")
     , @NamedQuery(name = "Person.findByCommonName", query = "SELECT p FROM Person p WHERE p.commonName = :commonName")
     , @NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email")})
+
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,20 +52,29 @@ public class Person implements Serializable {
     private String commonName;
     @Column(name = "email")
     private String email;
+    
+    /**
     @ManyToMany(mappedBy = "personCollection")
     private Collection<Catalogue> catalogueCollection;
     @ManyToMany(mappedBy = "personCollection1")
     private Collection<Catalogue> catalogueCollection1;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
     private Collection<Reviews> reviewsCollection;
+    
+    @OneToMany(mappedBy = "workshopHostId")
+    private Collection<Catalogue> catalogueCollection2;
+    **/
+    
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     @ManyToOne
     private Departments departmentId;
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     @ManyToOne
     private Roles roleId;
-    @OneToMany(mappedBy = "workshopHostId")
-    private Collection<Catalogue> catalogueCollection2;
+    
+    @ManyToMany(mappedBy = "myRegistrants")
+    private List<Catalogue> myWorkshops;
 
     public Person() {
     }
@@ -101,7 +114,8 @@ public class Person implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    
+    /**
     @XmlTransient
     public Collection<Catalogue> getCatalogueCollection() {
         return catalogueCollection;
@@ -128,7 +142,17 @@ public class Person implements Serializable {
     public void setReviewsCollection(Collection<Reviews> reviewsCollection) {
         this.reviewsCollection = reviewsCollection;
     }
+    
+    @XmlTransient
+    public Collection<Catalogue> getCatalogueCollection2() {
+        return catalogueCollection2;
+    }
 
+    public void setCatalogueCollection2(Collection<Catalogue> catalogueCollection2) {
+        this.catalogueCollection2 = catalogueCollection2;
+    }
+    **/
+    
     public Departments getDepartmentId() {
         return departmentId;
     }
@@ -144,15 +168,21 @@ public class Person implements Serializable {
     public void setRoleId(Roles roleId) {
         this.roleId = roleId;
     }
-
+    
     @XmlTransient
-    public Collection<Catalogue> getCatalogueCollection2() {
-        return catalogueCollection2;
+    public List<Catalogue> getMyWorkshops() {
+        return myWorkshops;
     }
 
-    public void setCatalogueCollection2(Collection<Catalogue> catalogueCollection2) {
-        this.catalogueCollection2 = catalogueCollection2;
+    public void setMyWorkshops(List<Catalogue> workshops) {
+        this.myWorkshops = workshops;
     }
+    
+    public void addWorkshop(Catalogue w) {
+        this.myWorkshops.add(w);
+        w.getMyRegistrants().add(this);
+    }
+
 
     @Override
     public int hashCode() {

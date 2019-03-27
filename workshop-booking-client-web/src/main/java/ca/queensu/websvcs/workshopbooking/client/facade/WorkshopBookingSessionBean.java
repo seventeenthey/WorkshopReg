@@ -41,23 +41,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
 
     @Inject
     QueensEmailInterface emailStub;// = new CaQueensuUisWebservicesEmailStub();
-    
- 
-    
-    /**
-     * {@inheritDoc}
-     *
-     * Returns a list of people in the archetype database.
-     */
-    @Override
-    public Person archetypeBusinessMethodGetPerson(String stuId) {
-        
-        //example gather data from the archetype DB
-        
-        Person person = em.createNamedQuery("Person.findByPersonPk", Person.class).setParameter("personPk", new BigDecimal(stuId)).getSingleResult();
-        
-        return person;
-    }
+
 
 @Override
     public List<StudentDataBean> findStudentList() {
@@ -358,6 +342,16 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
             output.add(generateWorkshopInfo(i));
         
         return output;
+    }
+    
+    @Override
+    public List<Catalogue> getWorkshopsForPerson(Person p) {
+
+        List<Catalogue> myWorkshops = p.getMyWorkshops();
+        System.out.println(myWorkshops.get(0));
+        
+        return p.getMyWorkshops();
+        
     }
     
     //TODO - Vincent or Taylor

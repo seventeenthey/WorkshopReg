@@ -8,6 +8,7 @@ package ca.queensu.websvcs.workshopbooking.client.action;
 import ca.queensu.uis.sso.tools.common.SSOConstants;
 import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
+import ca.queensu.websvcs.workshopbooking.core.entity.Catalogue;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -37,7 +38,7 @@ public class ListViewAction extends ActionSupport implements Preparable{
     private WorkshopBookingSessionBeanLocal ejb;
     
     private Person person;
-    private List<WorkshopInfoForm> workshopsRegistered;
+    private List<Catalogue> workshopsRegistered;
     private List<WorkshopInfoForm> workshopsCreated;
     
     public ListViewAction() {
@@ -51,11 +52,10 @@ public class ListViewAction extends ActionSupport implements Preparable{
         
         //set person based on NetID
         String userNetId = (String) session.getAttribute(SSOConstants.NET_ID);
-        //setPerson(ejb.archetypeBusinessMethodGetPerson(userNetId));           //This will only work if they are in the database, otherwise it will error
-        person = new Person();  //TODO - Remove this and fix this ^
+        person = ejb.getPersonByNetId(userNetId);
         
-        workshopsRegistered = ejb.findRegisteredWorkshops(person);
-        workshopsCreated = ejb.findCreatedWorkshops(person);
+        workshopsRegistered = ejb.getWorkshopsForPerson(person);
+        //workshopsCreated = ejb.findCreatedWorkshops(person);
     } 
     
     @Override
@@ -96,11 +96,11 @@ public class ListViewAction extends ActionSupport implements Preparable{
         this.person = person;
     }
     
-    public List<WorkshopInfoForm> getWorkshopsRegistered(){
+    public List<Catalogue> getWorkshopsRegistered(){
         return workshopsRegistered;
     }
     
-    public void setWorkshopsRegistered(List<WorkshopInfoForm> workshops){
+    public void setWorkshopsRegistered(List<Catalogue> workshops){
         workshopsRegistered = workshops;
     }
     
