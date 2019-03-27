@@ -12,7 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import ca.queensu.websvcs.workshopbooking.admin.facade.WorkshopBookingSessionBeanLocal;
-import ca.queensu.websvcs.workshopbooking.core.entity.Catalogue;
+import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.admin.action.ArchetypeAction.class);
      
     private Person person;
-    private Catalogue catalogue;
+    private Workshops catalogue;
     
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
@@ -101,14 +101,14 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     /**
      * @return the person
      */
-    public Catalogue getCatalogue() {
+    public Workshops getCatalogue() {
         return catalogue;
     }
 
     /**
      * @param catalogue the person to set
      */
-    public void setCatalogue(Catalogue catalogue) {
+    public void setCatalogue(Workshops catalogue) {
         this.catalogue = catalogue;
     }
     

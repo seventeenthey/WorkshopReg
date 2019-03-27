@@ -34,22 +34,23 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Vincent
  */
 @Entity
-@Table(name = "catalogue")
+@Table(name = "workshops")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Catalogue.findAll", query = "SELECT c FROM Catalogue c")
-    , @NamedQuery(name = "Catalogue.findByWorkshopId", query = "SELECT c FROM Catalogue c WHERE c.workshopId = :workshopId")
-    , @NamedQuery(name = "Catalogue.findByWorkshopHostId", query = "SELECT c FROM Catalogue c WHERE c.workshopHostId.netId = :netId")
-    , @NamedQuery(name = "Catalogue.findByTitle", query = "SELECT c FROM Catalogue c WHERE c.title = :title")
-    , @NamedQuery(name = "Catalogue.findByDetails", query = "SELECT c FROM Catalogue c WHERE c.details = :details")
-    , @NamedQuery(name = "Catalogue.findByLocation", query = "SELECT c FROM Catalogue c WHERE c.location = :location")
-    , @NamedQuery(name = "Catalogue.findByMaxParticipants", query = "SELECT c FROM Catalogue c WHERE c.maxParticipants = :maxParticipants")
-    , @NamedQuery(name = "Catalogue.findByCurrentParticipants", query = "SELECT c FROM Catalogue c WHERE c.currentParticipants = :currentParticipants")
-    , @NamedQuery(name = "Catalogue.findByStartTime", query = "SELECT c FROM Catalogue c WHERE c.startTime = :startTime")
-    , @NamedQuery(name = "Catalogue.findByEndTime", query = "SELECT c FROM Catalogue c WHERE c.endTime = :endTime")})
+    @NamedQuery(name = "Workshops.findAll", query = "SELECT c FROM Workshops c")
+    , @NamedQuery(name = "Workshops.findByWorkshopId", query = "SELECT c FROM Workshops c WHERE c.workshopId = :workshopId")
+    , @NamedQuery(name = "Workshops.findByWorkshopHostId", query = "SELECT c FROM Workshops c WHERE c.workshopHostId.netId = :netId")
+    , @NamedQuery(name = "Workshops.findByTitle", query = "SELECT c FROM Workshops c WHERE c.title = :title")
+    , @NamedQuery(name = "Workshops.findByDetails", query = "SELECT c FROM Workshops c WHERE c.details = :details")
+    , @NamedQuery(name = "Workshops.findByLocation", query = "SELECT c FROM Workshops c WHERE c.location = :location")
+    , @NamedQuery(name = "Workshops.findByMaxParticipants", query = "SELECT c FROM Workshops c WHERE c.maxParticipants = :maxParticipants")
+    , @NamedQuery(name = "Workshops.findByCurrentParticipants", query = "SELECT c FROM Workshops c WHERE c.currentParticipants = :currentParticipants")
+    , @NamedQuery(name = "Workshops.findByStartTime", query = "SELECT c FROM Workshops c WHERE c.eventStart = :eventStart")
+    , @NamedQuery(name = "Workshops.findByEndTime", query = "SELECT c FROM Workshops c WHERE c.eventEnd = :eventEnd")
+})
 
 
-public class Catalogue implements Serializable {
+public class Workshops implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -67,25 +68,36 @@ public class Catalogue implements Serializable {
     private Integer maxParticipants;
     @Column(name = "current_participants")
     private Integer currentParticipants;
-    @Column(name = "start_time")
+    @Column(name = "registration_start")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date startTime;
-    @Column(name = "end_time")
+    private Date registrationStart;
+    @Column(name = "registration_end")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date endTime;
+    private Date registrationEnd;
+    @Column(name = "event_start")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date eventStart;
+    @Column(name = "event_end")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date eventEnd;
     @JoinTable(name = "waitlist", joinColumns = {
         @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id")}, inverseJoinColumns = {
         @JoinColumn(name = "net_id", referencedColumnName = "net_id")})
     @ManyToMany
     private Collection<Person> personCollection1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogue")
+    /**
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workshops")
     private Collection<Reviews> reviewsCollection;
+    **/
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     @ManyToOne
     private Departments departmentId;
     @JoinColumn(name = "workshop_host_id", referencedColumnName = "net_id")
     @ManyToOne
     private Person workshopHostId;
+    @JoinColumn(name = "event_status", referencedColumnName = "event_status")
+    @ManyToOne
+    private EventStatus eventStatus;
     
     @ManyToMany
     @JoinTable(name = "REGISTRATIONS", joinColumns = {
@@ -93,10 +105,10 @@ public class Catalogue implements Serializable {
         @JoinColumn(name = "net_id", referencedColumnName = "net_id")})
     private List<Person> myRegistrants;
     
-    public Catalogue() {
+    public Workshops() {
     }
 
-    public Catalogue(Integer workshopId) {
+    public Workshops(Integer workshopId) {
         this.workshopId = workshopId;
     }
 
@@ -147,21 +159,37 @@ public class Catalogue implements Serializable {
     public void setCurrentParticipants(Integer currentParticipants) {
         this.currentParticipants = currentParticipants;
     }
-
-    public Date getStartTime() {
-        return startTime;
+    
+    public Date getRegistrationStart() {
+        return registrationStart;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setRegistrationStart(Date registrationStart) {
+        this.registrationStart = registrationStart;
+    }
+    
+    public Date getRegistrationEnd() {
+        return registrationEnd;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public void setRegistrationEnd(Date registrationEnd) {
+        this.registrationEnd = registrationEnd;
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public Date getEventStart() {
+        return eventStart;
+    }
+
+    public void setEventStart(Date eventStart) {
+        this.eventStart = eventStart;
+    }
+
+    public Date getEventEnd() {
+        return eventEnd;
+    }
+
+    public void setEventEnd(Date eventEnd) {
+        this.eventEnd = eventEnd;
     }
 
     @XmlTransient
@@ -182,6 +210,7 @@ public class Catalogue implements Serializable {
         this.personCollection1 = personCollection1;
     }
 
+    /**
     @XmlTransient
     public Collection<Reviews> getReviewsCollection() {
         return reviewsCollection;
@@ -190,6 +219,7 @@ public class Catalogue implements Serializable {
     public void setReviewsCollection(Collection<Reviews> reviewsCollection) {
         this.reviewsCollection = reviewsCollection;
     }
+    **/
 
     public Departments getDepartmentId() {
         return departmentId;
@@ -207,6 +237,14 @@ public class Catalogue implements Serializable {
         this.workshopHostId = workshopHostId;
     }
     
+    public EventStatus getEventStatus() {
+        return eventStatus;
+    }
+
+    public void setEventStatus(EventStatus eventStatus) {
+        this.eventStatus = eventStatus;
+    }
+    
     public void addRegistrant(Person p) {
         this.myRegistrants.add(p);
         p.getMyWorkshops().add(this);
@@ -222,10 +260,10 @@ public class Catalogue implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Catalogue)) {
+        if (!(object instanceof Workshops)) {
             return false;
         }
-        Catalogue other = (Catalogue) object;
+        Workshops other = (Workshops) object;
         if ((this.workshopId == null && other.workshopId != null) || (this.workshopId != null && !this.workshopId.equals(other.workshopId))) {
             return false;
         }
@@ -234,7 +272,7 @@ public class Catalogue implements Serializable {
 
     @Override
     public String toString() {
-        return "ca.queensu.websvcs.workshopbooking.core.entity.Catalogue[ workshopId=" + workshopId + " ]";
+        return "ca.queensu.websvcs.workshopbooking.core.entity.Workshops[ workshopId=" + workshopId + " ]";
     }
     
 }

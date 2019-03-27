@@ -41,7 +41,7 @@ public class Departments implements Serializable {
     @OneToMany(mappedBy = "departmentId")
     private Collection<Person> personCollection;
     @OneToMany(mappedBy = "departmentId")
-    private Collection<Catalogue> catalogueCollection;
+    private Collection<Workshops> workshopCollection;
 
     public Departments() {
     }
@@ -76,12 +76,12 @@ public class Departments implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Catalogue> getCatalogueCollection() {
-        return catalogueCollection;
+    public Collection<Workshops> getWorkshopCollection() {
+        return workshopCollection;
     }
 
-    public void setCatalogueCollection(Collection<Catalogue> catalogueCollection) {
-        this.catalogueCollection = catalogueCollection;
+    public void setWorkshopCollection(Collection<Workshops> workshopCollection) {
+        this.workshopCollection = workshopCollection;
     }
 
     @Override

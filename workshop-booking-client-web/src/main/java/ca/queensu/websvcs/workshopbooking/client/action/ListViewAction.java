@@ -8,7 +8,7 @@ package ca.queensu.websvcs.workshopbooking.client.action;
 import ca.queensu.uis.sso.tools.common.SSOConstants;
 import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
-import ca.queensu.websvcs.workshopbooking.core.entity.Catalogue;
+import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -38,8 +38,8 @@ public class ListViewAction extends ActionSupport implements Preparable{
     private WorkshopBookingSessionBeanLocal ejb;
     
     private Person person;
-    private List<Catalogue> workshopsRegistered;
-    private List<Catalogue> workshopsHosted;
+    private List<Workshops> workshopsRegistered;
+    private List<Workshops> workshopsHosted;
     
     public ListViewAction() {
         System.out.println("### ListViewLoadAction constructor running");
@@ -96,19 +96,19 @@ public class ListViewAction extends ActionSupport implements Preparable{
         this.person = person;
     }
     
-    public List<Catalogue> getWorkshopsRegistered(){
+    public List<Workshops> getWorkshopsRegistered(){
         return workshopsRegistered;
     }
     
-    public void setWorkshopsRegistered(List<Catalogue> workshops){
+    public void setWorkshopsRegistered(List<Workshops> workshops){
         workshopsRegistered = workshops;
     }
     
-    public List<Catalogue> getWorkshopsHosted(){
+    public List<Workshops> getWorkshopsHosted(){
         return workshopsHosted;
     }
     
-    public void setWorkshopsHosted(List<Catalogue> workshops){
+    public void setWorkshopsHosted(List<Workshops> workshops){
         workshopsHosted = workshops;
     }
     

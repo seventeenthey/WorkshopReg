@@ -55,15 +55,15 @@ public class Person implements Serializable {
     
     /**
     @ManyToMany(mappedBy = "personCollection")
-    private Collection<Catalogue> catalogueCollection;
+    private Collection<Workshops> workshopCollection;
     @ManyToMany(mappedBy = "personCollection1")
-    private Collection<Catalogue> catalogueCollection1;
+    private Collection<Workshops> workshopCollection1;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
     private Collection<Reviews> reviewsCollection;
     
     @OneToMany(mappedBy = "workshopHostId")
-    private Collection<Catalogue> catalogueCollection2;
+    private Collection<Workshops> workshopCollection2;
     **/
     
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
@@ -74,7 +74,7 @@ public class Person implements Serializable {
     private Roles roleId;
     
     @ManyToMany(mappedBy = "myRegistrants")
-    private List<Catalogue> myWorkshops;
+    private List<Workshops> myWorkshops;
 
     public Person() {
     }
@@ -117,21 +117,21 @@ public class Person implements Serializable {
     
     /**
     @XmlTransient
-    public Collection<Catalogue> getCatalogueCollection() {
-        return catalogueCollection;
+    public Collection<Workshops> getWorkshopsCollection() {
+        return workshopCollection;
     }
 
-    public void setCatalogueCollection(Collection<Catalogue> catalogueCollection) {
-        this.catalogueCollection = catalogueCollection;
+    public void setWorkshopsCollection(Collection<Workshops> workshopCollection) {
+        this.workshopCollection = workshopCollection;
     }
 
     @XmlTransient
-    public Collection<Catalogue> getCatalogueCollection1() {
-        return catalogueCollection1;
+    public Collection<Workshops> getWorkshopsCollection1() {
+        return workshopCollection1;
     }
 
-    public void setCatalogueCollection1(Collection<Catalogue> catalogueCollection1) {
-        this.catalogueCollection1 = catalogueCollection1;
+    public void setWorkshopsCollection1(Collection<Workshops> workshopCollection1) {
+        this.workshopCollection1 = workshopCollection1;
     }
 
     @XmlTransient
@@ -144,12 +144,12 @@ public class Person implements Serializable {
     }
     
     @XmlTransient
-    public Collection<Catalogue> getCatalogueCollection2() {
-        return catalogueCollection2;
+    public Collection<Workshops> getWorkshopsCollection2() {
+        return workshopCollection2;
     }
 
-    public void setCatalogueCollection2(Collection<Catalogue> catalogueCollection2) {
-        this.catalogueCollection2 = catalogueCollection2;
+    public void setWorkshopsCollection2(Collection<Workshops> workshopCollection2) {
+        this.workshopCollection2 = workshopCollection2;
     }
     **/
     
@@ -170,15 +170,15 @@ public class Person implements Serializable {
     }
     
     @XmlTransient
-    public List<Catalogue> getMyWorkshops() {
+    public List<Workshops> getMyWorkshops() {
         return myWorkshops;
     }
 
-    public void setMyWorkshops(List<Catalogue> workshops) {
+    public void setMyWorkshops(List<Workshops> workshops) {
         this.myWorkshops = workshops;
     }
     
-    public void addWorkshop(Catalogue w) {
+    public void addWorkshop(Workshops w) {
         this.myWorkshops.add(w);
         w.getMyRegistrants().add(this);
     }

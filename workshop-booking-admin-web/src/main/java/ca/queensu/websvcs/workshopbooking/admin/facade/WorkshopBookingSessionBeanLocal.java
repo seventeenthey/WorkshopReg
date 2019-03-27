@@ -2,7 +2,7 @@ package ca.queensu.websvcs.workshopbooking.admin.facade;
 
 import ca.queensu.websvcs.workshopbooking.admin.domain.EmailUtility;
 import ca.queensu.websvcs.workshopbooking.admin.domain.ClientDataBean;
-import ca.queensu.websvcs.workshopbooking.core.entity.Catalogue;
+import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import java.util.List;
 import javax.ejb.Local;
@@ -26,8 +26,8 @@ public interface WorkshopBookingSessionBeanLocal {
     
     public void savePerson(Person p);
     
-    public Catalogue findByWorkshopId(Integer id);
+    public Workshops findByWorkshopId(Integer id);
     
-    public List<Catalogue> getAllWorkshops();
+    public List<Workshops> getAllWorkshops();
     
 }

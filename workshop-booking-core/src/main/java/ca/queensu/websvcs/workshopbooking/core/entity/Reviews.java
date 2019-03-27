@@ -37,7 +37,7 @@ public class Reviews implements Serializable {
     private String review;
     @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Catalogue catalogue;
+    private Workshops workshop;
     @JoinColumn(name = "net_id", referencedColumnName = "net_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Person person;
@@ -69,12 +69,12 @@ public class Reviews implements Serializable {
         this.review = review;
     }
 
-    public Catalogue getCatalogue() {
-        return catalogue;
+    public Workshops getWorkshop() {
+        return workshop;
     }
 
-    public void setCatalogue(Catalogue catalogue) {
-        this.catalogue = catalogue;
+    public void setWorkshop(Workshops workshop) {
+        this.workshop = workshop;
     }
 
     public Person getPerson() {

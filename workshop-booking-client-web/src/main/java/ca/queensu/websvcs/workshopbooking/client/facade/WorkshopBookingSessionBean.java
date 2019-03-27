@@ -6,7 +6,7 @@ import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.uis.services.email.ws.QueensEmailInterface;
 import ca.queensu.websvcs.workshopbooking.client.domain.EmailInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
-import ca.queensu.websvcs.workshopbooking.core.entity.Catalogue;
+import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -160,7 +160,10 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     
     @Override
     public boolean updateWorkshopForm(WorkshopInfoForm workshopForm){
-//        Todo: Need Modified with actural success verification
+//      Todo: Need Modified with actural success verification
+        System.out.println("Received");
+        System.out.println(workshopForm.getRgStDate());
+        System.out.println(workshopForm.getEventTitle());
         try{
             return true;
         }catch(Exception e) {
@@ -303,9 +306,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
     
     @Override
-    public Catalogue findByWorkshopId(Integer id) {
-        Catalogue catalogue = em.createNamedQuery("Catalogue.findByWorkshopId", Catalogue.class).setParameter("workshopId", id).getSingleResult();
-        return catalogue;
+    public Workshops findByWorkshopId(Integer id) {
+        Workshops workshop = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", id).getSingleResult();
+        return workshop;
     }
     
 
@@ -337,14 +340,14 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     
     // find all workshops that person is attending
     @Override
-    public List<Catalogue> getWorkshopsForPerson(Person p) {
+    public List<Workshops> getWorkshopsForPerson(Person p) {
         return p.getMyWorkshops();
     }
     
     // find all workshops that person has created
     @Override
-    public List<Catalogue> getWorkshopsHostedByPerson(Person p) {
-        List<Catalogue> workshops = em.createNamedQuery("Catalogue.findByWorkshopHostId", Catalogue.class).setParameter("netId", p.getNetId()).getResultList();
+    public List<Workshops> getWorkshopsHostedByPerson(Person p) {
+        List<Workshops> workshops = em.createNamedQuery("Workshops.findByWorkshopHostId", Workshops.class).setParameter("netId", p.getNetId()).getResultList();
         return workshops;
     }
 }

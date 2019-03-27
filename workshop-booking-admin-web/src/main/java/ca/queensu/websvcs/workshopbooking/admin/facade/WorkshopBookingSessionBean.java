@@ -1,7 +1,7 @@
 package ca.queensu.websvcs.workshopbooking.admin.facade;
 
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
-import ca.queensu.websvcs.workshopbooking.core.entity.Catalogue;
+import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.uis.services.email.ws.QueensEmailInterface;
 import java.math.BigDecimal;
 import java.util.List;
@@ -56,14 +56,14 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
     
     @Override
-    public Catalogue findByWorkshopId(Integer id) {
-        Catalogue catalogue = em.createNamedQuery("Catalogue.findByWorkshopId", Catalogue.class).setParameter("workshopId", id).getSingleResult();
+    public Workshops findByWorkshopId(Integer id) {
+        Workshops catalogue = em.createNamedQuery("Catalogue.findByWorkshopId", Workshops.class).setParameter("workshopId", id).getSingleResult();
         return catalogue;
     }
     
     @Override
-    public List<Catalogue> getAllWorkshops() {
-        List<Catalogue> catalogue = em.createNamedQuery("Catalogue.findAll", Catalogue.class).getResultList();
+    public List<Workshops> getAllWorkshops() {
+        List<Workshops> catalogue = em.createNamedQuery("Catalogue.findAll", Workshops.class).getResultList();
         return catalogue;
     }
 
