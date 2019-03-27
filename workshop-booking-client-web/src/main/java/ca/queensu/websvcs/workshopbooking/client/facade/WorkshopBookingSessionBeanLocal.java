@@ -50,4 +50,5 @@ public interface WorkshopBookingSessionBeanLocal {
     public List<WorkshopInfoForm> findCreatedWorkshops(Person person);
     
     public List<Catalogue> getWorkshopsForPerson(Person p);
+    public List<Catalogue> getWorkshopsHostedByPerson(Person p);
 }

@@ -11,66 +11,68 @@ DROP TABLE IF EXISTS REVIEWS;
 DROP TABLE IF EXISTS LOCATIONS;
 
 CREATE TABLE PERSON (
-	net_id VARCHAR(10) PRIMARY KEY,
-	empl_id INTEGER,
-	common_name VARCHAR(50),
-	email VARCHAR(50),
-    role_id INTEGER,
-    department_id INTEGER
+    net_id VARCHAR(10) NOT NULL PRIMARY KEY,
+    empl_id INTEGER NOT NULL,
+    common_name VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    role_id INTEGER NOT NULL,
+    department_id INTEGER NOT NULL
 );
 
 CREATE TABLE ROLES (
-	role_id INTEGER PRIMARY KEY,
-	role_name VARCHAR(20)
+    role_id INTEGER NOT NULL PRIMARY KEY,
+    role_name VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE DEPARTMENTS (
-	department_id INTEGER PRIMARY KEY,
-    department_name VARCHAR(20)
+    department_id INTEGER NOT NULL PRIMARY KEY,
+    department_name VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE CATALOGUE (
-    workshop_id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    workshop_host_id VARCHAR(10),
-    department_id INTEGER,
-    title VARCHAR(100),
-    details VARCHAR(500),
-    location VARCHAR(200),
-	max_participants INTEGER,
-	current_participants INTEGER,
-    start_time DATETIME,
-	end_time DATETIME
+    workshop_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    workshop_host_id VARCHAR(10) NOT NULL,
+    department_id INTEGER NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    details VARCHAR(500) NOT NULL,
+    location VARCHAR(200) NOT NULL,
+    max_participants INTEGER NOT NULL,
+    current_participants INTEGER NOT NULL,
+    start_time DATETIME NOT NULL,
+    end_time DATETIME NOT NULL
 );
 
 CREATE TABLE REGISTRATIONS (
-	workshop_id INTEGER,
-    net_id VARCHAR(10),
+    workshop_id INTEGER NOT NULL,
+    net_id VARCHAR(10) NOT NULL,
     PRIMARY KEY(workshop_id, net_id)
 );
 
 CREATE TABLE WAITLIST (
-	workshop_id INTEGER,
-	net_id VARCHAR(10),
+    workshop_id INTEGER NOT NULL,
+    net_id VARCHAR(10) NOT NULL,
     PRIMARY KEY(workshop_id, net_id)
 );
 
 CREATE TABLE REVIEWS (
-	workshop_id INTEGER,
-	net_id VARCHAR(10),
-	review VARCHAR(1000),
+    workshop_id INTEGER NOT NULL,
+    net_id VARCHAR(10) NOT NULL,
+    review VARCHAR(1000) NOT NULL,
     PRIMARY KEY(workshop_id, net_id)
 );
 
 CREATE TABLE LOCATIONS (
-	location_name VARCHAR(100) PRIMARY KEY
+    location_name VARCHAR(100) NOT NULL PRIMARY KEY
 );
 
 -- Constraints for table PERSON
 ALTER TABLE PERSON ADD CONSTRAINT FOREIGN KEY (role_id) REFERENCES ROLES (role_id);
 ALTER TABLE PERSON ADD CONSTRAINT FOREIGN KEY (department_id) REFERENCES DEPARTMENTS (department_id);
+ALTER TABLE PERSON ALTER role_id SET DEFAULT 0;
+ALTER TABLE PERSON ALTER department_id SET DEFAULT 0;
 
 -- Constraints for table ROLES
-ALTER TABLE ROLES ALTER role_id SET DEFAULT 0;
+-- none
 
 -- Constraints for table DEPARTMENTS
 -- none
@@ -78,6 +80,7 @@ ALTER TABLE ROLES ALTER role_id SET DEFAULT 0;
 -- Constraints for table CATALOGUE
 ALTER TABLE CATALOGUE ADD CONSTRAINT FOREIGN KEY (workshop_host_id) REFERENCES PERSON (net_id);
 ALTER TABLE CATALOGUE ADD CONSTRAINT FOREIGN KEY (department_id) REFERENCES DEPARTMENTS (department_id);
+ALTER TABLE CATALOGUE ALTER current_participants SET DEFAULT 0;
 
 -- Constraints for table REGISTRATIONS
 ALTER TABLE REGISTRATIONS ADD CONSTRAINT FOREIGN KEY (workshop_id) REFERENCES CATALOGUE (workshop_id);
@@ -110,12 +113,19 @@ INSERT INTO LOCATIONS VALUES ("Walter Light Hall");
 INSERT INTO LOCATIONS VALUES ("Goodes Hall");
 
 -- ADD FAKE DATA
-INSERT INTO PERSON VALUES ("15dny", 12345678, "Daniel K.", "5dny@queensu.ca", 1, 0);
+INSERT INTO PERSON VALUES ("15dny", 12345678, "Daniel K.", "15dny@queensu.ca", 1, 2);
+INSERT INTO PERSON VALUES ("13tpv", 62575632, "Tanner V.", "13tpv@queensu.ca", 1, DEFAULT);
+INSERT INTO PERSON VALUES ("11ern", 85317453, "Elise N.", "11ern@queensu.ca", 1, DEFAULT);
 INSERT INTO PERSON VALUES ("emmah", 57338531, "Emma H.", "emma_h@queensu.ca", 3, 2);
-INSERT INTO CATALOGUE VALUES (NULL, 2, 3, "How to Stay Awake in Class", "Learn to stay focused!", "Walter Light Hall", 100, 5, '2019-02-05 10:00:00', '2019-02-05 11:30:00');
-INSERT INTO CATALOGUE VALUES (NULL, 2, 2, "How to Study Effectively", "Learn how to study effectively!", "Dunning Hall", 100, 0, '2019-04-01 14:00:00', '2019-04-01 16:00:00');
-INSERT INTO CATALOGUE VALUES (NULL, 2, 1, "How to Make New Friends", "Get lots of friends!", "Goodes Hall", 100, 0, '2019-05-12 18:30:00', '2019-05-12 20:00:00');
+INSERT INTO CATALOGUE VALUES (NULL, "emmah", 3, "How to Stay Awake in Class", "Learn to stay focused!", "Walter Light Hall", 100, 5, '2019-02-05 10:00:00', '2019-02-05 11:30:00');
+INSERT INTO CATALOGUE VALUES (NULL, "emmah", 1, "How to Study Effectively", "Learn how to study effectively!", "Dunning Hall", 100, DEFAULT, '2019-04-01 14:00:00', '2019-04-01 16:00:00');
+INSERT INTO CATALOGUE VALUES (NULL, "emmah", 2, "How to Make New Friends", "Get lots of friends!", "Goodes Hall", 100, DEFAULT, '2019-05-12 18:30:00', '2019-05-12 20:00:00');
+INSERT INTO CATALOGUE VALUES (NULL, "15dny", 1, "How to Think Smart", "Think less, learn more", "Goodes Hall", 100, DEFAULT, '2019-04-09 15:45:00', '2019-04-09 17:30:00');
+INSERT INTO CATALOGUE VALUES (NULL, "15dny", 3, "How to Express Yourself", "Get to know yourself before others!", "Dunning Hall", 100, DEFAULT, '2019-04-15 16:15:00', '2019-04-15 18:00:00');
 INSERT INTO REVIEWS VALUES (1, "15dny", "Loved it!");
 INSERT INTO REGISTRATIONS VALUES (1, "15dny");
 INSERT INTO REGISTRATIONS VALUES (2, "15dny");
 INSERT INTO REGISTRATIONS VALUES (3, "15dny");
+INSERT INTO REGISTRATIONS VALUES (2, "13tpv");
+INSERT INTO REGISTRATIONS VALUES (3, "13tpv");
+INSERT INTO REGISTRATIONS VALUES (1, "11ern");

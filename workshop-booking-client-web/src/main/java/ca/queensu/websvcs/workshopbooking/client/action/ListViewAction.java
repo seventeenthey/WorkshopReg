@@ -39,7 +39,7 @@ public class ListViewAction extends ActionSupport implements Preparable{
     
     private Person person;
     private List<Catalogue> workshopsRegistered;
-    private List<WorkshopInfoForm> workshopsCreated;
+    private List<Catalogue> workshopsHosted;
     
     public ListViewAction() {
         System.out.println("### ListViewLoadAction constructor running");
@@ -55,7 +55,7 @@ public class ListViewAction extends ActionSupport implements Preparable{
         person = ejb.getPersonByNetId(userNetId);
         
         workshopsRegistered = ejb.getWorkshopsForPerson(person);
-        //workshopsCreated = ejb.findCreatedWorkshops(person);
+        workshopsHosted = ejb.getWorkshopsHostedByPerson(person);
     } 
     
     @Override
@@ -104,12 +104,12 @@ public class ListViewAction extends ActionSupport implements Preparable{
         workshopsRegistered = workshops;
     }
     
-    public List<WorkshopInfoForm> getWorkshopsCreated(){
-        return workshopsCreated;
+    public List<Catalogue> getWorkshopsHosted(){
+        return workshopsHosted;
     }
     
-    public void setWorkshopsCreated(List<WorkshopInfoForm> workshops){
-        workshopsCreated = workshops;
+    public void setWorkshopsHosted(List<Catalogue> workshops){
+        workshopsHosted = workshops;
     }
     
     public WorkshopBookingSessionBeanLocal getEjb() {

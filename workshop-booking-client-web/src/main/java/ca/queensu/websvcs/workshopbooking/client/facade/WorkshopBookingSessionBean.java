@@ -346,12 +346,14 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     
     @Override
     public List<Catalogue> getWorkshopsForPerson(Person p) {
-
         List<Catalogue> myWorkshops = p.getMyWorkshops();
-        System.out.println(myWorkshops.get(0));
-        
         return p.getMyWorkshops();
-        
+    }
+    
+    @Override
+    public List<Catalogue> getWorkshopsHostedByPerson(Person p) {
+        List<Catalogue> workshops = em.createNamedQuery("Catalogue.findByWorkshopHostId", Catalogue.class).setParameter("netId", p.getNetId()).getResultList();
+        return workshops;
     }
     
     //TODO - Vincent or Taylor
