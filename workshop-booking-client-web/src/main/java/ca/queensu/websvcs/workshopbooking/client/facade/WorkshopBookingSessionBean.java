@@ -6,9 +6,11 @@ import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.uis.services.email.ws.QueensEmailInterface;
 import ca.queensu.websvcs.workshopbooking.client.domain.EmailInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
+import ca.queensu.websvcs.workshopbooking.core.entity.Departments;
 import ca.queensu.websvcs.workshopbooking.core.entity.EventStatus;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
+import ca.queensu.websvcs.workshopbooking.core.entity.Roles;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -191,11 +193,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public List<String> finddepartmentList(){
 //      List of all possible locations to hold a workshop
         List<String> departmentList = new ArrayList<>();
-        departmentList.add("Choose a department");
-        departmentList.add("Arts");
-        departmentList.add("Computing");
-        departmentList.add("Engineering");
-        departmentList.add("Nursing");
+        for (Departments department: em.createNamedQuery("Departments.findAll", Departments.class).getResultList()) {
+            departmentList.add(department.getDepartmentName());
+        }
         return departmentList;
     }
     
@@ -203,18 +203,16 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public List<String> findroleList(){
 //      List of all possible locations to hold a workshop
         List<String> roleList = new ArrayList<>();
-        roleList.add("Faculty");
-        roleList.add("Staff");
+        for (Roles role: em.createNamedQuery("Roles.findAll", Roles.class).getResultList()) {
+            roleList.add(role.getRoleName());
+        }
         return roleList;
     }
     
-    //actually just creates a new list
     @Override
     public List<Workshops> findWorkshopList() {
-        
         try {
             List<Workshops> workshopList = em.createNamedQuery("Workshops.findAll", Workshops.class).getResultList();
-
             return workshopList;
         }
         catch(Exception e) {
@@ -222,65 +220,8 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
     }
     
-    //to create dummy workshop data
-    private WorkshopInfoForm generateWorkshopInfo(int num) {
-        WorkshopInfoForm workshop = new WorkshopInfoForm();
-        workshop.setEventTitle("How to be Cool " + num);
-        workshop.setWorkshopNumber(num);
-        
-        String year, month, day, hour, min;
-        int tempHour;
-        
-        Random rand = new Random();
-        
-        //Commented out code is for using if dates are java Date objects
-        
-        //year = 2019;
-        //month = rand.nextInt(2) + 2;
-        //day = rand.nextInt(28);
-        
-        year = "2019";
-        month = Integer.toString(rand.nextInt(2) + 2);
-        day = Integer.toString(rand.nextInt(28));
-        
-        tempHour = rand.nextInt(24);
-        //hour = tempHour;
-        //min = rand.nextInt(4) * 15;
-        hour = Integer.toString(tempHour);
-        min = Integer.toString(rand.nextInt(4) * 15);
-        
-        /*
-        Date d = new Date();
-        d.setYear(year);
-        d.setMonth(month);
-        d.setDate(day);
-        d.setHours(hour);
-        d.setMinutes(min);
-        */
-        
-        workshop.setRgStDate(year + "," + month + "," + day);
-        workshop.setRgStTime(hour + "," + min);
-        
-        /*
-        workshop.setRgStDate(d);
-        workshop.setRgEndDate(d);
-        */
-        
-        hour = Integer.toString(tempHour + 2);
-        workshop.setRgEndTime(hour + "," + min);
-        
-        List<String> departments = finddepartmentList();
-        workshop.setDepartment(departments.get(rand.nextInt(departments.size()-1)+1));
-        
-        return workshop;
-    }
-    
-    // ADDED BY VINCENT (3 ITEMS)
     @Override
     public Person getPersonByNetId(String netId) {
-        
-        //example gather data from the archetype DB
-        
         Person person = em.createNamedQuery("Person.findByNetId", Person.class).setParameter("netId", netId).getSingleResult();
         return person;
     }
@@ -296,7 +237,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         Workshops workshop = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", id).getSingleResult();
         return workshop;
     }
-    
 
     @Override
     public Workshops findByWorkshopId(String id) {
