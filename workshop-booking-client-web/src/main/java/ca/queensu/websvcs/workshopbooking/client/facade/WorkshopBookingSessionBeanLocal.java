@@ -42,7 +42,7 @@ public interface WorkshopBookingSessionBeanLocal {
     public Person getPersonByNetId(String netId);
     public void savePerson(Person p);
     public Workshops findByWorkshopId(Integer id);
-    
+    public Workshops findByWorkshopId(String id);
 
     public List<facilitatorDataBean> findFacilitatorList();
     

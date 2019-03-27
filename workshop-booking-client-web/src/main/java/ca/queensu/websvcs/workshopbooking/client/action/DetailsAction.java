@@ -7,6 +7,7 @@ package ca.queensu.websvcs.workshopbooking.client.action;
 
 import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
+import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
@@ -30,9 +31,9 @@ public class DetailsAction extends ActionSupport implements Preparable {
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
 
-    private String workshopNumber;
-    private WorkshopInfoForm workshop;
-    
+    private String workshopId;
+    private Workshops workshop;
+  
     public DetailsAction() {
         System.out.println("### DetailsAction constructor running");
     }
@@ -40,7 +41,7 @@ public class DetailsAction extends ActionSupport implements Preparable {
     @Override 
     public void prepare() throws Exception {
         System.out.println("### DetailsAction Prepare running");
-        System.out.println("wkrshop # : " + workshopNumber);
+        System.out.println("wkrshop # : " + workshopId);
         //workshop = ejb.findWorkshopByNum(workshopNumber);
     }
      
@@ -48,10 +49,10 @@ public class DetailsAction extends ActionSupport implements Preparable {
     public String execute() throws Exception {
         try {
             System.out.println("### DetailsAction execute running");
-           
-            System.out.println(workshopNumber);
-            workshop = ejb.findWorkshopByNum(workshopNumber);
-            System.out.println(workshop.getEventTitle());
+            
+            System.out.println("");
+            System.out.println(workshopId);
+            workshop = ejb.findByWorkshopId(workshopId);
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -67,9 +68,7 @@ public class DetailsAction extends ActionSupport implements Preparable {
     public String load() throws Exception{
         try {
             System.out.println("### DetailsAction load running");
-            System.out.println(workshopNumber);
-            workshop = ejb.findWorkshopByNum(workshopNumber);
-            System.out.println(workshop.getEventTitle());
+            workshop = ejb.findByWorkshopId(workshopId);
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -104,19 +103,19 @@ public class DetailsAction extends ActionSupport implements Preparable {
         this.ejb = ejb;
     }
     
-    public WorkshopInfoForm getWorkshop(){
+    public Workshops getWorkshop(){
         return workshop;
     }
     
-    public void setWorkshop(WorkshopInfoForm workshop){
+    public void setWorkshop(Workshops workshop){
         this.workshop = workshop;
     }
     
-    public String getWorkshopNumber(){
-        return workshopNumber;
+    public String getWorkshopId(){
+        return workshopId;
     }
     
-    public void setWorkshopNumber(String workshopNumber){
-        this.workshopNumber = workshopNumber;
+    public void setWorkshopId(String workshopId){
+        this.workshopId = workshopId;
     }
 }

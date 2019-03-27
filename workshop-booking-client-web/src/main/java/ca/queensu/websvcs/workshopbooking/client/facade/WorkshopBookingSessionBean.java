@@ -280,7 +280,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     public WorkshopInfoForm findWorkshopByNum(String workshopNum){
         try {
-            WorkshopInfoForm workshop = generateWorkshopInfo(Integer.parseInt(workshopNum));
+            WorkshopInfoForm workshop = generateWorkshopInfo(Integer.valueOf(workshopNum));
             return workshop;
         }
         catch(NumberFormatException e) {
@@ -312,6 +312,11 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
     
 
+    @Override
+    public Workshops findByWorkshopId(String id) {
+        return findByWorkshopId(Integer.valueOf(id));
+    }
+    
     @Override
     public List<facilitatorDataBean> findFacilitatorList() {
         try {
