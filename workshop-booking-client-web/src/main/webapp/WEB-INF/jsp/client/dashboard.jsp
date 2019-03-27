@@ -254,7 +254,7 @@
         </div>
 
         <div class="container">
-            <table class="table table-bordered table-striped table-hover" id="workshopData">
+            <table class="table table-bordered table-striped table-hover" id="workshopData" style="display:none">
                 <th>Workshop Name</th>
                 <th>Workshop Number</th>
                 <th>Date</th>

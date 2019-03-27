@@ -304,11 +304,8 @@ var $currentPopover = null;
                     //data.push({title: names[c1 % names.length], start: new Date(y, m, d, h, m), end: end, allDay: !(i % 6), text: slipsum[c % slipsum.length ]});
                 }
                 
-                console.log("test");
-                //console.log($('#workshopData').find('tr'));
-                console.log("test");
+                console.log($('#workshopData').find('tr'));
                 var workshops = $('#workshopData').find('tr');
-                console.log(workshops.length);
                 for(i = 1; i < workshops.length; i++){
                    
                     /*currently it is :
@@ -321,7 +318,6 @@ var $currentPopover = null;
                      * 6 - clickable link ----- probably don't try and use that here
                      */
                     
-                    console.log("1");
                     var workshopColumns = workshops[i].children;
                     var workshopTitle = workshopColumns[0].innerText;
                     var workshopNumber = workshopColumns[1].innerText;
@@ -333,7 +329,8 @@ var $currentPopover = null;
                     var startDate = new Date(workshopColumns[2].innerText);
                     var endDate = new Date(workshopColumns[4].innerText); //currently not used
                     var department = workshopColumns[5].innerText;  //currently not used
-                    console.log(workshopColumns[2].innerText);
+                    
+                    //TODO - add startDate and time
                     data.push({title:workshopTitle, start:startDate, end: startDate, text:"some text"});
                 }
 
