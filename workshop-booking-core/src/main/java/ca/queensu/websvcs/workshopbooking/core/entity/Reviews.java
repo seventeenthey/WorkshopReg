@@ -6,6 +6,7 @@
 package ca.queensu.websvcs.workshopbooking.core.entity;
 
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -33,20 +34,26 @@ public class Reviews implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ReviewsPK reviewsPK;
+    @Basic(optional = false)
     @Column(name = "review")
     private String review;
-    @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Workshops workshop;
     @JoinColumn(name = "net_id", referencedColumnName = "net_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Person person;
+    @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Workshops workshops;
 
     public Reviews() {
     }
 
     public Reviews(ReviewsPK reviewsPK) {
         this.reviewsPK = reviewsPK;
+    }
+
+    public Reviews(ReviewsPK reviewsPK, String review) {
+        this.reviewsPK = reviewsPK;
+        this.review = review;
     }
 
     public Reviews(int workshopId, String netId) {
@@ -69,20 +76,20 @@ public class Reviews implements Serializable {
         this.review = review;
     }
 
-    public Workshops getWorkshop() {
-        return workshop;
-    }
-
-    public void setWorkshop(Workshops workshop) {
-        this.workshop = workshop;
-    }
-
     public Person getPerson() {
         return person;
     }
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public Workshops getWorkshops() {
+        return workshops;
+    }
+
+    public void setWorkshops(Workshops workshops) {
+        this.workshops = workshops;
     }
 
     @Override
@@ -107,7 +114,7 @@ public class Reviews implements Serializable {
 
     @Override
     public String toString() {
-        return "ca.queensu.websvcs.workshopbooking.core.entity.Reviews[ reviewsPK=" + reviewsPK + " ]";
+        return "ca.queensu.websvcs.workshopbooking.Reviews[ reviewsPK=" + reviewsPK + " ]";
     }
     
 }
