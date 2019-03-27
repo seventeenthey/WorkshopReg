@@ -6,14 +6,18 @@
 package ca.queensu.websvcs.workshopbooking.core.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,6 +36,11 @@ public class EventStatus implements Serializable {
     @Basic(optional = false)
     @Column(name = "event_status")
     private String eventStatus;
+    
+    /**
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventStatus")
+    private Collection<Workshops> workshopsCollection;
+    **/
 
     public EventStatus() {
     }
@@ -47,6 +56,17 @@ public class EventStatus implements Serializable {
     public void setEventStatus(String eventStatus) {
         this.eventStatus = eventStatus;
     }
+
+    /**
+    @XmlTransient
+    public Collection<Workshops> getWorkshopsCollection() {
+        return workshopsCollection;
+    }
+
+    public void setWorkshopsCollection(Collection<Workshops> workshopsCollection) {
+        this.workshopsCollection = workshopsCollection;
+    }
+    **/
 
     @Override
     public int hashCode() {
@@ -70,7 +90,7 @@ public class EventStatus implements Serializable {
 
     @Override
     public String toString() {
-        return "ca.queensu.websvcs.workshopbooking.core.entity.EventStatus[ eventStatus=" + eventStatus + " ]";
+        return "ca.queensu.websvcs.workshopbooking.EventStatus[ eventStatus=" + eventStatus + " ]";
     }
     
 }

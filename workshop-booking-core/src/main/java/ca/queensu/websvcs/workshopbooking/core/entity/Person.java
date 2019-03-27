@@ -16,10 +16,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -39,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Person.findByNetId", query = "SELECT p FROM Person p WHERE p.netId = :netId")
     , @NamedQuery(name = "Person.findByEmplId", query = "SELECT p FROM Person p WHERE p.emplId = :emplId")
     , @NamedQuery(name = "Person.findByCommonName", query = "SELECT p FROM Person p WHERE p.commonName = :commonName")
-    , @NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email")})
+    , @NamedQuery(name = "Person.findByEmail", query = "SELECT p FROM Person p WHERE p.email = :email")
+})
 
 public class Person implements Serializable {
 
@@ -48,41 +47,52 @@ public class Person implements Serializable {
     @Basic(optional = false)
     @Column(name = "net_id")
     private String netId;
+    @Basic(optional = false)
     @Column(name = "empl_id")
-    private Integer emplId;
+    private int emplId;
+    @Basic(optional = false)
     @Column(name = "common_name")
     private String commonName;
+    @Basic(optional = false)
     @Column(name = "email")
     private String email;
     
     /**
     @ManyToMany(mappedBy = "personCollection")
-    private Collection<Workshops> workshopCollection;
+    private Collection<Workshops> workshopsCollection;
     @ManyToMany(mappedBy = "personCollection1")
-    private Collection<Workshops> workshopCollection1;
-    
+    private Collection<Workshops> workshopsCollection1;
+    @ManyToMany(mappedBy = "personCollection2")
+    private Collection<Workshops> workshopsCollection2;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
     private Collection<Reviews> reviewsCollection;
-    
-    @OneToMany(mappedBy = "workshopHostId")
-    private Collection<Workshops> workshopCollection2;
     **/
     
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Departments departmentId;
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Roles roleId;
     
     @ManyToMany(mappedBy = "myRegistrants")
     private List<Workshops> myWorkshops;
+    
+    @ManyToMany(mappedBy = "myFacilitators")
+    private List<Workshops> myOwnedWorkshops;
 
     public Person() {
     }
 
     public Person(String netId) {
         this.netId = netId;
+    }
+
+    public Person(String netId, int emplId, String commonName, String email) {
+        this.netId = netId;
+        this.emplId = emplId;
+        this.commonName = commonName;
+        this.email = email;
     }
 
     public String getNetId() {
@@ -93,11 +103,11 @@ public class Person implements Serializable {
         this.netId = netId;
     }
 
-    public Integer getEmplId() {
+    public int getEmplId() {
         return emplId;
     }
 
-    public void setEmplId(Integer emplId) {
+    public void setEmplId(int emplId) {
         this.emplId = emplId;
     }
 
@@ -116,24 +126,33 @@ public class Person implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
     /**
     @XmlTransient
     public Collection<Workshops> getWorkshopsCollection() {
-        return workshopCollection;
+        return workshopsCollection;
     }
 
-    public void setWorkshopsCollection(Collection<Workshops> workshopCollection) {
-        this.workshopCollection = workshopCollection;
+    public void setWorkshopsCollection(Collection<Workshops> workshopsCollection) {
+        this.workshopsCollection = workshopsCollection;
     }
 
     @XmlTransient
     public Collection<Workshops> getWorkshopsCollection1() {
-        return workshopCollection1;
+        return workshopsCollection1;
     }
 
-    public void setWorkshopsCollection1(Collection<Workshops> workshopCollection1) {
-        this.workshopCollection1 = workshopCollection1;
+    public void setWorkshopsCollection1(Collection<Workshops> workshopsCollection1) {
+        this.workshopsCollection1 = workshopsCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Workshops> getWorkshopsCollection2() {
+        return workshopsCollection2;
+    }
+
+    public void setWorkshopsCollection2(Collection<Workshops> workshopsCollection2) {
+        this.workshopsCollection2 = workshopsCollection2;
     }
 
     @XmlTransient
@@ -144,17 +163,8 @@ public class Person implements Serializable {
     public void setReviewsCollection(Collection<Reviews> reviewsCollection) {
         this.reviewsCollection = reviewsCollection;
     }
-    
-    @XmlTransient
-    public Collection<Workshops> getWorkshopsCollection2() {
-        return workshopCollection2;
-    }
-
-    public void setWorkshopsCollection2(Collection<Workshops> workshopCollection2) {
-        this.workshopCollection2 = workshopCollection2;
-    }
     **/
-    
+
     public Departments getDepartmentId() {
         return departmentId;
     }
@@ -170,10 +180,59 @@ public class Person implements Serializable {
     public void setRoleId(Roles roleId) {
         this.roleId = roleId;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (netId != null ? netId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Person)) {
+            return false;
+        }
+        Person other = (Person) object;
+        if ((this.netId == null && other.netId != null) || (this.netId != null && !this.netId.equals(other.netId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ca.queensu.websvcs.workshopbooking.Person[ netId=" + netId + " ]";
+    }
+    
     
     @XmlTransient
     public List<Workshops> getAllWorkshops() {
         return myWorkshops;
+    }
+    
+    public void setMyWorkshops(List<Workshops> workshops) {
+        this.myWorkshops = workshops;
+    }
+    
+    public void addWorkshop(Workshops w) {
+        this.myWorkshops.add(w);
+        w.getMyRegistrants().add(this);
+    }
+    
+    @XmlTransient
+    public List<Workshops> getOwnedWorkshops() {
+        return myOwnedWorkshops;
+    }
+    
+    public void setOwnedWorkshops(List<Workshops> workshops) {
+        this.myOwnedWorkshops = workshops;
+    }
+    
+    public void addOwnedWorkshop(Workshops w) {
+        this.myOwnedWorkshops.add(w);
+        w.getMyFacilitators().add(this);
     }
 
     public List<Workshops> getUpcomingWorkshops(){
@@ -198,41 +257,6 @@ public class Person implements Serializable {
                 past.add(allWorkshops.get(i));
         
         return past;
-    }
-    
-    public void setMyWorkshops(List<Workshops> workshops) {
-        this.myWorkshops = workshops;
-    }
-    
-    public void addWorkshop(Workshops w) {
-        this.myWorkshops.add(w);
-        w.getMyRegistrants().add(this);
-    }
-
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (netId != null ? netId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Person)) {
-            return false;
-        }
-        Person other = (Person) object;
-        if ((this.netId == null && other.netId != null) || (this.netId != null && !this.netId.equals(other.netId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "ca.queensu.websvcs.workshopbooking.core.entity.Person[ netId=" + netId + " ]";
     }
     
 }

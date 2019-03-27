@@ -38,10 +38,13 @@ public class Departments implements Serializable {
     private Integer departmentId;
     @Column(name = "department_name")
     private String departmentName;
+    
+    /**
     @OneToMany(mappedBy = "departmentId")
     private Collection<Person> personCollection;
     @OneToMany(mappedBy = "departmentId")
     private Collection<Workshops> workshopCollection;
+    **/
 
     public Departments() {
     }
@@ -66,6 +69,7 @@ public class Departments implements Serializable {
         this.departmentName = departmentName;
     }
 
+    /**
     @XmlTransient
     public Collection<Person> getPersonCollection() {
         return personCollection;
@@ -83,6 +87,7 @@ public class Departments implements Serializable {
     public void setWorkshopCollection(Collection<Workshops> workshopCollection) {
         this.workshopCollection = workshopCollection;
     }
+    **/
 
     @Override
     public int hashCode() {

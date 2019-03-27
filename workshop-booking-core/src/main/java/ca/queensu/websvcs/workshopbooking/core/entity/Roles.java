@@ -8,6 +8,7 @@ package ca.queensu.websvcs.workshopbooking.core.entity;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -36,16 +37,25 @@ public class Roles implements Serializable {
     @Basic(optional = false)
     @Column(name = "role_id")
     private Integer roleId;
+    @Basic(optional = false)
     @Column(name = "role_name")
     private String roleName;
-    @OneToMany(mappedBy = "roleId")
+    
+    /**
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
     private Collection<Person> personCollection;
+    **/
 
     public Roles() {
     }
 
     public Roles(Integer roleId) {
         this.roleId = roleId;
+    }
+
+    public Roles(Integer roleId, String roleName) {
+        this.roleId = roleId;
+        this.roleName = roleName;
     }
 
     public Integer getRoleId() {
@@ -64,6 +74,7 @@ public class Roles implements Serializable {
         this.roleName = roleName;
     }
 
+    /**
     @XmlTransient
     public Collection<Person> getPersonCollection() {
         return personCollection;
@@ -72,6 +83,7 @@ public class Roles implements Serializable {
     public void setPersonCollection(Collection<Person> personCollection) {
         this.personCollection = personCollection;
     }
+    **/
 
     @Override
     public int hashCode() {
@@ -95,7 +107,7 @@ public class Roles implements Serializable {
 
     @Override
     public String toString() {
-        return "ca.queensu.websvcs.workshopbooking.core.entity.Roles[ roleId=" + roleId + " ]";
+        return "ca.queensu.websvcs.workshopbooking.Roles[ roleId=" + roleId + " ]";
     }
     
 }
