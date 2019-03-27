@@ -84,7 +84,7 @@
                             <td><s:property value="startTime"/></td>
                             <td><s:property value="startTimeToString()"/></td>
                             <td><s:property value="endTime"/></td>
-                            <td><s:property value="department"/></td>
+                            <td><s:property value="departmentId.departmentName"/></td>
                             <td>
                                 <s:url action="detailsLoadAction" var="detailsUrl">
                                     <s:param name="workshopNumber" value="workshopNumber" />

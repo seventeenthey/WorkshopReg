@@ -1,3 +1,5 @@
+use workshopbooking;
+
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS PERSON;
 DROP TABLE IF EXISTS ROLES;
@@ -110,7 +112,10 @@ INSERT INTO LOCATIONS VALUES ("Goodes Hall");
 -- ADD FAKE DATA
 INSERT INTO PERSON VALUES ("15dny", 12345678, "Daniel K.", "5dny@queensu.ca", 1, 0);
 INSERT INTO PERSON VALUES ("emmah", 57338531, "Emma H.", "emma_h@queensu.ca", 3, 2);
-INSERT INTO CATALOGUE VALUES (NULL, 2, 2, "How to Stay Awake in Class", "Learn to stay focused!", "Walter Light Hall", 100, 5, '2019-02-05 10:00:00', '2019-02-05 11:30:00');
+INSERT INTO CATALOGUE VALUES (NULL, 2, 3, "How to Stay Awake in Class", "Learn to stay focused!", "Walter Light Hall", 100, 5, '2019-02-05 10:00:00', '2019-02-05 11:30:00');
 INSERT INTO CATALOGUE VALUES (NULL, 2, 2, "How to Study Effectively", "Learn how to study effectively!", "Dunning Hall", 100, 0, '2019-04-01 14:00:00', '2019-04-01 16:00:00');
+INSERT INTO CATALOGUE VALUES (NULL, 2, 1, "How to Make New Friends", "Get lots of friends!", "Goodes Hall", 100, 0, '2019-05-12 18:30:00', '2019-05-12 20:00:00');
 INSERT INTO REVIEWS VALUES (1, "15dny", "Loved it!");
+INSERT INTO REGISTRATIONS VALUES (1, "15dny");
 INSERT INTO REGISTRATIONS VALUES (2, "15dny");
+INSERT INTO REGISTRATIONS VALUES (3, "15dny");
