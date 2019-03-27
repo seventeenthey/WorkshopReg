@@ -45,9 +45,6 @@ public interface WorkshopBookingSessionBeanLocal {
 
     public List<facilitatorDataBean> findFacilitatorList();
 
-    //for listview.jsp
-    public List<WorkshopInfoForm> findRegisteredWorkshops(Person person);
-    public List<WorkshopInfoForm> findCreatedWorkshops(Person person);
     
     public List<Catalogue> getWorkshopsForPerson(Person p);
     public List<Catalogue> getWorkshopsHostedByPerson(Person p);

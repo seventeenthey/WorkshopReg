@@ -331,39 +331,18 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return facilBean;
     }
     
-
-    //TODO - Vincent or Taylor
-    //make this find all workshops that person is attending
-    @Override
-    public List<WorkshopInfoForm> findRegisteredWorkshops(Person person){
-        List<WorkshopInfoForm> output = new ArrayList();
-        
-        for(int i = 0; i < 10; i++)
-            output.add(generateWorkshopInfo(i));
-        
-        return output;
-    }
     
+    
+    // find all workshops that person is attending
     @Override
     public List<Catalogue> getWorkshopsForPerson(Person p) {
-        List<Catalogue> myWorkshops = p.getMyWorkshops();
         return p.getMyWorkshops();
     }
     
+    // find all workshops that person has created
     @Override
     public List<Catalogue> getWorkshopsHostedByPerson(Person p) {
         List<Catalogue> workshops = em.createNamedQuery("Catalogue.findByWorkshopHostId", Catalogue.class).setParameter("netId", p.getNetId()).getResultList();
         return workshops;
-    }
-    
-    //TODO - Vincent or Taylor
-    //make this find all workshops that person has created
-    @Override public List<WorkshopInfoForm> findCreatedWorkshops(Person person){
-        List<WorkshopInfoForm> output = new ArrayList();
-        
-        for(int i = 0; i < 5; i++)
-            output.add(generateWorkshopInfo(i));
-        
-        return output;
     }
 }
