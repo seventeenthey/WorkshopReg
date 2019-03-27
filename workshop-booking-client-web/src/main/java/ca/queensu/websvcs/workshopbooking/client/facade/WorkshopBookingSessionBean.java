@@ -6,6 +6,7 @@ import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.uis.services.email.ws.QueensEmailInterface;
 import ca.queensu.websvcs.workshopbooking.client.domain.EmailInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
+import ca.queensu.websvcs.workshopbooking.core.entity.EventStatus;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import java.math.BigDecimal;
@@ -142,9 +143,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public List<String> findstatusList(){
 //      List of possible status for workshops
         List<String> statusList = new ArrayList<>();
-        statusList.add("Not Posted");
-        statusList.add("Posted");
-        statusList.add("Archived");
+        for (EventStatus eventStatus: em.createNamedQuery("EventStatus.findAll", EventStatus.class).getResultList()) {
+            statusList.add(eventStatus.getEventStatus());
+        }
         return statusList;
     }
     
