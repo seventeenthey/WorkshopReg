@@ -59,13 +59,13 @@
 
         <div class="container"> 
                 <div class="text-center">
-                    <h3><s:property value="workshop.eventTitle"/></h3>
-                    <p width="1"><s:property value="workshop.teaser"/></p>
+                    <h3><s:property value="workshop.Title"/></h3>
+                    <p width="1"><s:property value="workshop.details"/></p>
                 </div>
                 <div class="row">
                     <div class="row col-sm-4">
                         <h4> Workshop Number:  </h4>
-                        <h4> <s:property value="workshopNumber"/> </h4>
+                        <h4> <s:property value="workshopId"/> </h4>
                     </div>
                     <div class="col-sm-4">
                         <h4> Location: </h4>
@@ -73,15 +73,15 @@
                     </div>
                     <div class="col-sm-4">
                         <h4> Start Time & Date: </h4>
-                        <h4> <s:property value="workshop.eventStDate"/> <s:property value="workshop.eventStTime"/></h4>
+                        <h4> <s:property value="workshop.eventStart"/> <s:property value="workshop.eventStTime"/></h4>
                     </div>
                     <div class="col-sm-4">
                         <h4> Facilitator: </h4>
-                        <h4> <s:property value="workshop.facilitator"/> </h4>
+                        <h4> <s:property value="workshop.workshopHostId.commonName"/> </h4>
                     </div>
                     <div class="col-sm-4">
                         <h4> Status: </h4>
-                        <h4> <s:property value="workshop.status"/></h4>
+                        <h4> <s:property value="workshop.eventStatus.eventStatus"/></h4>
                     </div>
                 </div>
 
