@@ -7,6 +7,7 @@ import ca.queensu.uis.services.email.ws.QueensEmailInterface;
 import ca.queensu.websvcs.workshopbooking.client.domain.EmailInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
 import ca.queensu.websvcs.workshopbooking.core.entity.Catalogue;
+import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import javax.persistence.PersistenceContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.Random;
+import static java.util.stream.Collectors.toList;
 
 /**
  * <p>WorkshopBookingSessionBean class.</p>
@@ -150,9 +152,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public List<String> findlocationList(){
 //      List of all possible locations to hold a workshop
         List<String> locationList = new ArrayList<>();
-        locationList.add("Dunning Hall");
-        locationList.add("WalterLight Hall");
-        locationList.add("Stauffer Lib");
+        for (Locations location: em.createNamedQuery("Locations.findAll", Locations.class).getResultList()) {
+            locationList.add(location.getLocationName());
+        }
         return locationList;
     }
     

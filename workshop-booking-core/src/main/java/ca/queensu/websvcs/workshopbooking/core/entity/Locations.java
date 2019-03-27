@@ -24,7 +24,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Locations.findAll", query = "SELECT l FROM Locations l")
-    , @NamedQuery(name = "Locations.findByLocationName", query = "SELECT l FROM Locations l WHERE l.locationName = :locationName")})
+    , @NamedQuery(name = "Locations.findByLocationName", query = "SELECT l FROM Locations l WHERE l.locationName = :locationName")
+})
+
 public class Locations implements Serializable {
 
     private static final long serialVersionUID = 1L;

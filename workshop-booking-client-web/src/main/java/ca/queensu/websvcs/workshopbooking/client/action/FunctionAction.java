@@ -7,6 +7,7 @@ package ca.queensu.websvcs.workshopbooking.client.action;
 
 import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
+import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
@@ -35,8 +36,8 @@ public class FunctionAction extends ActionSupport implements Preparable{
     private WorkshopInfoForm workshopForm;
     
     // This list populates the radio buttons for workshop status
-    List<String> statusList;
-    List<String> locationList;
+    private List<String> statusList;
+    private List<String> locationList;
 
     public FunctionAction() {
         System.out.println("### FunctionAction constructor running");
@@ -48,7 +49,11 @@ public class FunctionAction extends ActionSupport implements Preparable{
             System.out.println("### FunctionAction prepare running");
             statusList = ejb.findstatusList();
             locationList = ejb.findlocationList();
-        } 
+            
+            for (String l: locationList){
+                System.out.println(l);
+            }
+        }
         catch (Exception e) {
             StringWriter out = new StringWriter();
             e.printStackTrace(new PrintWriter(out));
