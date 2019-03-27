@@ -348,4 +348,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public List<Workshops> getUpcomingWorkshopsByPerson(Person p){
         return p.getUpcomingWorkshops();
     }
+    
+    // questionaire.jsp
+    public boolean registerIn(){
+        return true;
+    }
 }

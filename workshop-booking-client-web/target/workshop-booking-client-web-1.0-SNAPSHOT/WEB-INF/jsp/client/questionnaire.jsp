@@ -84,11 +84,30 @@
         </nav>
 
         <div class="container">
-            <p> Will need to access the questionnaire set for this workshop</p>
-            <div type='button' class='btn btn-primary'>
-                <s:url action="registerConfirmationAction" var="registerConfirmationUrl" />
-                <a class="nav-link" href='<s:property value="registerConfirmationUrl"/>' style="color:white">Register</a>
-            </div>
+            <s:actionmessage theme="bootstrap"/>
+            
+            <h2>Registration Questionnaire</h2>
+            
+            <s:form id="regQuestionnaire" action="questionnaireExeAction" 
+                    theme="bootstrap" method="post" cssClass="form-vertical">
+                <s:fielderror theme="bootstrap"/>
+                
+                <%--Todo: Need connect the expectation to Database--%>
+                <s:textarea 
+                    label="Are there any expectation for the workshop?"
+                    name="expectation"
+                    placeholder="Write something here..."
+                    elementCssClass="col-sm-5"/>
+
+                <s:checkbox
+                    label="*I understand that by registering for this event I am committing to attend the entire event."
+                    name="personInfo.checkbox"
+                    required="required"/>
+
+                <s:submit 
+                    value="Register"
+                    cssClass="btn btn-success"/>
+            </s:form>
         </div>
 
         <footer class="footer" id="footer">

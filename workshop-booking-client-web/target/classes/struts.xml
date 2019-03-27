@@ -191,8 +191,15 @@
             <result name="success">WEB-INF/jsp/client/personaldetail.jsp</result>
         </action>
         
-        <action name="questionnaireAction" class="ca.queensu.websvcs.workshopbooking.client.action.QuestionnaireAction" method="execute">
+        <!--questionaire.jsp-->
+        <action name="questionnaireLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.QuestionnaireAction" method="load">
             <interceptor-ref name="baseStack"></interceptor-ref>
+            <result name="success">WEB-INF/jsp/client/questionnaire.jsp</result>
+        </action>
+        
+        <action name="questionnaireExeAction" class="ca.queensu.websvcs.workshopbooking.client.action.QuestionnaireAction" method="execute">
+            <interceptor-ref name="baseValidationStack"></interceptor-ref>
+            <result name="input">WEB-INF/jsp/client/questionnaire.jsp</result>
             <result name="success">WEB-INF/jsp/client/questionnaire.jsp</result>
         </action>
         

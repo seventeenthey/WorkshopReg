@@ -128,16 +128,6 @@
                             label="Facilitator ID:"
                             name="facilBeanList.facilID"
                             elementCssClass="col-sm-3"/>
-
-                        <s:textfield
-                            label="First Name:"
-                            name="facilBeanList.facilFirstName"
-                            elementCssClass="col-sm-3"/>
-
-                        <s:textfield
-                            label="Last Name:"
-                            name="facilBeanList.facilLastName"
-                            elementCssClass="col-sm-3"/>
                         
                         <s:submit 
                             value="Add"

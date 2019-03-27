@@ -5,31 +5,83 @@
  */
 package ca.queensu.websvcs.workshopbooking.client.action;
 
+import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.Preparable;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
+import javax.ejb.EJB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 
 /**
  *
  * @author dwesl
  */
-public class QuestionnaireAction extends ActionSupport{
+public class QuestionnaireAction extends ActionSupport implements Preparable{
     
     private static final long serialVersionUID = 1L;
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.client.action.QuestionnaireAction.class);
 
+    @EJB(mappedName = "WorkshopBookingSessionBean")
+    private WorkshopBookingSessionBeanLocal ejb;
+    
     public QuestionnaireAction() {
         System.out.println("### QuestionnaireAction constructor running");
+    }
+    
+/**
+ * Prepare Load Execute Validation
+ * @return
+ * @throws Exception 
+ */
+    @Override
+    public void prepare() throws Exception {
+        try {
+            System.out.println("### FunctionAction prepare running");
+//            Todo: Add Load Workshop Name from Previous Page
+        }
+        catch (Exception e) {
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
+            addActionError(createErrorMessage("Exception occurred while preparing data for edit screen."));
+            log.error("***************Exception occurred in prepare method " + e.getMessage());
+            log.error(out);
+        }
+    }    
+    
+    @SkipValidation
+    public String load() throws Exception{
+        try {
+            System.out.println("### FunctionAction load running");
+        } 
+        catch (Exception e) {
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
+            addActionError(createErrorMessage("Exception occurred while loading register questionaire screen."));
+            log.error("***************Exception occurred in load method " + e.getMessage());
+            log.error(out);
+            return ERROR;
+        }
+        return SUCCESS;
     }
     
     @Override
     public String execute() throws Exception {
         try {
+            // Check if the attendee successful registered in workshop or not
+//            Todo: May be need a input bean here to update
+            boolean saveSuccessful = ejb.registerIn();
+            if(saveSuccessful){
+                addActionMessage("Successfully registered in workshop");
+            }
+            else {
+                addActionError("Data was not saved.");
+            }
             System.out.println("### QuestionnaireAction execute running");
         } 
         catch (Exception e) {
