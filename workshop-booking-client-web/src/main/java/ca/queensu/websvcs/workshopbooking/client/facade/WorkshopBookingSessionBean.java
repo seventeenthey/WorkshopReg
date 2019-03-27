@@ -331,7 +331,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     // find all workshops that person is attending
     @Override
     public List<Workshops> getWorkshopsForPerson(Person p) {
-        return p.getMyWorkshops();
+        return p.getAllWorkshops();
     }
     
     // find all workshops that person has created
@@ -339,5 +339,13 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public List<Workshops> getWorkshopsHostedByPerson(Person p) {
         List<Workshops> workshops = em.createNamedQuery("Workshops.findByWorkshopHostId", Workshops.class).setParameter("netId", p.getNetId()).getResultList();
         return workshops;
+    }
+    
+    public List<Workshops> getPastWorkshopsByPerson(Person p){
+        return p.getPastWorkshops();
+    }
+    
+    public List<Workshops> getUpcomingWorkshopsByPerson(Person p){
+        return p.getUpcomingWorkshops();
     }
 }

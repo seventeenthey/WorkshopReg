@@ -40,6 +40,7 @@ public class ListViewAction extends ActionSupport implements Preparable{
     private Person person;
     private List<Workshops> workshopsRegistered;
     private List<Workshops> workshopsHosted;
+    private List<Workshops> pastWorkshops;
     
     public ListViewAction() {
         System.out.println("### ListViewLoadAction constructor running");
@@ -54,8 +55,9 @@ public class ListViewAction extends ActionSupport implements Preparable{
         String userNetId = (String) session.getAttribute(SSOConstants.NET_ID);
         person = ejb.getPersonByNetId(userNetId);
         
-        workshopsRegistered = ejb.getWorkshopsForPerson(person);
+        workshopsRegistered = ejb.getUpcomingWorkshopsByPerson(person);
         workshopsHosted = ejb.getWorkshopsHostedByPerson(person);
+        pastWorkshops = ejb.getPastWorkshopsByPerson(person);
     } 
     
     @Override

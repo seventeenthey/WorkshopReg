@@ -20,14 +20,17 @@
 */
 
 //find elements
-var rwTable, crTable, rwMSG, crMSG;
+var rwTable, crTable, pstTable, rwMSG, crMSG, pstMSG;
 rwTable = document.getElementById("registeredWorkshops");
 crTable = document.getElementById("createdWorkshops");
+pstTable = document.getElementById("pastWorkshops");
 rwMSG = document.getElementById("noRegWorkshopsMsg");
 crMSG = document.getElementById("noCreatedWorkshopsMsg");
+pstMSG = document.getElementById("noPastWorkshopsMsg");
 
 var numRegistered = rwTable.getElementsByTagName("tr").length -1;   //the <thead> <tr> will count as 1
 var numCreated = crTable.getElementsByTagName("tr").length -1;
+var numPast = pstTable.getElementsByTagName("tr").length -1;
 
 //if there are no workshops registered for, then show message
 if (numRegistered <= 0){
@@ -45,4 +48,13 @@ if (numCreated <= 0){
 } else {
     crTable.style.display="";
     crMSG.style.display="none";
+}
+
+//if there are no past workshops attended, then show message
+if (numPast <= 0){
+    pstTable.style.display="none";
+    pstMSG.style.display="";
+} else {
+    pstTable.style.display="";
+    pstMSG.style.display="none";
 }

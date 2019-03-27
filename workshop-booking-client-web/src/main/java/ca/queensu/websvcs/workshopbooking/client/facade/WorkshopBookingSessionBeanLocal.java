@@ -47,8 +47,8 @@ public interface WorkshopBookingSessionBeanLocal {
     
     
     
-
-    
+    public List<Workshops> getUpcomingWorkshopsByPerson(Person p);
+    public List<Workshops> getPastWorkshopsByPerson(Person p);
     public List<Workshops> getWorkshopsForPerson(Person p);
     public List<Workshops> getWorkshopsHostedByPerson(Person p);
 }

@@ -6,7 +6,9 @@
 package ca.queensu.websvcs.workshopbooking.core.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -170,10 +172,34 @@ public class Person implements Serializable {
     }
     
     @XmlTransient
-    public List<Workshops> getMyWorkshops() {
+    public List<Workshops> getAllWorkshops() {
         return myWorkshops;
     }
 
+    public List<Workshops> getUpcomingWorkshops(){
+        Date today = new Date();
+        List<Workshops> allWorkshops = getAllWorkshops();
+        List<Workshops> upcoming = new ArrayList();
+        
+        for(int i = 0;i < allWorkshops.size(); i++)
+            if (allWorkshops.get(i).getEventEnd().after(today))
+                upcoming.add(allWorkshops.get(i));
+        
+        return upcoming;
+    }
+    
+    public List<Workshops> getPastWorkshops(){
+        Date today = new Date();
+        List<Workshops> allWorkshops = getAllWorkshops();
+        List<Workshops> past = new ArrayList();
+        
+        for(int i = 0;i < allWorkshops.size(); i++)
+            if (allWorkshops.get(i).getEventEnd().before(today))
+                past.add(allWorkshops.get(i));
+        
+        return past;
+    }
+    
     public void setMyWorkshops(List<Workshops> workshops) {
         this.myWorkshops = workshops;
     }
