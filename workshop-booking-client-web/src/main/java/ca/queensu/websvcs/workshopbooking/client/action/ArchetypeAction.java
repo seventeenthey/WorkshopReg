@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import ca.queensu.websvcs.workshopbooking.client.facade.*;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
+import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,12 +32,11 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     
     //TODO these are entity objects from EASi  make archetype entities
     private Person person;
-   
     
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
     
-    List<WorkshopInfoForm> workshopBeanList;
+    List<Workshops> workshopBeanList;
     String searchKey;
 
     /**
@@ -76,9 +76,9 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
             
             String studentNetId = (String) session.getAttribute(SSOConstants.NET_ID);
             
+            
             log.debug("Log level debug");
-            //setPerson(ejb.archetypeBusinessMethodGetPerson(studentId));
-
+            setPerson(ejb.getPersonByNetId(studentNetId));
 
         } catch (Exception e) {
             
@@ -116,11 +116,11 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
         this.ejb = ejb;
     }
 
-    public List<WorkshopInfoForm> getWorkshopBeanList() {
+    public List<Workshops> getWorkshopBeanList() {
         return workshopBeanList;
     }
 
-    public void setWorkshopBeanList(List<WorkshopInfoForm> workshopBeanList) {
+    public void setWorkshopBeanList(List<Workshops> workshopBeanList) {
         this.workshopBeanList = workshopBeanList;
     }
 
@@ -131,5 +131,4 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     public void setSearchKey(String searchKey) {
         this.searchKey = searchKey;
     }
-
 }

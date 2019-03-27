@@ -55,7 +55,6 @@
     <body>
         <div class="jumbotron text-center banner-row mb-0">
             <h1>Workshop Calendar</h1>
-            <p class="h3"> <s:property value="getText('general.title.h3')" /> </p>
         </div>
 
         <!-- Navigation Bar - INCLUDED IN EVERY .JSP FILE -->
@@ -254,7 +253,7 @@
             </script>
         </div>
 
-        <div class="container" style="display:none">
+        <div class="container">
             <table class="table table-bordered table-striped table-hover" id="workshopData">
                 <th>Workshop Name</th>
                 <th>Workshop Number</th>
@@ -265,15 +264,15 @@
                 <th>Link</th>
                     <s:iterator value="workshopBeanList">
                         <tr>
-                            <td><s:property value="eventTitle" /></td>
-                            <td><s:property value="workshopNumber" /></td>
-                            <td><s:property value="rgStDate"/></td>
+                            <td><s:property value="title" /></td>
+                            <td><s:property value="workshopId" /></td>
+                            <td><s:property value="eventStart.toString()"/></td>
                             <td><s:property value="rgStTime"/></td>
-                            <td><s:property value="rgEndDate"/></td>
-                            <td><s:property value="department"/></td>
+                            <td><s:property value="event_end"/></td>
+                            <td><s:property value="departmentId.departmentName"/></td>
                             <td>
-                                <s:url action="detailsLoadActionREAL" var="detailsUrl">
-                                    <s:param name="workshopNumber" value="workshopNumber" />
+                                <s:url action="detailsLoadAction" var="detailsUrl">
+                                    <s:param name="workshopId" value="workshopId" />
                                 </s:url>
                                 <a href='<s:property value="detailsUrl"/>'>Workshop Details</a>
                             </td>
@@ -281,7 +280,6 @@
                     </s:iterator>
             </table>
         </div>            
-
         <footer class="footer" id="footer">
             <div class="container-fluid copyright navbar">
                 <div class="container text-right">
@@ -290,12 +288,26 @@
                 </div>
             </div>
         </footer>
+
+        <!--TODO - delete example-->
+        <!--Example visibility Control-->
+        <div class="superAdmin"> <h1> superAdmin </h1> </div>
+        <div class="departmentalAdmin"> <h1> departmentalAdmin </h1> </div>
+        <div class="workshopCreator"> <h1> workshopCreator </h1> </div>
+        <div class="faciliator"> <h1> faciliator </h1> </div>
+        <!--End example-->
+        
+        <!--Controls Visibility -->
+        <!--This control needs to be after all other elements, and these two lines need to be in this order-->
+        <div id="role" style="display:none"><s:property value="person.roleId.roleId"/></div> 
+        <script src="js/visibility.js"></script>
+        <!--End Visibility Control-->
+        
         <!-- JS -->
         <script src="js/tether.min.js"></script>
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/calendar.js"></script>
-        <script src="js/dashboard.js"></script>
+        <script src="js/calendar.js"></script>        
         <!-- End JS -->
     </body>
 </html>

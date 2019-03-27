@@ -52,6 +52,7 @@ public class DetailsAction extends ActionSupport implements Preparable {
             
             System.out.println("");
             System.out.println(workshopId);
+            
             workshop = ejb.findByWorkshopId(workshopId);
         } 
         catch (Exception e) {

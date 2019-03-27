@@ -35,8 +35,7 @@ public interface WorkshopBookingSessionBeanLocal {
     public List<String> findroleList();
     
     //for dashboard/Events    
-    public List<WorkshopInfoForm> findWorkshopList();
-    public WorkshopInfoForm findWorkshopByNum(String workshopNum);
+    public List<Workshops> findWorkshopList();
     
     // ADDED BY VINCENT
     public Person getPersonByNetId(String netId);

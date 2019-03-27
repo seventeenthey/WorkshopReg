@@ -123,7 +123,7 @@
                             <td><s:property value="departmentId.departmentName"/></td>
                             <td>
                                 <s:url action="detailsLoadAction" var="detailsUrl">
-                                    <s:param name="workshopNumber" value="workshopNumber" />
+                                    <s:param name="workshopId" value="workshopId" />
                                 </s:url>
                                 <a href='<s:property value="detailsUrl"/>'>Workshop Details</a>
                             </td>

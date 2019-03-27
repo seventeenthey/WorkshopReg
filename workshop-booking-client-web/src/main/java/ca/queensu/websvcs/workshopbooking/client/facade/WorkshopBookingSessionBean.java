@@ -209,14 +209,12 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     
     //actually just creates a new list
     @Override
-    public List<WorkshopInfoForm> findWorkshopList() {
+    public List<Workshops> findWorkshopList() {
+        
         try {
-            List<WorkshopInfoForm> workshopBeanList = new ArrayList<>();
-            for(int i = 0; i < 20; i++) {
-                WorkshopInfoForm workshop = generateWorkshopInfo(i);
-                workshopBeanList.add(workshop);
-            }
-            return workshopBeanList;
+            List<Workshops> workshopList = em.createNamedQuery("Workshops.findAll", Workshops.class).getResultList();
+
+            return workshopList;
         }
         catch(Exception e) {
             throw  new EJBException(e);
@@ -275,19 +273,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         
         return workshop;
     }
-    
-    //does not actually search, simply creates a new one
-    @Override
-    public WorkshopInfoForm findWorkshopByNum(String workshopNum){
-        try {
-            WorkshopInfoForm workshop = generateWorkshopInfo(Integer.valueOf(workshopNum));
-            return workshop;
-        }
-        catch(NumberFormatException e) {
-            throw  new EJBException(e);
-        }
-    }
-    
     
     // ADDED BY VINCENT (3 ITEMS)
     @Override
