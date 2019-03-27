@@ -48,8 +48,7 @@ public class DetailsAction extends ActionSupport implements Preparable {
     public String execute() throws Exception {
         try {
             System.out.println("### DetailsAction execute running");
-            
-            System.out.println("### DetailsAction load running");
+           
             System.out.println(workshopNumber);
             workshop = ejb.findWorkshopByNum(workshopNumber);
             System.out.println(workshop.getEventTitle());

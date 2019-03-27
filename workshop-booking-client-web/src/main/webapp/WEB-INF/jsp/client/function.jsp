@@ -4,7 +4,6 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -95,92 +94,121 @@
 
                 <!--Workshop Information Gathering-->
                 <div class="col-md-9">
+                    <s:actionmessage theme="bootstrap"/>
+                    <s:actionerror theme="bootstrap"/>
+                    
                     <s:form id="workshopEditForm" action="functionExeAction" 
                             theme="bootstrap" method="post" cssClass="form-vertical">
-
+                        
+                        <s:fielderror/>
                         <s:radio 
                             label="Status:"
                             labelposition="inline"
                             name="workshopForm.status" 
-                            list="statusList" />
-
+                            list="statusList"
+                            elementCssClass="col-sm-9"/>
+                        
                         <s:textfield 
                             label="Event Title:"
                             placeholder="Event Title"
                             name="workshopForm.eventTitle"
-                            tooltip="Enter Workshop Title Here"/>
+                            tooltip="Enter Workshop Title Here"
+                            cssClass="input-sm"
+                            elementCssClass="col-sm-5"/>
 
                         <s:select 
-                            label="Location"
+                            label="Location:"
                             name="workshopForm.location" 
-                            list="locationList"/>
+                            list="locationList"
+                            elementCssClass="col-sm-5"/>
 
                         <s:textarea 
                             label="Teaser:"
                             name="workshopForm.teaser"
-                            emptyOption="true"/>
+                            emptyOption="true"
+                            elementCssClass="col-sm-9"/>
 
 
                         <s:textfield 
                             label="Maximum Participants:"
                             name="workshopForm.maxParticipant"
-                            type="number"/>
+                            type="number"
+                            placeholder="10"
+                            elementCssClass="col-sm-2"/>
 
                         <s:textfield 
                             label="Wait List Limit:"
                             name="workshopForm.waitlistLimit"
-                            type="number"/>
+                            type="number"
+                            placeholder="0"
+                            elementCssClass="col-sm-2"/>
 
                         <!--Registration Start/End Date/Time-->
-                        <div class="datetimepicker">
-                            <sx:datetimepicker 
-                                label="Registration Start Date" 
-                                name="workshopForm.rgStDate" 
-                                displayFormat="dd-MMM-yyyy"/>
-                            <sx:datetimepicker 
-                                label="Registration Start Time" 
-                                name="workshopForm.rgStTime" 
-                                displayFormat="HH:mm" 
-                                type="time"/>
+                        <div class="workshopdatetime row">
+                            <div class="col-md-4">
+                                <sx:datetimepicker 
+                                    label="Registration Start Date" 
+                                    name="workshopForm.rgStDate" 
+                                    displayFormat="dd-MMM-yyyy"/>
+                            </div>
+                            <div class="col-md-4">
+                                <sx:datetimepicker 
+                                    label="Registration Start Time" 
+                                    name="workshopForm.rgStTime" 
+                                    displayFormat="HH:mm" 
+                                    type="time"/>
+                            </div>
                         </div>
 
-                        <div class="datetimepicker">
-                            <sx:datetimepicker 
-                                label="Registration End Date" 
-                                name="workshopForm.rgEndDate" 
-                                displayFormat="dd-MMM-yyyy"/>
+                        <div class="workshopdatetime row">
+                            <div class="col-md-4">
+                                <sx:datetimepicker 
+                                    label="Registration End Date" 
+                                    name="workshopForm.rgEndDate" 
+                                    displayFormat="dd-MMM-yyyy"/>
+                            </div>                            
+                            <div class="col-md-4">
                             <sx:datetimepicker 
                                 label="Registration End Time" 
                                 name="workshopForm.rgEndTime" 
                                 displayFormat="HH:mm" 
-                                type="time"/>  
+                                type="time"/>
+                            </div>
                         </div>
 
                         <!--Event Start/End Date/Time-->
-                        <div class="datetimepicker">
-                            <sx:datetimepicker 
-                                label="Event Start Date" 
-                                name="workshopForm.eventStDate" 
-                                displayFormat="dd-MMM-yyyy"/>
-                            <sx:datetimepicker 
-                                label="Event Start Time" 
-                                name="workshopForm.eventStTime" 
-                                displayFormat="HH:mm" 
-                                type="time"/>
+                        <div class="workshopdatetime row">
+                            <div class="col-md-4">
+                                <sx:datetimepicker 
+                                    label="Event Start Date" 
+                                    name="workshopForm.eventStDate" 
+                                    displayFormat="dd-MMM-yyyy"/>
+                            </div>
+                            <div class="col-md-4">
+                                <sx:datetimepicker 
+                                    label="Event Start Time" 
+                                    name="workshopForm.eventStTime" 
+                                    displayFormat="HH:mm" 
+                                    type="time"/>
+                            </div>
                         </div>
 
-                        <div class="datetimepicker">
-                            <sx:datetimepicker 
-                                label="Event End Date" 
-                                name="workshopForm.eventEndDate" 
-                                displayFormat="dd-MMM-yyyy"/>
-                            <sx:datetimepicker 
-                                label="Event End Time" 
-                                name="workshopForm.eventEndTime" 
-                                displayFormat="HH:mm" 
-                                type="time"/>  
+                        <div class="workshopdatetime row">
+                            <div class="col-md-4">
+                                <sx:datetimepicker 
+                                    label="Event End Date" 
+                                    name="workshopForm.eventEndDate" 
+                                    displayFormat="dd-MMM-yyyy"/>
+                            </div>
+                            <div class="col-md-4">
+                                <sx:datetimepicker 
+                                    label="Event End Time" 
+                                    name="workshopForm.eventEndTime" 
+                                    displayFormat="HH:mm" 
+                                    type="time"/>  
+                            </div>
                         </div>
-
+                        
                         <s:submit 
                             value="Save"
                             cssClass="btn btn-primary"/>
@@ -194,7 +222,7 @@
         <!-- JS -->
         <script src="js/tether.min.js"></script>
         <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+        <!--<script src="js/bootstrap.min.js"></script>-->
         <script src="js/searchBar.js"></script>
         <!-- End JS -->
     </body>

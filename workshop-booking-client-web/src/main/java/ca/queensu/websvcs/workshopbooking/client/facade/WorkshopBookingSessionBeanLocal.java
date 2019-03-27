@@ -21,7 +21,7 @@ public interface WorkshopBookingSessionBeanLocal {
      * @param stuId a {@link java.lang.String} object.
      * @return a boolean.
      */
-
+    public Person archetypeBusinessMethodGetPerson(String stuId);
     public List<StudentDataBean> findStudentList();
     public StudentDataBean findStudentByPk(String studentPk);
     public List<String> findCountries();
