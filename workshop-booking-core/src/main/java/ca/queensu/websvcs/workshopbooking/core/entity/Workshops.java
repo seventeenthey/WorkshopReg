@@ -375,4 +375,27 @@ public class Workshops implements Serializable {
         this.myFacilitators.add(p);
         p.getOwnedWorkshops().add(this);
     }
+    
+    public String startTimeToString(){
+        String output = "";
+        //String[] startTime = rgStTime.split(",");
+        
+        int hours = eventStart.getHours(); //Integer.parseInt(startTime[0]);
+        int minutes = eventStart.getMinutes(); //Integer.parseInt(startTime[1]);
+        
+        if(minutes == 0)
+            output += " : 00";
+        else
+            output += " : " + minutes;
+        
+        
+        if (hours > 12){
+            hours -= 12;
+            output = hours + output + " PM";
+        }
+        else
+            output = hours + output + " AM";
+
+        return output;
+    }
 }
