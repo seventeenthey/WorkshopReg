@@ -312,9 +312,9 @@ legend {
     font-size:17px;
 }
 
-.workshopdatetime{
+.datetimepicker{
     display: box;
-    padding-bottom: 2%;
+    padding-top: 1%;
 }
 
 .function #facilitatorEditForm{

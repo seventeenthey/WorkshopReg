@@ -60,8 +60,9 @@ public class FunctionAction extends ActionSupport implements Preparable{
     
     @SkipValidation
     public String load() throws Exception{
+        addActionMessage("Save Successful!");
         try {
-            System.out.println("### FunctionAction load running");
+            System.out.println("### FunctionAction load running");            
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -78,24 +79,25 @@ public class FunctionAction extends ActionSupport implements Preparable{
     public String execute() throws Exception {
         try {
             System.out.println("### FunctionAction execute running");
-            
-            // Check if the workshopInfoForm successfully saved or not
+        } 
+        catch (Exception e) {
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
             boolean saveSuccessful = ejb.updateWorkshopForm(workshopForm);
+            addActionMessage("Save Successful!");
             if(saveSuccessful){
-                addActionMessage("Workshop Information Successfully saved");
+                addActionMessage("Save Successful!");
             }
             else {
                 addActionError("Data was not saved.");
             }
-        } 
-        catch (Exception e) {
-            StringWriter out = new StringWriter();
-            e.printStackTrace(new PrintWriter(out));          
+            
+            
             addActionError(createErrorMessage("Exception occurred while granting access to the application. Please contact the Archetype Client for assistance."));
             log.error("***************Exception occurred in execute method " + e.getMessage());
             log.error(out);
             return ERROR;
-        }//end try/catch
+        }
         return SUCCESS;
     }
     
@@ -111,29 +113,11 @@ public class FunctionAction extends ActionSupport implements Preparable{
             }
             
             if(workshopForm.getEventTitle().isEmpty()) {
-                addFieldError("eventTitle", "Event Title is required.");
-            }else if(workshopForm.getEventTitle().length() > 30){
-                addFieldError("eventTitle", "Event Title cannot exceed 30 characters.");
+                addFieldError("eventTitle", "eventTitle is required.");
             }
-            
             if(workshopForm.getTeaser().isEmpty()) {
                 addFieldError("teaser", "Workshop Teaser is required.");
             }
-            
-            if (workshopForm.getMaxParticipant() == null){
-                addFieldError("maxParticipant", "Maximun Participant is required.");
-            }else if(workshopForm.getMaxParticipant()>300) {
-                addFieldError("maxParticipant", "Exceed maximun Participant (Should no more than 300).");
-            }else if(workshopForm.getMaxParticipant()<10){
-                addFieldError("maxParticipant","Less than minimun Participant (Should no less than 10).");
-            }
-            
-            if (workshopForm.getWaitlistLimit() == null){
-                addFieldError("waitlistLimit", "Wait List Limit is required.");
-            }else if(workshopForm.getWaitlistLimit()>300) {
-                addFieldError("waitlistLimit", "Exceed maximun Wait List Limit (Should no more than 300).");
-            } 
-            
         } 
         catch (Exception e) { 
             StringWriter out = new StringWriter();
