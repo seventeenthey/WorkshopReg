@@ -33,3 +33,7 @@ workshop-booking-client-web/target/maven-archiver/pom.properties
 workshop-booking-client-web/target/workshop-booking-client-web-1.0-SNAPSHOT/gfv3ee6.dpf
 workshop-booking-client-web/target/workshop-booking-client-web-1.0-SNAPSHOT/gfv3ee6.dpf
 workshop-booking-client-web/target/maven-archiver/pom.properties
+workshop-booking-admin-web/target/classes/.netbeans_automatic_build
+workshop-booking-admin-web/target/maven-archiver/pom.properties
+workshop-booking-admin-web/target/test-classes/.netbeans_automatic_build
+workshop-booking-admin-web/target/workshop-booking-admin-web-1.0-SNAPSHOT/gfv3ee6.dpf

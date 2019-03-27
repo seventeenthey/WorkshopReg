@@ -37,6 +37,15 @@ public class WorkshopInfoForm implements Serializable{
     private int workshopNumber;
     private String department;
     private facilitatorDataBean facilitator;
+    private EmailInfoForm emailInfo;
+
+    public EmailInfoForm getEmailInfo() {
+        return emailInfo;
+    }
+
+    public void setEmailInfo(EmailInfoForm emailInfo) {
+        this.emailInfo = emailInfo;
+    }
     
     
     public String getRgStDate() {

@@ -163,8 +163,14 @@
         </action>
         
         <!-- Email Edit Page-->
-        <action name="emaileditLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.EmailEditAction" method="execute">
+        <action name="emaileditLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.EmailEditAction" method="load">
             <interceptor-ref name="baseStack"></interceptor-ref>
+            <result name="success">WEB-INF/jsp/client/emailedit.jsp</result>
+        </action>
+        
+        <action name="emaileditExeAction" class="ca.queensu.websvcs.workshopbooking.client.action.EmailEditAction" method="execute">
+            <interceptor-ref name="baseValidationStack"></interceptor-ref>
+            <result name="input">WEB-INF/jsp/client/emailedit.jsp</result>
             <result name="success">WEB-INF/jsp/client/emailedit.jsp</result>
         </action>
         

@@ -76,7 +76,7 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     public String execute() throws Exception {
         try {
             System.out.println("### AttendanceAction execute running");
-        } 
+        }
         catch (Exception e) {
             StringWriter out = new StringWriter();
             e.printStackTrace(new PrintWriter(out));

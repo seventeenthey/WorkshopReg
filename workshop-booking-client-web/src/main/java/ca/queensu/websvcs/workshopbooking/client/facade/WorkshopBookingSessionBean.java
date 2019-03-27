@@ -4,6 +4,7 @@ import ca.queensu.websvcs.workshopbooking.client.domain.StudentDataBean;
 import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.uis.services.email.ws.QueensEmailInterface;
+import ca.queensu.websvcs.workshopbooking.client.domain.EmailInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
 import ca.queensu.websvcs.workshopbooking.core.entity.Catalogue;
 import java.math.BigDecimal;
@@ -147,9 +148,10 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
     }
     
-/*
-    Function Page
-    */
+/**
+ * function.jsp
+ * @return statusList; locationList; submit condition
+ */
     @Override
     public List<String> findstatusList(){
 //      List of possible status for workshops
@@ -172,6 +174,22 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     
     @Override
     public boolean updateWorkshopForm(WorkshopInfoForm workshopForm){
+//        Todo: Need Modified with actural success verification
+        try{
+            return true;
+        }catch(Exception e) {
+            throw  new EJBException(e);
+        }
+    }
+
+/**
+ * emailedit.jsp
+ * @param emailForm
+ * @return 
+ */    
+    @Override
+    public boolean updateEmailForm(EmailInfoForm emailForm){
+//        Todo: Need Modified with actural success verification
         try{
             return true;
         }catch(Exception e) {

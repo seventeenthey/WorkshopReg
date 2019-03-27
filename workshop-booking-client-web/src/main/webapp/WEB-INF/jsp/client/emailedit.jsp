@@ -89,46 +89,55 @@
 
 
                 <div class="col-md-9">
-                    <s:form id="RegEmailForm" action="emailEditLoadAction" 
+                    <s:actionmessage theme="bootstrap"/>
+                    <s:actionerror theme="bootstrap"/>
+                    
+                    <s:form id="RegEmailForm" action="emaileditExeAction" 
                             theme="bootstrap" method="post" cssClass="form-vertical"
                             enctype="multipart/form-data">
 
                         <h2>Registrant Notification Messages</h2>
+                        <s:fielderror/>
                         <s:textfield 
                             label="Notification Email From Name:"
-                            name="EmailInfoForm.notifyFromName"/>
+                            name="emailForm.notifyFromName"
+                            elementCssClass="col-sm-5"/>
 
                         <s:textarea 
                             label="Confirmation Message"
-                            name="EmailInfoForm.confirmMsg"
-                            emptyOption="true"/>
+                            name="emailForm.confirmMsg"
+                            emptyOption="true"
+                            elementCssClass="col-sm-9"/>
 
                         <s:textarea 
                             label="Wait List Message"
-                            name="EmailInfoForm.waitListMsg"
-                            emptyOption="true"/>
+                            name="emailForm.waitListMsg"
+                            emptyOption="true"
+                            elementCssClass="col-sm-9"/>
 
                         <s:textarea 
                             label="Cancellation Message"
-                            name="EmailInfoForm.cancelMsg"
-                            emptyOption="true"/>
+                            name="emailForm.cancelMsg"
+                            emptyOption="true"
+                            elementCssClass="col-sm-9"/>
 
                         <s:textarea 
                             label="Evaluation Message"
-                            name="EmailInfoForm.evalMsg"
-                            emptyOption="true"/>
+                            name="emailForm.evalMsg"
+                            emptyOption="true"
+                            elementCssClass="col-sm-9"/>
 
                         <h2>Internal Notification Options</h2>
                         <s:checkboxlist 
                             label="Notify:" 
                             labelposition="inline"
-                            name="EmailInfoForm.notifyGroup"
+                            name="emailForm.notifyGroup"
                             list="{'Event Host','Assigned Facilitators'}"/>
 
                         <s:checkboxlist 
                             label="Receive Notifications For:" 
                             labelposition="inline"
-                            name="EmailInfoForm.notifyCondition"
+                            name="emailForm.notifyCondition"
                             list="{'Confirmation','Wait List','Cancellation','Event Full'}"/>                
 
                         <s:submit cssClass="btn btn-primary"/>

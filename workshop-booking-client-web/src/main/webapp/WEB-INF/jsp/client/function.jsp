@@ -128,7 +128,6 @@
                             emptyOption="true"
                             elementCssClass="col-sm-9"/>
 
-
                         <s:textfield 
                             label="Maximum Participants:"
                             name="workshopForm.maxParticipant"
