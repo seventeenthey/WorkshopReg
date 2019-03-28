@@ -8,6 +8,7 @@ package ca.queensu.websvcs.workshopbooking.client.action;
 import ca.queensu.websvcs.workshopbooking.client.domain.StudentDataBean;
 import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
+import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
@@ -33,7 +34,7 @@ public class AttendanceAction extends ActionSupport {
     private WorkshopBookingSessionBeanLocal ejb;
     
     List<StudentDataBean> studentBeanList;
-    
+    List<Person> participants;
     private Integer workshopId;
 
 
@@ -44,8 +45,10 @@ public class AttendanceAction extends ActionSupport {
     @Override
     public String execute() throws Exception {
         try {
-            studentBeanList = ejb.findStudentList();
             System.out.println("### AttendanceAction execute running");
+            
+            studentBeanList = ejb.findStudentList();
+            participants = ejb.getParticipantsForWorkshop(workshopId);
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -80,13 +83,21 @@ public class AttendanceAction extends ActionSupport {
     public void setEjb(WorkshopBookingSessionBeanLocal ejb) {
         this.ejb = ejb;
     }
-
+    
     public List<StudentDataBean> getStudentBeanList() {
         return studentBeanList;
     }
 
     public void setStudentBeanList(List<StudentDataBean> studentBeanList) {
         this.studentBeanList = studentBeanList;
+    }
+
+    public List<Person> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<Person> participants) {
+        this.participants = participants;
     }
 
     public Integer getWorkshopId() {

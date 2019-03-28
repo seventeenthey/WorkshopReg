@@ -101,26 +101,22 @@
                     <thead>
                         <tr>
                             <th>Student-ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
+                            <th>Name</th>
                             <th>Attendance</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <s:iterator value="studentBeanList">
+                        <s:iterator value="participants">
                             <tr>
                                 <td>
-                                    <s:property value="studentID" />
+                                    <s:property value="netId" />
                                 </td>
                                 <td>
-                                    <s:property value="studentFirstName" />
+                                    <s:property value="commonName" />
                                 </td>
-                                <td>
-                                    <s:property value="studentLastName" />
-                                </td>
-
                                 <td><s:checkbox
-                                    name="studentBeanList.attendance"/></td>
+                                    name="studentBeanList.attendance"/>
+                                </td>
                             </tr>
                         </s:iterator>
                     </tbody>

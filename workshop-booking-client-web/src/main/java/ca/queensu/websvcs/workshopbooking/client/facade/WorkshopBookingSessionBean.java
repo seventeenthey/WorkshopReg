@@ -117,6 +117,17 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
         return locationList;
     }
+    
+    @Override
+    public List<Person> getParticipantsForWorkshop(Integer workshopId){
+        // Get all participants in a workshop
+        Workshops w = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", workshopId).getSingleResult();
+        List<Person> participants = new ArrayList<>();
+        for (Person p: w.getMyRegistrants()) {
+            participants.add(p);
+        }
+        return participants;
+    }
 
     @Override
     public boolean updateWorkshopForm(WorkshopInfoForm workshopForm){
@@ -232,16 +243,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
             throw  new EJBException(e);
         }
     }
-
-//    private facilitatorDataBean generateFacilBean(int facilNum) {
-//        facilitatorDataBean facilBean = new facilitatorDataBean();
-//        facilBean.setFacilID(String.valueOf(facilNum));
-//        facilBean.setFacilName("BeCool"+facilNum);
-//
-//        return facilBean;
-//    }
-
-
 
     // find all workshops that person is attending
     @Override
