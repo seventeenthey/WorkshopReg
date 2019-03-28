@@ -45,7 +45,8 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     public void prepare() throws Exception {
         try {
             System.out.println("### FacilitatorAction prepare running");
-            facilBeanList = ejb.findFacilitatorList(workshopId);
+//            addActionMessage(workshopId.toString());
+            
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -62,6 +63,9 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
         try {
             System.out.println("### FacilitatorAction load running");
 //            addActionMessage("Test Input"+workshopId);
+            if (workshopId != null){
+                facilBeanList = ejb.findFacilitatorList(workshopId);
+            }
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
