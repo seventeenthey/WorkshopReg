@@ -384,9 +384,9 @@ public class Workshops implements Serializable {
         int minutes = eventStart.getMinutes(); //Integer.parseInt(startTime[1]);
         
         if(minutes == 0)
-            output += " : 00";
+            output += ":00";
         else
-            output += " : " + minutes;
+            output += ":" + minutes;
         
         
         if (hours > 12){
@@ -396,6 +396,15 @@ public class Workshops implements Serializable {
         else
             output = hours + output + " AM";
 
+        return output;
+    }
+    
+    //date.toString() does not have exactly the output that we would like
+    public String dateToString(){
+        String[] dateInfo = eventStart.toString().split(" ");
+        String output = dateInfo[0] + " " + dateInfo[1] + " " + dateInfo[2] + " " + startTimeToString() + " " + dateInfo[5];
+        System.out.println("DATE");
+        System.out.println(output);
         return output;
     }
 }

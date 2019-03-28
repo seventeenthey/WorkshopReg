@@ -30,7 +30,7 @@
     </head>
     <body>
         <div class="jumbotron text-center banner-row mb-0">
-            <h1>Details Page</h1>
+            <h1>Workshop Details</h1>
         </div>
 
         <!-- Navigation Bar - INCLUDED IN EVERY .JSP FILE -->
@@ -69,9 +69,10 @@
                 </div>
                 <div class="row mx-1">
                     <div class="col-sm-4 my-2">
-                        <div class='card bg-info'>
-                            <h5 class="card-header">Workshop ID: </h5>
-                            <p class='card-body text-white'> <s:property value="workshopId"/> </p>
+                        <div class="card bg-info">
+                            <h4 class="card-header">Registered Status: </h4>
+                            <p class='card-body text-white' id="registeredStatus">Not Registered</p> <!--This needs to say: "Registered", "Not Registered", or "WaitListed" -->
+                            <s:property value="workshop.personCollection1"/>
                         </div>
                     </div>
                     <div class="col-sm-4 my-2">
@@ -84,8 +85,7 @@
                         <div class="card bg-info">
                             <h4  class="card-header">Start Time & Date: </h4>
                             <div class="card-body text-white">
-                                <p><s:property value="workshop.eventStart"/></p>
-                                <p><s:property value="workshop.startTimeToString()"/></p>
+                                <p><s:property value="workshop.dateToString()"/></p>
                             </div>
                         </div>
                     </div>
@@ -102,11 +102,10 @@
                         </div>
                     </div>
                     <div class="col-sm-4 my-2">
-                        <div class="card bg-info">
-                            <h4 class="card-header">Registered Status: </h4>
-                            <p class='card-body text-white' id="registeredStatus">Not Registered</p> <!--This needs to say: "Registered", "Not Registered", or "WaitListed" -->
-                            <s:property value="workshop.personCollection1"/>
-                        </div>
+                        <div class='card bg-info'>
+                            <h5 class="card-header">Workshop ID: </h5>
+                            <p class='card-body text-white'> <s:property value="workshopId"/> </p>
+                        </div>                        
                     </div>
                 </div>
             </div>
