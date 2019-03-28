@@ -10,7 +10,7 @@ package ca.queensu.websvcs.workshopbooking.client.domain;
  * @author dd123
  */
 public class facilitatorDataBean {
-    
+
     private String facilID;
     private String facilName;
 
@@ -31,5 +31,5 @@ public class facilitatorDataBean {
     }
 
 
-    
+
 }

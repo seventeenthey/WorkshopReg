@@ -42,7 +42,7 @@ import static java.util.stream.Collectors.toList;
 public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLocal {
 
     private final Logger log = LogManager.getLogger(WorkshopBookingSessionBean.class);
-     
+
     @PersistenceContext(unitName = "WorkshopBooking-WebPU")
     private EntityManager em;
 
@@ -64,7 +64,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
             throw  new EJBException(e);
         }
     }
-    
+
     private StudentDataBean generateStudentBean(int studentNum) {
         StudentDataBean studBean = new StudentDataBean();
         studBean.setStudentID(String.valueOf(studentNum));
@@ -93,7 +93,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
             throw  new EJBException(e);
         }
     }
-    
+
 /**
  * function.jsp
  * @return statusList; locationList; submit condition
@@ -107,7 +107,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
         return statusList;
     }
-    
+
     @Override
     public List<String> findlocationList(){
 //      List of all possible locations to hold a workshop
@@ -117,11 +117,11 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
         return locationList;
     }
-    
+
     @Override
     public boolean updateWorkshopForm(WorkshopInfoForm workshopForm){
 //      Todo: Need Modified with actural success verification
-        
+
         String netId = workshopForm.getFacilitatorId();
         Person facilitator = em.createNamedQuery("Person.findByNetId", Person.class).setParameter("netId", netId).getSingleResult();
         Departments department = facilitator.getDepartmentId();
@@ -130,18 +130,13 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         String location = workshopForm.getLocation();
         int maxParticipants = workshopForm.getMaxParticipant();
         EventStatus eventStatus = new EventStatus(workshopForm.getStatus());
-        
-        System.out.println("hello22");
-        System.out.println(workshopForm.getRgStDate());
-        System.out.println(workshopForm.getRgStTime());
-        
+
         try {
-            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date registrationStart = formatter.parse(workshopForm.getRgStDate()+" "+workshopForm.getRgStTime());
-            System.out.println("byebye" + registrationStart.toString());
-            Date registrationEnd = formatter.parse(workshopForm.getRgEndDate()+" "+workshopForm.getRgEndTime());
-            Date eventStart = formatter.parse(workshopForm.getEventStDate()+" "+workshopForm.getEventStTime());
-            Date eventEnd = formatter.parse(workshopForm.getEventEndDate()+" "+workshopForm.getEventEndTime());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date registrationStart = formatter.parse(workshopForm.getRgStDateTime());
+            Date registrationEnd = formatter.parse(workshopForm.getRgEndDateTime());
+            Date eventStart = formatter.parse(workshopForm.getEventStDateTime());
+            Date eventEnd = formatter.parse(workshopForm.getEventEndDateTime());
             System.out.println("hello2");
             Workshops w = new Workshops(facilitator, department, title, details, location, maxParticipants, registrationStart, registrationEnd, eventStart, eventEnd, eventStatus);
             System.out.println("hello3");
@@ -157,8 +152,8 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
 /**
  * emailedit.jsp
  * @param emailForm
- * @return 
- */    
+ * @return
+ */
     @Override
     public boolean updateEmailForm(EmailInfoForm emailForm){
 //        Todo: Need Modified with actural success verification
@@ -168,7 +163,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
             throw  new EJBException(e);
         }
     }
-    
+
     @Override
     public List<String> finddepartmentList(){
 //      List of all possible locations to hold a workshop
@@ -178,7 +173,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
         return departmentList;
     }
-    
+
     @Override
     public List<String> findroleList(){
 //      List of all possible locations to hold a workshop
@@ -188,7 +183,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
         return roleList;
     }
-    
+
     @Override
     public List<Workshops> findWorkshopList() {
         try {
@@ -199,19 +194,19 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
             throw  new EJBException(e);
         }
     }
-    
+
     @Override
     public Person getPersonByNetId(String netId) {
         Person person = em.createNamedQuery("Person.findByNetId", Person.class).setParameter("netId", netId).getSingleResult();
         return person;
     }
-    
+
     @Override
     public void savePerson(Person p) {
         em.persist(p);
         em.flush();
     }
-    
+
     @Override
     public Workshops findByWorkshopId(Integer id) {
         Workshops workshop = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", id).getSingleResult();
@@ -222,16 +217,14 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public Workshops findByWorkshopId(String id) {
         return findByWorkshopId(Integer.valueOf(id));
     }
-    
+
     @Override
     public List<facilitatorDataBean> findFacilitatorList(Integer workshopId) {
-        System.out.println("hello18");
-        System.out.println(workshopId); // THIS IS NULL
         try {
+            Workshops w = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", workshopId).getSingleResult();
             List<facilitatorDataBean> facilitatorList = new ArrayList<>();
-            for(int i = 0; i < 5; i++) {
-                facilitatorDataBean facilBean = generateFacilBean(i);
-                facilitatorList.add(facilBean);
+            for (Person p: w.getMyFacilitators()) {
+                facilitatorList.add(new facilitatorDataBean(p.getNetId(),p.getCommonName(),p.getCommonName()));
             }
             return facilitatorList;
         }
@@ -239,40 +232,40 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
             throw  new EJBException(e);
         }
     }
-    
+
     private facilitatorDataBean generateFacilBean(int facilNum) {
         facilitatorDataBean facilBean = new facilitatorDataBean();
         facilBean.setFacilID(String.valueOf(facilNum));
         facilBean.setFacilName("BeCool"+facilNum);
-       
+
         return facilBean;
     }
-    
-    
-    
+
+
+
     // find all workshops that person is attending
     @Override
     public List<Workshops> getWorkshopsForPerson(Person p) {
         return p.getAllWorkshops();
     }
-    
+
     // find all workshops that person has created
     @Override
     public List<Workshops> getWorkshopsHostedByPerson(Person p) {
         List<Workshops> workshops = em.createNamedQuery("Workshops.findByWorkshopCreatorId", Workshops.class).setParameter("netId", p.getNetId()).getResultList();
         return workshops;
     }
-    
+
     @Override
     public List<Workshops> getPastWorkshopsByPerson(Person p){
         return p.getPastWorkshops();
     }
-    
+
     @Override
     public List<Workshops> getUpcomingWorkshopsByPerson(Person p){
         return p.getUpcomingWorkshops();
     }
-    
+
     // questionaire.jsp
     public boolean registerIn(){
         return true;
