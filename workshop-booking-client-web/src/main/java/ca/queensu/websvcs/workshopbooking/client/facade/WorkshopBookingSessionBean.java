@@ -131,17 +131,12 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         int maxParticipants = workshopForm.getMaxParticipant();
         EventStatus eventStatus = new EventStatus(workshopForm.getStatus());
         
-        System.out.println("hello22");
-        System.out.println(workshopForm.getRgStDate());
-        System.out.println(workshopForm.getRgStTime());
-        
         try {
-            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date registrationStart = formatter.parse(workshopForm.getRgStDate()+" "+workshopForm.getRgStTime());
-            System.out.println("byebye" + registrationStart.toString());
-            Date registrationEnd = formatter.parse(workshopForm.getRgEndDate()+" "+workshopForm.getRgEndTime());
-            Date eventStart = formatter.parse(workshopForm.getEventStDate()+" "+workshopForm.getEventStTime());
-            Date eventEnd = formatter.parse(workshopForm.getEventEndDate()+" "+workshopForm.getEventEndTime());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date registrationStart = formatter.parse(workshopForm.getRgStDateTime());
+            Date registrationEnd = formatter.parse(workshopForm.getRgEndDateTime());
+            Date eventStart = formatter.parse(workshopForm.getEventStDateTime());
+            Date eventEnd = formatter.parse(workshopForm.getEventEndDateTime());
             System.out.println("hello2");
             Workshops w = new Workshops(facilitator, department, title, details, location, maxParticipants, registrationStart, registrationEnd, eventStart, eventEnd, eventStatus);
             System.out.println("hello3");
@@ -225,13 +220,11 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     
     @Override
     public List<facilitatorDataBean> findFacilitatorList(Integer workshopId) {
-        System.out.println("hello18");
-        System.out.println(workshopId); // THIS IS NULL
         try {
+            Workshops w = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", workshopId).getSingleResult();
             List<facilitatorDataBean> facilitatorList = new ArrayList<>();
-            for(int i = 0; i < 5; i++) {
-                facilitatorDataBean facilBean = generateFacilBean(i);
-                facilitatorList.add(facilBean);
+            for (Person p: w.getMyFacilitators()) {
+                facilitatorList.add(new facilitatorDataBean(p.getNetId(),p.getCommonName(),p.getCommonName()));
             }
             return facilitatorList;
         }
@@ -239,17 +232,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
             throw  new EJBException(e);
         }
     }
-    
-    private facilitatorDataBean generateFacilBean(int facilNum) {
-        facilitatorDataBean facilBean = new facilitatorDataBean();
-        facilBean.setFacilID(String.valueOf(facilNum));
-        facilBean.setFacilFirstName("Be");
-        facilBean.setFacilLastName("Cool" + facilNum);
-       
-        return facilBean;
-    }
-    
-    
     
     // find all workshops that person is attending
     @Override

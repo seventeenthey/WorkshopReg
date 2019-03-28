@@ -14,6 +14,12 @@ public class facilitatorDataBean {
     private String facilID;
     private String facilFirstName;
     private String facilLastName;
+    
+    public facilitatorDataBean(String facilID, String facilFirstName, String facilLastName) {
+        this.facilID = facilID;
+        this.facilFirstName = facilFirstName;
+        this.facilLastName = facilLastName;
+    }
 
     public String getFacilID() {
         return facilID;
