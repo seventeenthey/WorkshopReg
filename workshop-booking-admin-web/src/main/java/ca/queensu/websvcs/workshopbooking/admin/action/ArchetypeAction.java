@@ -81,6 +81,7 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpSession session = request.getSession();
         try {
+            
             String stuId = (String) session.getAttribute(SSOConstants.EMPL_ID);
             
             String netId = (String) session.getAttribute(SSOConstants.NET_ID);

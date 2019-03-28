@@ -75,7 +75,7 @@
  
         <!-- default action-->
         <action name="" class="ca.queensu.websvcs.workshopbooking.client.action.AccessControlAction" method="execute">
-            <interceptor-ref name="baseAuthStack"></interceptor-ref>                      
+            <interceptor-ref name="baseStack"></interceptor-ref>                      
             <result name="success" type="redirectAction">
                 <param name="actionName">dashboard</param>
             </result>              
@@ -84,7 +84,7 @@
         
         <!--dashboard action -->
         <action name="dashboard" class="ca.queensu.websvcs.workshopbooking.client.action.ArchetypeAction" method="execute">
-            <interceptor-ref name="baseAuthStack"></interceptor-ref>
+            <interceptor-ref name="baseStack"></interceptor-ref>
             <result name="success">/WEB-INF/jsp/client/dashboard.jsp</result>
         </action>
         

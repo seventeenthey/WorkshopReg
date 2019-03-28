@@ -135,7 +135,7 @@
 
             <div id="noPastWorkshopsMsg" style="display:none">You have not attended any workshops in the past.</div>
 
-            <table class="superAdmin table table-bordered table-striped table-hover" id="createdWorkshops">
+            <table class="workshopCreator table table-bordered table-striped table-hover" id="createdWorkshops">
                 <caption style="caption-side:top"><h3>Workshops You have Created</h3></caption>
                 <thead>
                     <tr>

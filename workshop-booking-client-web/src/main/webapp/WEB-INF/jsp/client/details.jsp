@@ -46,7 +46,7 @@
                     <s:url action="listViewLoadAction" var="listViewUrl" />
                     <a class="nav-link" href='<s:property value="listViewUrl"/>'>My Workshops</a>
                 </li>
-                <li class="nav-item">
+                <li class="workshopCreator nav-item">
                     <s:url action="functionLoadAction" var="functionUrl" />
                     <a class="nav-link" href='<s:property value="functionUrl"/>'>Create Workshop</a>
                 </li>
@@ -92,7 +92,7 @@
                     <div class="col-sm-4 my-2">
                         <div class="card bg-info">
                             <h4  class="card-header">Facilitator: </h4>
-                            <p class='card-body text-white'> <s:property value="workshop.workshopHostId.commonName"/> </p>
+                            <p class='card-body text-white'><s:property value="workshop.workshopHostId.commonName"/></p>
                         </div>
                     </div>
                     <div class="col-sm-4 my-2">
@@ -110,35 +110,34 @@
                 </div>
             </div>
 
+            <!--Todo: Add a Review Form for Attendee to fill out after the workshop ends-->
+
+            <ul>
+
+                <!--Workshop Register-->
+                <li type="button" class="btn btn-primary" id="registerBtn">
+                    <s:url action="questionnaireLoadAction" var="questionnaireUrl" />
+                    <a href='<s:property value="questionnaireUrl"/>' style="color:white">Register</a>
+                </li>
+
+                <!--Workshop Unregister-->
+                <li type="button" class="btn btn-primary" id="unRegisterBtn">
+                    <s:url action="personalDetailAction" var="personalDetailUrl" />
+                    <a href='<s:property value="personalDetailUrl"/>' style="color:white">Cancel Registration</a>
+                </li>
+
+                <!--Workshop Management-->
+                <li type="button" class="btn btn-primary faciliator">
+                    <s:url action="functionLoadAction" var="functionUrl">
+                        <s:param name="workshopId" value="workshopId"/>
+                    </s:url>
+                    <a href='<s:property value="functionUrl"/>' style="color:white">Advanced Options</a>
+                </li>
+
                 <!--Todo: Add a Review Form for Attendee to fill out after the workshop ends-->
 
-                <ul>
-
-                    <!--Workshop Register-->
-                    <li type="button" class="btn btn-primary">
-                        <s:url action="questionnaireLoadAction" var="questionnaireUrl" />
-                        <a href='<s:property value="questionnaireUrl"/>' style="color:white">Register</a>
-                    </li>
-
-                    <!--Workshop Unregister-->
-                    <li type="button" class="btn btn-primary">
-                        <s:url action="personalDetailAction" var="personalDetailUrl" />
-                        <a href='<s:property value="personalDetailUrl"/>' style="color:white">Cancel Registration</a>
-                    </li>
-
-                    <!--Workshop Management-->
-                    <li type="button" class="btn btn-primary">
-                        <s:url action="functionLoadAction" var="functionUrl">
-                            <s:param name="workshopId" value="workshopId"/>
-                        </s:url>
-                        <a href='<s:property value="functionUrl"/>' style="color:white">Advanced Options (Will be hidden depending on user class)</a>
-                    </li>
-
-                    <!--Todo: Add a Review Form for Attendee to fill out after the workshop ends-->
-
-                </ul>
+            </ul>
         </div>
-
         <!-- JS -->
         <script src="js/tether.min.js"></script>
         <script src="js/jquery-3.2.1.min.js"></script>

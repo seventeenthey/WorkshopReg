@@ -66,11 +66,11 @@
                     <a class="nav-link" href='<s:property value="dashboardUrl"/>'>Workshop Calendar</a>
                     <!--<a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>-->
                 </li>
-                <li class="nav-item">
+                <li class="loggedIn nav-item">
                     <s:url action="listViewLoadAction" var="listViewUrl" />
                     <a class="nav-link" href='<s:property value="listViewUrl"/>'>My Workshops</a>
                 </li>
-                <li class="nav-item">
+                <li class="loggedIn workshopCreator nav-item">
                     <s:url action="functionLoadAction" var="functionUrl" />
                     <a class="nav-link" href='<s:property value="functionUrl"/>'>Create Workshop</a>
                 </li>
@@ -80,7 +80,8 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                    <s:url action="dashboard" var="dashboardUrl" />
+                    <a id="loginBtn" class="nav-link" href='<s:property value="dashboardUrl"/>'>Login</a>
                 </li>
             </ul>              
         </nav>
@@ -288,20 +289,15 @@
                 </div>
             </div>
         </footer>
+        <div id="loggedIn"><s:property value="loggedIn"/></div>
 
-        <!--TODO - delete example-->
-        <!--Example visibility Control-->
-        <div class="superAdmin"> <h1> superAdmin </h1> </div>
-        <div class="departmentalAdmin"> <h1> departmentalAdmin </h1> </div>
-        <div class="workshopCreator"> <h1> workshopCreator </h1> </div>
-        <div class="faciliator"> <h1> faciliator </h1> </div>
-        <!--End example-->
         
         <!-- JS -->
         <script src="js/tether.min.js"></script>
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/calendar.js"></script>        
+        <script src="js/calendar.js"></script> 
+        <script src="js/loginManager.js"></script>
         
         <!--Controls Visibility -->
         <!--This control needs to be after all other elements AND any other .js that affect visibility, and these two lines need to be in this order-->

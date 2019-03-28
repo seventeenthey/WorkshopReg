@@ -116,8 +116,8 @@
                                 </tr>
                             </table>
                         </td>
-                        <td><s:property value="myOwnedWorkshops.size()"/></td>
-                        <td><s:property value="myWorkshops.size()"/></td>
+                        <td><s:property value="myOwnedWorkshops.size()"/>1</td>
+                        <td><s:property value="myWorkshops.size()"/>3</td>
                     </tr>
                 </s:iterator>
             </table>
