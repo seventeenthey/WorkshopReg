@@ -85,7 +85,7 @@
             <div class="active-cyan-3 active-cyan-4 mb-4 nav-item col-sm-12">
                 <input id="searchKey" class="form-control" type="text" placeholder="Search" aria-label="Search" onkeyup="filterTable()">
             </div>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-striped table-hover" id="userTable">
                 <th>Name</th>
                 <th>Net ID</th>
                 <th>Roles</th>
@@ -107,8 +107,6 @@
                                     <td>
                                         <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                                         <a class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
-                                        <!--<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons add">&#xe145;</i></a>-->
-                                        <!--<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>-->
                                     </td>
                                 </tr>
                             </table>
