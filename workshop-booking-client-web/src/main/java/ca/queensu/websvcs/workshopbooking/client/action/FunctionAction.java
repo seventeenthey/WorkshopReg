@@ -86,6 +86,10 @@ public class FunctionAction extends ActionSupport implements Preparable{
         }
         return SUCCESS;
     }
+    
+//    public String populate(){
+//        
+//    }
 
     @Override
     public String execute() throws Exception {

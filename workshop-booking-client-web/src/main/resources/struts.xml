@@ -142,6 +142,7 @@
         <!--Function Page-->
         <action name="functionLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.FunctionAction" method="load">
             <interceptor-ref name="baseStack"></interceptor-ref>
+            <result name="populate">WEB-INF/jsp/client/function.jsp</result>
             <result name="success">WEB-INF/jsp/client/function.jsp</result>
         </action>
         

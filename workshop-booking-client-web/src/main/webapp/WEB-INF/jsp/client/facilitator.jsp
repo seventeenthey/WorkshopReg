@@ -107,9 +107,8 @@
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>Facilitator-ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>Facilitator ID</th>
+                                <th>Name</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -119,10 +118,7 @@
                                         <s:property value="facilID" />
                                     </td>
                                     <td>
-                                        <s:property value="facilFirstName" />
-                                    </td>
-                                    <td>
-                                        <s:property value="facilLastName" />
+                                        <s:property value="facilName" />
                                     </td>
                                 </tr>
                             </s:iterator>

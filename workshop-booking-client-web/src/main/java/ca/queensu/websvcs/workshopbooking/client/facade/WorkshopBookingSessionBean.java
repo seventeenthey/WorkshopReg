@@ -243,8 +243,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     private facilitatorDataBean generateFacilBean(int facilNum) {
         facilitatorDataBean facilBean = new facilitatorDataBean();
         facilBean.setFacilID(String.valueOf(facilNum));
-        facilBean.setFacilFirstName("Be");
-        facilBean.setFacilLastName("Cool" + facilNum);
+        facilBean.setFacilName("BeCool"+facilNum);
        
         return facilBean;
     }

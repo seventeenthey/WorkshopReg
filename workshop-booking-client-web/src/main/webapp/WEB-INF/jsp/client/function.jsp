@@ -114,6 +114,7 @@
                         <!--Todo: Prepopulate the form with existing information-->
                         
                         <h2>Workshop No.<s:property value="workshopId"/></h2>
+                        <h3>Workshop Name: <s:property value="workshop.Title"/></h3>
                         
                         <s:radio 
                             label="Status:"
@@ -128,8 +129,8 @@
                             name="workshopForm.eventTitle"
                             tooltip="Enter Workshop Title Here"
                             cssClass="input-sm"
-                            elementCssClass="col-sm-5"                            
-                            value="TestInput"/>
+                            elementCssClass="col-sm-5"
+                            value="defaultName"/>
 
                         <s:select 
                             label="Location:"

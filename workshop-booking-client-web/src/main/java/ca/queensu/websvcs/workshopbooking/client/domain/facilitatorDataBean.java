@@ -12,8 +12,7 @@ package ca.queensu.websvcs.workshopbooking.client.domain;
 public class facilitatorDataBean {
     
     private String facilID;
-    private String facilFirstName;
-    private String facilLastName;
+    private String facilName;
 
     public String getFacilID() {
         return facilID;
@@ -23,20 +22,14 @@ public class facilitatorDataBean {
         this.facilID = facilID;
     }
 
-    public String getFacilFirstName() {
-        return facilFirstName;
+    public String getFacilName() {
+        return facilName;
     }
 
-    public void setFacilFirstName(String facilFirstName) {
-        this.facilFirstName = facilFirstName;
+    public void setFacilName(String facilName) {
+        this.facilName = facilName;
     }
 
-    public String getFacilLastName() {
-        return facilLastName;
-    }
 
-    public void setFacilLastName(String facilLastName) {
-        this.facilLastName = facilLastName;
-    }
     
 }
