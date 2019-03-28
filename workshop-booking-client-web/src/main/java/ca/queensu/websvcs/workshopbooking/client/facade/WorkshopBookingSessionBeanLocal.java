@@ -44,7 +44,7 @@ public interface WorkshopBookingSessionBeanLocal {
     public Workshops findByWorkshopId(Integer id);
     public Workshops findByWorkshopId(String id);
 
-    public List<facilitatorDataBean> findFacilitatorList(String workshopId);
+    public List<facilitatorDataBean> findFacilitatorList(Integer workshopId);
     
     
     

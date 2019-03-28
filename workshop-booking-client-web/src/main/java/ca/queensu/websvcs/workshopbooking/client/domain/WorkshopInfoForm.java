@@ -201,6 +201,10 @@ public class WorkshopInfoForm implements Serializable{
         this.emailInfo = emailInfo;
     }
     
+    public String getRtStDatetime() {
+        return "";
+    }
+    
     
     
 }//end WorkshopInfoBean Class

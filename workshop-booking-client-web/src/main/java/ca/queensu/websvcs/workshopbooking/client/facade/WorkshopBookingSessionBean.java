@@ -224,7 +224,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
     
     @Override
-    public List<facilitatorDataBean> findFacilitatorList(String workshopId) {
+    public List<facilitatorDataBean> findFacilitatorList(Integer workshopId) {
         System.out.println("hello18");
         System.out.println(workshopId); // THIS IS NULL
         try {
