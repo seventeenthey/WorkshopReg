@@ -5,6 +5,7 @@
  */
 package ca.queensu.websvcs.workshopbooking.client.action;
 
+import ca.queensu.uis.sso.tools.common.SSOConstants;
 import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
@@ -18,8 +19,11 @@ import java.io.StringWriter;
 import java.util.Date;
 import javax.ejb.EJB;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
 /**
@@ -39,10 +43,9 @@ public class FunctionAction extends ActionSupport implements Preparable{
     // This list populates the radio buttons for workshop status
     private List<String> statusList;
     private List<String> locationList;
-    
+	
     private String workshopId;
     private Workshops workshop;
-
 
     public FunctionAction() {
         System.out.println("### FunctionAction constructor running");
@@ -54,10 +57,6 @@ public class FunctionAction extends ActionSupport implements Preparable{
             System.out.println("### FunctionAction prepare running");
             statusList = ejb.findstatusList();
             locationList = ejb.findlocationList();
-            
-            for (String l: locationList){
-                System.out.println(l);
-            }
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -72,11 +71,9 @@ public class FunctionAction extends ActionSupport implements Preparable{
     public String load() throws Exception{
         try {
             System.out.println("### FunctionAction load running");
-            
             if (workshopId != null && !workshopId.isEmpty()){
-                workshop = ejb.findByWorkshopId(workshopId);
+				workshop = ejb.findByWorkshopId(workshopId);
             }
-            
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -93,6 +90,12 @@ public class FunctionAction extends ActionSupport implements Preparable{
     public String execute() throws Exception {
         try {
             System.out.println("### FunctionAction execute running");
+            
+            HttpServletRequest request = ServletActionContext.getRequest();
+            HttpSession session = request.getSession();
+            
+            String facilitatorId = (String) session.getAttribute(SSOConstants.NET_ID);
+            workshopForm.setFacilitatorId(facilitatorId);
             
             // Check if the workshopInfoForm successfully saved or not
             boolean saveSuccessful = ejb.updateWorkshopForm(workshopForm);
@@ -205,8 +208,7 @@ public class FunctionAction extends ActionSupport implements Preparable{
     public void setLocationList(List<String> locationList) {
         this.locationList = locationList;
     }
-    
-
+	
     public String getWorkshopId() {
         return workshopId;
     }
@@ -222,4 +224,5 @@ public class FunctionAction extends ActionSupport implements Preparable{
     public void setWorkshop(Workshops workshop) {
         this.workshop = workshop;
     }
+    
 }
