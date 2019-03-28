@@ -156,7 +156,7 @@
                             placeholder="0"
                             elementCssClass="col-sm-2"/>
 
-                        <!--Registration Start/End Date/Time
+                        <!--Registration Start/End Date/Time-->
                         <div class="workshopdatetime row">
                             <div class="col-md-4">
                                 <sx:datetimepicker 
@@ -211,13 +211,13 @@
                                 <sx:datetimepicker 
                                     label="Event End Date" 
                                     name="workshopForm.eventEndDate" 
-                                    displayFormat="dd-MMM-yyyy"/>
+                                    displayFormat="yyyy-MM-dd"/>
                             </div>
                             <div class="col-md-4">
                                 <sx:datetimepicker 
                                     label="Event End Time" 
                                     name="workshopForm.eventEndTime" 
-                                    displayFormat="HH:mm" 
+                                    displayFormat="HH:mm:ss" 
                                     type="time"/>  
                             </div>
                         </div>
@@ -235,7 +235,7 @@
         <!-- JS -->
         <script src="js/tether.min.js"></script>
         <script src="js/jquery-3.2.1.min.js"></script>
-        <!--<script src="js/bootstrap.min.js"></script>-->
+        <script src="js/bootstrap.min.js"></script>
         <script src="js/searchBar.js"></script>
         <!-- End JS -->
     </body>

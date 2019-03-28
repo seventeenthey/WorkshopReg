@@ -110,25 +110,6 @@
                 </div>
             </div>
 
-            <ul my-2>
-                <!--Workshop Register-->
-                <li type="button" class="btn btn-primary" id="registerBtn">
-                    <s:url action="questionnaireLoadAction" var="questionnaireUrl" />
-                    <a href='<s:property value="questionnaireUrl"/>' style="color:white">Register</a>
-                </li>
-
-                <!--Workshop Unregister-->
-                <li type="button" class="btn btn-primary" id="unRegisterBtn">
-                    <s:url action="personalDetailAction" var="personalDetailUrl" />
-                    <a href='<s:property value="personalDetailUrl"/>' style="color:white">Cancel Registration</a>
-                </li>
-
-                <!--Workshop Management-->
-                <li type="button" class="facilitator btn btn-primary">
-                    <s:url action="functionLoadAction" var="functionUrl" />
-                    <a href='<s:property value="functionUrl"/>' style="color:white">Advanced Options</a>
-                </li>
-
                 <!--Todo: Add a Review Form for Attendee to fill out after the workshop ends-->
 
                 <ul>
