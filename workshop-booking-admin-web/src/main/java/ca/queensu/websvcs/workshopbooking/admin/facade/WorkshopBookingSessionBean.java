@@ -50,6 +50,12 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
     
     @Override
+    public List<Person> getAllPeople(){
+        List<Person> allPeople = em.createNamedQuery("Person.findAll", Person.class).getResultList();
+        return allPeople;
+    }
+    
+    @Override
     public void savePerson(Person p) {
         em.persist(p);
         em.flush();

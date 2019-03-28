@@ -49,10 +49,11 @@ public class AssignRolesAction extends ActionSupport {
      */
     @Override
     public String execute() throws Exception {
+        System.out.println("Execute of AssignRolesAction - Admin");
         
         log.info("Entering execute of AssignRolesAction");
         try {            
-            log.info("Executing AssignRolesAction");            
+            allPeople = ejb.getAllPeople();
         } catch (Exception e) {
             
             // hmm  may not need this
@@ -66,4 +67,13 @@ public class AssignRolesAction extends ActionSupport {
         log.info("leaving AssignRolesAction");
         return SUCCESS;
     }
+    
+    public List<Person> getAllPeople(){
+        return allPeople;
+    }
+    
+    public void setAllPeople(List<Person> allPeople){
+        this.allPeople = allPeople;
+    }
+    
 }

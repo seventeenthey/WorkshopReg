@@ -82,36 +82,28 @@
         </nav>
 
         <div class="container">
+            <div class="active-cyan-3 active-cyan-4 mb-4 nav-item col-sm-12">
+                <input id="searchKey" class="form-control" type="text" placeholder="Search" aria-label="Search" onkeyup="filterTable()">
+            </div>
             <table class="table table-bordered table-striped table-hover">
-                <th>
-                    Name
-                </th>
-                <th>
-                    Person PK
-                </th>
-                <th>
-                    Roles
-                </th>
-                <th>
-                    Workshops Created
-                </th>
-                <th>
-                    Workshops Registered For
-                </th>
+                <th>Name</th>
+                <th>Net ID</th>
+                <th>Roles</th>
+                <th>Workshops Created</th>
+                <th>Workshops Registered For</th>
 
-                <s:iterator value="people">
+                <s:iterator value="allPeople">
                     <tr>
                         <td><s:property value="commonName" /></td>
-                        <td><s:property value="personPK" /></td>
+                        <td><s:property value="netId" /></td>
                         <td>
                             <table>
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <s:iterator value="roleList">
                                 <tr>
-                                    <td><s:property value="department"/></td>
-                                    <td><s:property value="role"/></td>
+                                    <td><s:property value="departmentId.departmentName"/></td>
+                                    <td><s:property value="roleId.roleId"/></td>
                                     <td>
                                         <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                                         <a class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
@@ -119,140 +111,15 @@
                                         <!--<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>-->
                                     </td>
                                 </tr>
-                                </s:iterator>
                             </table>
                         </td>
-                        <td>
-                            <p>#</p>
-                        </td>
-                        <td>
-                            <p>#</p>
-                        </td>
+                        <td><s:property value="myOwnedWorkshops.size()"/></td>
+                        <td><s:property value="myWorkshops.size()"/></td>
                     </tr>
                 </s:iterator>
             </table>
         </div>
-        <div class="container">
-            <h3>Example below</h3>
-            <div class="active-cyan-3 active-cyan-4 mb-4 nav-item col-sm-12">
-                <input id="searchKey" class="form-control" type="text" placeholder="Search" aria-label="Search" onkeyup="filterTable()">
-            </div>
-            <table id="userTable" class="table table-bordered table-striped">
-                <th>
-                    Name
-                </th>
-                <th>
-                    Person PK
-                </th>
-                <th>
-                    Roles
-                </th>
-                <th>
-                    Workshops Created
-                </th>
-                <th>
-                    Workshops Registered For
-                </th>
-
-
-
-                <tr>
-                    <td>
-                        <p>John Doe</p>
-                    </td>
-                    <td>
-                        <p>3</p>
-                    </td>
-                    <td>
-                        <table>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <tr>
-                                <td>Queen's ITS</td>
-                                <td>Departmental Admin</td>
-                                <td>
-                                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
-                                    <!--<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons add">&#xe145;</i></a>-->
-                                    <!--<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>-->
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td>
-                        <p>3</p>
-                    </td>
-                    <td>
-                        <p>1</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p>Jane Hey</p>
-                    </td>
-                    <td>
-                        <p>2</p>
-                    </td>
-                    <td>
-
-                        <table>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <tr>
-                                <td><p>Physics</p></td>
-                                <td><p>Workshop Creator</p></td>
-                                <td>
-                                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
-                                    <!--<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons add">&#xe145;</i></a>-->
-                                    <!--<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>-->
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td>
-                        <p>8</p>
-                    </td>
-                    <td>
-                        <p>0</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p>Mr. Nobody</p>
-                    </td>
-                    <td>
-                        <p>1</p>
-                    </td>
-                    <td>
-
-                        <table>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <tr>
-                                <td><p>Computing</p></td>
-                                <td><p>Attendee</p></td>
-                                <td>
-                                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
-                                    <!--<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons add">&#xe145;</i></a>-->
-                                    <!--<a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>-->
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td>
-                        <p>0</p>
-                    </td>
-                    <td>
-                        <p>15</p>
-                    </td>
-                </tr>
-            </table>
-        </div>        
+            
         <script src="js/tableControl.js"></script>
     </body>
 </html>

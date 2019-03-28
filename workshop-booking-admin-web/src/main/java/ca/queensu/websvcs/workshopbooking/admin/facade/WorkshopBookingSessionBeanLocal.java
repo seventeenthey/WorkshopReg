@@ -23,6 +23,7 @@ public interface WorkshopBookingSessionBeanLocal {
      * @return a boolean.
      */
     public Person getPersonByNetId(String netId);
+    public List<Person> getAllPeople();
     
     public void savePerson(Person p);
     

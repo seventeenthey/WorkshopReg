@@ -106,7 +106,7 @@
                                 <s:url action="dashboardRemoveAction" var="removeUrl">
                                     <s:param name="workshopIdToRemove" value="workshopId" />
                                 </s:url>
-                                <a href='<s:property value="removeUrl"/>'>Workshop Details</a>
+                                <a href='<s:property value="removeUrl"/>'>Delete</a>
                             </td>
                         </tr>
                     </s:iterator>
