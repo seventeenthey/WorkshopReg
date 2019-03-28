@@ -5,6 +5,7 @@
  */
 package ca.queensu.websvcs.workshopbooking.client.action;
 
+import ca.queensu.uis.sso.tools.common.SSOConstants;
 import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
@@ -18,8 +19,11 @@ import java.io.StringWriter;
 import java.util.Date;
 import javax.ejb.EJB;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
 /**
@@ -33,16 +37,15 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
-    
+
     private WorkshopInfoForm workshopForm;
-    
+
     // This list populates the radio buttons for workshop status
     private List<String> statusList;
     private List<String> locationList;
-    
+
     private Integer workshopId;
     private Workshops workshop;
-
 
     public FunctionAction() {
         System.out.println("### FunctionAction constructor running");
@@ -54,10 +57,6 @@ public class FunctionAction extends ActionSupport implements Preparable{
             System.out.println("### FunctionAction prepare running");
             statusList = ejb.findstatusList();
             locationList = ejb.findlocationList();
-            
-            for (String l: locationList){
-                System.out.println(l);
-            }
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -67,16 +66,16 @@ public class FunctionAction extends ActionSupport implements Preparable{
             log.error(out);
         }
     }
-    
+
     @SkipValidation
     public String load() throws Exception{
         try {
             System.out.println("### FunctionAction load running");
-            
+
             if (workshopId != null){
                 workshop = ejb.findByWorkshopId(workshopId);
             }
-        } 
+        }
         catch (Exception e) {
             StringWriter out = new StringWriter();
             e.printStackTrace(new PrintWriter(out));
@@ -87,12 +86,18 @@ public class FunctionAction extends ActionSupport implements Preparable{
         }
         return SUCCESS;
     }
-    
+
     @Override
     public String execute() throws Exception {
         try {
             System.out.println("### FunctionAction execute running");
-            
+
+            HttpServletRequest request = ServletActionContext.getRequest();
+            HttpSession session = request.getSession();
+
+            String facilitatorId = (String) session.getAttribute(SSOConstants.NET_ID);
+            workshopForm.setFacilitatorId(facilitatorId);
+
             // Check if the workshopInfoForm successfully saved or not
             boolean saveSuccessful = ejb.updateWorkshopForm(workshopForm);
             if(saveSuccessful){
@@ -103,10 +108,10 @@ public class FunctionAction extends ActionSupport implements Preparable{
             }
             String datetime = workshopForm.getRtStDatetime();
             addActionMessage("Test output" + datetime);
-        } 
+        }
         catch (Exception e) {
             StringWriter out = new StringWriter();
-            e.printStackTrace(new PrintWriter(out));          
+            e.printStackTrace(new PrintWriter(out));
             addActionError(createErrorMessage("Exception occurred while granting access to the application. Please contact the Archetype Client for assistance."));
             log.error("***************Exception occurred in execute method " + e.getMessage());
             log.error(out);
@@ -114,28 +119,28 @@ public class FunctionAction extends ActionSupport implements Preparable{
         }//end try/catch
         return SUCCESS;
     }
-    
-    
+
+
     @Override
     public void validate() {
         try {
-            
+
             System.out.println("### StudentEditAction validate running");
-            
+
             if(workshopForm.getStatus().isEmpty()) {
                 addFieldError("status", "Status is required.");
             }
-            
+
             if(workshopForm.getEventTitle().isEmpty()) {
                 addFieldError("eventTitle", "Event Title is required.");
             }else if(workshopForm.getEventTitle().length() > 30){
                 addFieldError("eventTitle", "Event Title cannot exceed 30 characters.");
             }
-            
+
             if(workshopForm.getTeaser().isEmpty()) {
                 addFieldError("teaser", "Workshop Teaser is required.");
             }
-            
+
             if (workshopForm.getMaxParticipant() == null){
                 addFieldError("maxParticipant", "Maximun Participant is required.");
             }else if(workshopForm.getMaxParticipant()>300) {
@@ -143,17 +148,17 @@ public class FunctionAction extends ActionSupport implements Preparable{
             }else if(workshopForm.getMaxParticipant()<10){
                 addFieldError("maxParticipant","Less than minimun Participant (Should no less than 10).");
             }
-            
+
             if (workshopForm.getWaitlistLimit() == null){
                 addFieldError("waitlistLimit", "Wait List Limit is required.");
             }else if(workshopForm.getWaitlistLimit()>300) {
                 addFieldError("waitlistLimit", "Exceed maximun Wait List Limit (Should no more than 300).");
-            } 
-            
-            
-            
-        } 
-        catch (Exception e) { 
+            }
+
+
+
+        }
+        catch (Exception e) {
             StringWriter out = new StringWriter();
             e.printStackTrace(new PrintWriter(out));
             addActionError(createErrorMessage("Exception occurred while validating student data."));
@@ -161,10 +166,10 @@ public class FunctionAction extends ActionSupport implements Preparable{
             log.error(out);
         }
     }
-    
+
     /**
-     * Creates a custom error message to be used as an action error 
-     * 
+     * Creates a custom error message to be used as an action error
+     *
      * @param customMessage message to be used as the action error text
      * @return the created error message
      */
@@ -175,7 +180,7 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
         return customMessage + msgAppend;
     }
-    
+
 
     public WorkshopBookingSessionBeanLocal getEjb() {
         return ejb;
@@ -200,7 +205,7 @@ public class FunctionAction extends ActionSupport implements Preparable{
     public void setStatusList(List<String> statusList) {
         this.statusList = statusList;
     }
-    
+
     public List<String> getLocationList() {
         return locationList;
     }
@@ -216,7 +221,7 @@ public class FunctionAction extends ActionSupport implements Preparable{
     public void setWorkshopId(Integer workshopId) {
         this.workshopId = workshopId;
     }
-    
+
     public Workshops getWorkshop() {
         return workshop;
     }
@@ -224,4 +229,5 @@ public class FunctionAction extends ActionSupport implements Preparable{
     public void setWorkshop(Workshops workshop) {
         this.workshop = workshop;
     }
+
 }

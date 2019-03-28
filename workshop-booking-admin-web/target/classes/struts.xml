@@ -145,5 +145,10 @@
             <result name="success">/WEB-INF/jsp/admin/assignRoles.jsp</result>   
         </action>
         
+        <action name="assignRolesUpdateAction" class="ca.queensu.websvcs.workshopbooking.admin.action.AssignRolesAction" method="updateRole">
+            <interceptor-ref name="baseAuthValidationStack"></interceptor-ref>
+            <result name="success">/WEB-INF/jsp/admin/assignRoles.jsp</result>   
+        </action>
+        
     </package>
 </struts>

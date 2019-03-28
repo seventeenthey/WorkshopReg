@@ -45,7 +45,7 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     public void prepare() throws Exception {
         try {
             System.out.println("### FacilitatorAction prepare running");
-            facilBeanList = ejb.findFacilitatorList();
+            facilBeanList = ejb.findFacilitatorList(workshopId);
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();

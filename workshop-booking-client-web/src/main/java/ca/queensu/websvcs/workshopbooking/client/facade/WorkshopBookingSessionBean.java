@@ -12,6 +12,8 @@ import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import ca.queensu.websvcs.workshopbooking.core.entity.Roles;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -119,13 +121,36 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     public boolean updateWorkshopForm(WorkshopInfoForm workshopForm){
 //      Todo: Need Modified with actural success verification
-        System.out.println("Received");
+        
+        String netId = workshopForm.getFacilitatorId();
+        Person facilitator = em.createNamedQuery("Person.findByNetId", Person.class).setParameter("netId", netId).getSingleResult();
+        Departments department = facilitator.getDepartmentId();
+        String title = workshopForm.getEventTitle();
+        String details = workshopForm.getTeaser();
+        String location = workshopForm.getLocation();
+        int maxParticipants = workshopForm.getMaxParticipant();
+        EventStatus eventStatus = new EventStatus(workshopForm.getStatus());
+        
+        System.out.println("hello22");
         System.out.println(workshopForm.getRgStDate());
-        System.out.println(workshopForm.getEventTitle());
-        try{
+        System.out.println(workshopForm.getRgStTime());
+        
+        try {
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date registrationStart = formatter.parse(workshopForm.getRgStDate()+" "+workshopForm.getRgStTime());
+            System.out.println("byebye" + registrationStart.toString());
+            Date registrationEnd = formatter.parse(workshopForm.getRgEndDate()+" "+workshopForm.getRgEndTime());
+            Date eventStart = formatter.parse(workshopForm.getEventStDate()+" "+workshopForm.getEventStTime());
+            Date eventEnd = formatter.parse(workshopForm.getEventEndDate()+" "+workshopForm.getEventEndTime());
+            System.out.println("hello2");
+            Workshops w = new Workshops(facilitator, department, title, details, location, maxParticipants, registrationStart, registrationEnd, eventStart, eventEnd, eventStatus);
+            System.out.println("hello3");
+            em.persist(w);
+            em.flush();
             return true;
-        }catch(Exception e) {
-            throw  new EJBException(e);
+        } catch (Exception e) {
+            System.out.println("Error parsing date");
+            throw new EJBException(e);
         }
     }
 
@@ -199,7 +224,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
     
     @Override
-    public List<facilitatorDataBean> findFacilitatorList() {
+    public List<facilitatorDataBean> findFacilitatorList(String workshopId) {
+        System.out.println("hello18");
+        System.out.println(workshopId); // THIS IS NULL
         try {
             List<facilitatorDataBean> facilitatorList = new ArrayList<>();
             for(int i = 0; i < 5; i++) {

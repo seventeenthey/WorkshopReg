@@ -31,7 +31,7 @@ public class WorkshopInfoForm implements Serializable{
      
     private int workshopNumber;
     private String department;
-    private facilitatorDataBean facilitator;
+    private String facilitator_id;
     private EmailInfoForm emailInfo;
 
 //    public String startTimeToString(){
@@ -185,12 +185,12 @@ public class WorkshopInfoForm implements Serializable{
         this.department = department;
     }
 
-    public facilitatorDataBean getFacilitator() {
-        return facilitator;
+    public String getFacilitatorId(){
+        return facilitator_id;
     }
-
-    public void setFacilitator(facilitatorDataBean facilitator) {
-        this.facilitator = facilitator;
+    
+    public void setFacilitatorId(String facilitator_id){
+        this.facilitator_id = facilitator_id;
     }
 
     public EmailInfoForm getEmailInfo() {

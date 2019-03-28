@@ -145,17 +145,27 @@ public class Workshops implements Serializable {
         this.workshopId = workshopId;
     }
 
-    public Workshops(Integer workshopId, String title, String details, String location, int maxParticipants, int currentParticipants, Date registrationStart, Date registrationEnd, Date eventStart, Date eventEnd) {
-        this.workshopId = workshopId;
+    public Workshops(Person workshopCreatorId, Departments departmentId, String title, String details, 
+            String location, int maxParticipants, Date registrationStart, Date registrationEnd, 
+            Date eventStart, Date eventEnd, EventStatus eventStatus) {
+        this.workshopId = null;
+        this.workshopCreatorId = workshopCreatorId;
+        this.departmentId = departmentId;
         this.title = title;
         this.details = details;
         this.location = location;
         this.maxParticipants = maxParticipants;
-        this.currentParticipants = currentParticipants;
+        this.currentParticipants = 0;
         this.registrationStart = registrationStart;
         this.registrationEnd = registrationEnd;
         this.eventStart = eventStart;
         this.eventEnd = eventEnd;
+        this.eventStatus = eventStatus;
+        this.emailNotificationName = "";
+        this.emailConfirmationMsg = "";
+        this.emailWaitlistMsg = "";
+        this.emailCancellationMsg = "";
+        this.emailEvaluationMsg = "";
     }
 
     public Integer getWorkshopId() {
