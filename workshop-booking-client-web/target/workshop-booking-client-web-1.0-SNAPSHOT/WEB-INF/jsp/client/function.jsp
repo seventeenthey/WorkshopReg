@@ -71,22 +71,29 @@
                         <div class="card-body">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <s:url action="functionLoadAction" var="functionUrl" />
+                                    <s:url action="functionLoadAction" var="functionUrl">
+                                        <s:param name="workshopId" value="workshopId"/>
+                                    </s:url>
                                     <a href='<s:property value="functionUrl"/>'>Event Setup</a>
                                 </li>
                                 <li class="nav-item">
-                                    <s:url action="facilitatorLoadAction" var="facilitatorUrl" />
+                                    <s:url action="facilitatorLoadAction" var="facilitatorUrl" >
+                                        <s:param name="workshopId" value="workshopId"/>
+                                    </s:url>
                                     <a href='<s:property value="facilitatorUrl"/>'>Facilitators</a>
                                 </li>
                                 <li class="nav-item">
-                                    <s:url action="emaileditLoadAction" var="emaileditUrl" />
+                                    <s:url action="emaileditLoadAction" var="emaileditUrl" >
+                                        <s:param name="workshopId" value="workshopId"/>
+                                    </s:url>
                                     <a href='<s:property value="emaileditUrl"/>'>Message Center</a>
                                 </li>
                                 <li class="nav-item">
-                                    <s:url action="attendanceLoadAction" var="attendanceUrl" />
+                                    <s:url action="attendanceLoadAction" var="attendanceUrl">
+                                        <s:param name="workshopId" value="workshopId"/>
+                                    </s:url>
                                     <a href='<s:property value="attendanceUrl"/>'>Attendance</a>
                                 </li>
-
                             </ul>
                         </div>
                     </div>
@@ -101,6 +108,12 @@
                             theme="bootstrap" method="post" cssClass="form-vertical">
                         
                         <s:fielderror/>
+                        
+                        <!--Todo: Will be hidden if the workshop is newly created-->
+                        <!--Todo: Prepopulate the form with existing information-->
+                        
+                        <h2>Workshop No.<s:property value="workshopId"/></h2>
+                        
                         <s:radio 
                             label="Status:"
                             labelposition="inline"
@@ -114,7 +127,8 @@
                             name="workshopForm.eventTitle"
                             tooltip="Enter Workshop Title Here"
                             cssClass="input-sm"
-                            elementCssClass="col-sm-5"/>
+                            elementCssClass="col-sm-5"                            
+                            value="TestInput"/>
 
                         <s:select 
                             label="Location:"
@@ -142,7 +156,7 @@
                             placeholder="0"
                             elementCssClass="col-sm-2"/>
 
-                        <!--Registration Start/End Date/Time-->
+                        <!--Registration Start/End Date/Time
                         <div class="workshopdatetime row">
                             <div class="col-md-4">
                                 <sx:datetimepicker 

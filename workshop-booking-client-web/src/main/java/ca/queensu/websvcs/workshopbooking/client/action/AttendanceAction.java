@@ -33,9 +33,10 @@ public class AttendanceAction extends ActionSupport {
     private WorkshopBookingSessionBeanLocal ejb;
     
     List<StudentDataBean> studentBeanList;
+    
+    private String workshopId;
 
-    
-    
+
     public AttendanceAction() {
         System.out.println("### AttendanceAction constructor running");
     }
@@ -86,6 +87,14 @@ public class AttendanceAction extends ActionSupport {
 
     public void setStudentBeanList(List<StudentDataBean> studentBeanList) {
         this.studentBeanList = studentBeanList;
+    }
+
+    public String getWorkshopId() {
+        return workshopId;
+    }
+
+    public void setWorkshopId(String workshopId) {
+        this.workshopId = workshopId;
     }
     
 }

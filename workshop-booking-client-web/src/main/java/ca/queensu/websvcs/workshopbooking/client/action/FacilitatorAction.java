@@ -34,6 +34,8 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     
     List<facilitatorDataBean> facilBeanList;
     
+    private String workshopId;
+
     
     public FacilitatorAction() {
         System.out.println("### FacilitatorAction constructor running");
@@ -59,6 +61,7 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     public String load() throws Exception{
         try {
             System.out.println("### FacilitatorAction load running");
+//            addActionMessage("Test Input"+workshopId);
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -109,6 +112,22 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
 
     public void setFacilBeanList(List<facilitatorDataBean> facilBeanList) {
         this.facilBeanList = facilBeanList;
+    }
+    
+    public WorkshopBookingSessionBeanLocal getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(WorkshopBookingSessionBeanLocal ejb) {
+        this.ejb = ejb;
+    }
+
+    public String getWorkshopId() {
+        return workshopId;
+    }
+
+    public void setWorkshopId(String workshopId) {
+        this.workshopId = workshopId;
     }
     
 }

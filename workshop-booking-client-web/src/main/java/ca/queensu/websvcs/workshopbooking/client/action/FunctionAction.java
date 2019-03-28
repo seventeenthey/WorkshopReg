@@ -8,6 +8,7 @@ package ca.queensu.websvcs.workshopbooking.client.action;
 import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
+import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
@@ -38,6 +39,10 @@ public class FunctionAction extends ActionSupport implements Preparable{
     // This list populates the radio buttons for workshop status
     private List<String> statusList;
     private List<String> locationList;
+    
+    private String workshopId;
+    private Workshops workshop;
+
 
     public FunctionAction() {
         System.out.println("### FunctionAction constructor running");
@@ -67,6 +72,11 @@ public class FunctionAction extends ActionSupport implements Preparable{
     public String load() throws Exception{
         try {
             System.out.println("### FunctionAction load running");
+            
+            if (workshopId != null && !workshopId.isEmpty()){
+                workshop = ejb.findByWorkshopId(workshopId);
+            }
+            
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -196,4 +206,20 @@ public class FunctionAction extends ActionSupport implements Preparable{
         this.locationList = locationList;
     }
     
+
+    public String getWorkshopId() {
+        return workshopId;
+    }
+
+    public void setWorkshopId(String workshopId) {
+        this.workshopId = workshopId;
+    }
+
+    public Workshops getWorkshop() {
+        return workshop;
+    }
+
+    public void setWorkshop(Workshops workshop) {
+        this.workshop = workshop;
+    }
 }

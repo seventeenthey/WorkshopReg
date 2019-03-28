@@ -32,6 +32,8 @@ public class EmailEditAction extends ActionSupport implements Preparable{
     private WorkshopBookingSessionBeanLocal ejb;
     
     private EmailInfoForm emailForm;
+    
+    private String workshopId;
 
 
     public EmailEditAction() {
@@ -175,4 +177,13 @@ public class EmailEditAction extends ActionSupport implements Preparable{
         this.emailForm = emailForm;
     }
     
+    public String getWorkshopId() {
+        return workshopId;
+    }
+
+    public void setWorkshopId(String workshopId) {
+        this.workshopId = workshopId;
+    }
+
+
 }

@@ -101,7 +101,9 @@
                     
                     <!--Workshop Management-->
                     <li type="button" class="btn btn-primary">
-                        <s:url action="functionLoadAction" var="functionUrl" />
+                        <s:url action="functionLoadAction" var="functionUrl">
+                            <s:param name="workshopId" value="workshopId"/>
+                        </s:url>
                         <a href='<s:property value="functionUrl"/>' style="color:white">Advanced Options (Will be hidden depending on user class)</a>
                     </li>
                     

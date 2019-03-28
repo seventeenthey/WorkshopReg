@@ -72,19 +72,27 @@
                         <div class="card-body">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <s:url action="functionLoadAction" var="functionUrl" />
+                                    <s:url action="functionLoadAction" var="functionUrl">
+                                        <s:param name="workshopId" value="workshopId"/>
+                                    </s:url>
                                     <a href='<s:property value="functionUrl"/>'>Event Setup</a>
                                 </li>
                                 <li class="nav-item">
-                                    <s:url action="facilitatorLoadAction" var="facilitatorUrl" />
+                                    <s:url action="facilitatorLoadAction" var="facilitatorUrl" >
+                                        <s:param name="workshopId" value="workshopId"/>
+                                    </s:url>
                                     <a href='<s:property value="facilitatorUrl"/>'>Facilitators</a>
                                 </li>
                                 <li class="nav-item">
-                                    <s:url action="emaileditLoadAction" var="emaileditUrl" />
+                                    <s:url action="emaileditLoadAction" var="emaileditUrl" >
+                                        <s:param name="workshopId" value="workshopId"/>
+                                    </s:url>
                                     <a href='<s:property value="emaileditUrl"/>'>Message Center</a>
                                 </li>
                                 <li class="nav-item">
-                                    <s:url action="attendanceLoadAction" var="attendanceUrl" />
+                                    <s:url action="attendanceLoadAction" var="attendanceUrl">
+                                        <s:param name="workshopId" value="workshopId"/>
+                                    </s:url>
                                     <a href='<s:property value="attendanceUrl"/>'>Attendance</a>
                                 </li>
                             </ul>
@@ -93,6 +101,8 @@
                 </div>
 
                 <div class="col-md-9">
+                    <s:actionmessage theme="bootstrap"/>
+                    
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr>
