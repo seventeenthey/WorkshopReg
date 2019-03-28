@@ -81,51 +81,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
             throw  new EJBException(e);
         }
     }
-    
-    @Override
-    public List<String> findCountries() {
-        List<String> countries = new ArrayList<>();
-        countries.add("Dominica");
-        countries.add("Norfolk Island");
-        countries.add("Comoros");
-        countries.add("Morocco");
-        countries.add("Cayman Islands");
-        countries.add("Costa Rica");
-        countries.add("Mayotte");
-        countries.add("Niger");
-        countries.add("Slovakia");
-        countries.add("Belgium");
-        countries.add("Martinique");
-        countries.add("Gibraltar");
-        countries.add("England");
-        countries.add("Panama");
-        countries.add("Saint Barthelemy");
-        countries.add("Palau");
-        countries.add("Curacao");
-        countries.add("Reunion");
-        countries.add("Bonaire");
-        countries.add("Saint Vincent and the Grenadines");
-        countries.add("Slovenia");
-        countries.add("Lesotho");
-        countries.add("Japan");
-        countries.add("North Korea");
-        countries.add("French Guiana");
-        countries.add("Uruguay");
-        countries.add("Canada");
-        countries.add("France");
-        countries.add("Qatar");
-        countries.add("Guam");
-        return  countries;
-    }
-    
-    @Override
-    public List<String> findHairColours() {
-        List<String> hairColours = new ArrayList<>();
-        hairColours.add("Pink");
-        hairColours.add("Purple");
-        hairColours.add("Green");
-        return  hairColours;
-    }
 
     @Override
     public boolean updateStudent(StudentDataBean studentBean) {

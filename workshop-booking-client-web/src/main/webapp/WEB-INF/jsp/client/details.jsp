@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : details
     Created on : 5-Mar-2019, 1:00:18 PM
     Author     : dwesl
@@ -17,7 +17,11 @@
         <!-- Bootstrap core CSS -->
         <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom styles for this template -->
-        <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">       
+        <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
         <!-- Bursary styles -->
         <!--<link href="<%=request.getContextPath()%>/css/bursaryapp.css" rel="stylesheet">-->
         <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
@@ -26,7 +30,7 @@
     </head>
     <body>
         <div class="jumbotron text-center banner-row mb-0">
-            <h1>Details Page</h1>
+            <h1>Workshop Details</h1>
         </div>
 
         <!-- Navigation Bar - INCLUDED IN EVERY .JSP FILE -->
@@ -54,51 +58,93 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Logout</a>
                 </li>
-            </ul>              
+            </ul>
         </nav>
 
-        <div class="container"> 
-                <div class="text-center">
+        <div class="container">
+            <div class="card text-center">
+                <div class='bg-info card-header'>
                     <h3><s:property value="workshop.Title"/></h3>
                     <p width="1"><s:property value="workshop.details"/></p>
                 </div>
-                <div class="row">
-                    <div class="row col-sm-4">
-                        <h4> Workshop Number:  </h4>
-                        <h4> <s:property value="workshopId"/> </h4>
+                <div class="row mx-1">
+                    <div class="col-sm-4 my-2">
+                        <div class="card bg-info">
+                            <h4 class="card-header">Registered Status: </h4>
+                            <p class='card-body text-white' id="registeredStatus">Not Registered</p> <!--This needs to say: "Registered", "Not Registered", or "WaitListed" -->
+                            <s:property value="workshop.personCollection1"/>
+                        </div>
                     </div>
-                    <div class="col-sm-4">
-                        <h4> Location: </h4>
-                        <h4> <s:property value="workshop.location"/></h4>
+                    <div class="col-sm-4 my-2">
+                        <div class="card bg-info">
+                            <h4  class="card-header">Location: </h4>
+                            <p class='card-body text-white'><s:property value="workshop.location"/></p>
+                        </div>
                     </div>
-                    <div class="col-sm-4">
-                        <h4> Start Time & Date: </h4>
-                        <h4> <s:property value="workshop.eventStart"/> <s:property value="workshop.eventStTime"/></h4>
+                    <div class="col-sm-4 my-2">
+                        <div class="card bg-info">
+                            <h4  class="card-header">Start Time & Date: </h4>
+                            <div class="card-body text-white">
+                                <p><s:property value="workshop.dateToString()"/></p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-4">
-                        <h4> Facilitator: </h4>
-                        <h4> <s:property value="workshop.workshopHostId.commonName"/> </h4>
+                    <div class="col-sm-4 my-2">
+                        <div class="card bg-info">
+                            <h4  class="card-header">Facilitator: </h4>
+                            <p class='card-body text-white'> <s:property value="workshop.workshopHostId.commonName"/> </p>
+                        </div>
                     </div>
-                    <div class="col-sm-4">
-                        <h4> Status: </h4>
-                        <h4> <s:property value="workshop.eventStatus.eventStatus"/></h4>
+                    <div class="col-sm-4 my-2">
+                        <div class="card bg-info">
+                            <h4 class="card-header">Workshop Status: </h4>
+                            <p class='card-body text-white'><s:property value="workshop.eventStatus.eventStatus"/></p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 my-2">
+                        <div class='card bg-info'>
+                            <h5 class="card-header">Workshop ID: </h5>
+                            <p class='card-body text-white'> <s:property value="workshopId"/> </p>
+                        </div>
                     </div>
                 </div>
+            </div>
+
+            <ul my-2>
+                <!--Workshop Register-->
+                <li type="button" class="btn btn-primary" id="registerBtn">
+                    <s:url action="questionnaireLoadAction" var="questionnaireUrl" />
+                    <a href='<s:property value="questionnaireUrl"/>' style="color:white">Register</a>
+                </li>
+
+                <!--Workshop Unregister-->
+                <li type="button" class="btn btn-primary" id="unRegisterBtn">
+                    <s:url action="personalDetailAction" var="personalDetailUrl" />
+                    <a href='<s:property value="personalDetailUrl"/>' style="color:white">Cancel Registration</a>
+                </li>
+
+                <!--Workshop Management-->
+                <li type="button" class="facilitator btn btn-primary">
+                    <s:url action="functionLoadAction" var="functionUrl" />
+                    <a href='<s:property value="functionUrl"/>' style="color:white">Advanced Options</a>
+                </li>
+
+                <!--Todo: Add a Review Form for Attendee to fill out after the workshop ends-->
 
                 <ul>
-                    
+
                     <!--Workshop Register-->
-                    <li type="button" class="btn btn-primary"> 
+                    <li type="button" class="btn btn-primary">
                         <s:url action="questionnaireLoadAction" var="questionnaireUrl" />
                         <a href='<s:property value="questionnaireUrl"/>' style="color:white">Register</a>
                     </li>
-                    
+
                     <!--Workshop Unregister-->
-                    <li type="button" class="btn btn-primary"> 
+                    <li type="button" class="btn btn-primary">
                         <s:url action="personalDetailAction" var="personalDetailUrl" />
                         <a href='<s:property value="personalDetailUrl"/>' style="color:white">Cancel Registration</a>
                     </li>
-                    
+
                     <!--Workshop Management-->
                     <li type="button" class="btn btn-primary">
                         <s:url action="functionLoadAction" var="functionUrl">
@@ -106,7 +152,7 @@
                         </s:url>
                         <a href='<s:property value="functionUrl"/>' style="color:white">Advanced Options (Will be hidden depending on user class)</a>
                     </li>
-                    
+
                     <!--Todo: Add a Review Form for Attendee to fill out after the workshop ends-->
 
                 </ul>
@@ -117,6 +163,13 @@
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/searchBar.js"></script>
+        <script src="js/detailsManager.js"></script>
+
+        <!--Controls Visibility -->
+        <!--This control needs to be after all other elements AND any other .js that affect visibility, and these two lines need to be in this order-->
+        <div id="role" style="display:none"><s:property value="person.roleId.roleId"/></div>
+        <script src="js/visibility.js"></script>
+        <!--End Visibility Control-->
         <!-- End JS -->
     </body>
 </html>

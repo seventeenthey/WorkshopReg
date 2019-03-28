@@ -76,7 +76,7 @@
                 </li>
                 <li class="nav-item">
                     <div class="active-cyan-3 active-cyan-4">
-                        <input class="form-control" type="text" placeholder="Search" aria-label="Search" onkeyup="filterTable()" id="searchKey"/>
+                        <input class="form-control" type="text" placeholder="Search" aria-label="Search" onkeyup="filterTable()" id="searchKey" value="<s:property value='searchKey'/>"/>
                     </div>
                 </li>
                 <li class="nav-item">
