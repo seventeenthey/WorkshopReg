@@ -29,7 +29,9 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.admin.action.ArchetypeAction.class);
      
     private Person person;
-    private Workshops catalogue;
+    private List<Workshops> workshops;
+    
+    private String workshopIdToRemove;
     
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
@@ -47,6 +49,23 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
 
     } 
     
+    public String remove() throws Exception {
+        System.out.println("Entering Remove of ArchetypeAction - Admin");
+        //This will be the real code
+        //ejb.removeWorkshopById(workshopIdToRemove);
+        //workshops = ejb.getAllWorkshops();
+        
+        //this is a temp workaround to show the point
+        workshops = ejb.getAllWorkshops();
+        for(int i = 0; i < workshops.size(); i++)
+            if (workshops.get(i).getWorkshopId() == Integer.valueOf(workshopIdToRemove)){
+                workshops.remove(i);
+                break;
+            }
+        
+        return SUCCESS;
+    }
+    
     /**
      * {@inheritDoc}
      *
@@ -57,7 +76,8 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     public String execute() throws Exception {
         
         log.info("Entering execute of ArchetypeAction");
-        
+        System.out.println("Entering Excute of ArchetypeAction - Admin");
+                
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpSession session = request.getSession();
         try {
@@ -68,7 +88,9 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
             log.debug("Log level debug");
             
             setPerson(ejb.getPersonByNetId(netId));
-            setCatalogue(ejb.findByWorkshopId(1));
+            workshops = ejb.getAllWorkshops();
+            
+            System.out.println(workshops.size());
 
         } catch (Exception e) {
             
@@ -97,19 +119,20 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     public void setPerson(Person person) {
         this.person = person;
     }
-
-    /**
-     * @return the person
-     */
-    public Workshops getCatalogue() {
-        return catalogue;
-    }
-
-    /**
-     * @param catalogue the person to set
-     */
-    public void setCatalogue(Workshops catalogue) {
-        this.catalogue = catalogue;
+    
+    public List<Workshops> getWorkshops(){
+        return workshops;
     }
     
+    public void setWorkshops(List<Workshops> workshops){
+        this.workshops = workshops;
+    }
+    
+    public String getWorkshopIdToRemove(){
+        return workshopIdToRemove;
+    }
+    
+    public void setWorkshopIdToRemove(String workshopIdToRemove){
+        this.workshopIdToRemove = workshopIdToRemove;
+    }
 }

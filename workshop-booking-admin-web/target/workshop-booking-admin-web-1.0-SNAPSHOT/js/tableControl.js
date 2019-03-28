@@ -62,7 +62,7 @@ $(document).ready(function () {
 });
 
 function filterTable() {
-    var input, filter, table, tr, td, i, txtValue;
+    var input, filter, table, tr, name, number, i, nameTxtValue, numberTxtValue, columns;
     input = document.getElementById("searchKey");
     filter = input.value.toUpperCase();
     table = document.getElementById("userTable");
@@ -70,18 +70,17 @@ function filterTable() {
         table = document.getElementById("workshopTable");
     
     tr = table.getElementsByTagName("tr");
-    console.log(table.getElementsByTagName("tbody"));
 
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        console.log("outputting TD");
-        console.log(td);
+    for (i = 1; i < tr.length; i++) {
+        columns = tr[i].getElementsByTagName("td");
+        name = columns[0];
+        number = columns[1];
         
-
-        
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        if (name || number) {
+            nameTxtValue = name.textContent || name.innerText;
+            numberTxtValue = number.textContent || number.innerText;
+            
+            if (nameTxtValue.toUpperCase().indexOf(filter) > -1 || numberTxtValue.indexOf(filter) > -1) {
                 tr[i].style.display = "";
             } else {
                 tr[i].style.display = "none";

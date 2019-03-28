@@ -88,6 +88,12 @@
             <result name="success">/WEB-INF/jsp/admin/dashboard.jsp</result>
         </action>
         
+        <!--Remove workshop Dashboard Action-->
+        <action name="dashboardRemoveAction" class="ca.queensu.websvcs.workshopbooking.admin.action.ArchetypeAction" method="remove">
+            <interceptor-ref name="baseAuthStack"></interceptor-ref>
+            <result name="success">/WEB-INF/jsp/admin/dashboard.jsp</result>
+        </action>
+        
         <!-- access control action-->
         <action name="accessControl" class="ca.queensu.websvcs.workshopbooking.admin.AccessControlAction" method="execute">
             <interceptor-ref name="baseAuthStack"></interceptor-ref>                      

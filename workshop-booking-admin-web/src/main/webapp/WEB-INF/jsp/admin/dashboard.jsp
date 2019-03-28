@@ -76,13 +76,42 @@
         </nav>
 
         <div class="container">
-            <p>Will be very similar to workshop list view, except showing all workshops.</p>
             <div class="active-cyan-3 active-cyan-4 mb-4 nav-item col-sm-12">
                 <input id="searchKey" class="form-control" type="text" placeholder="Search" aria-label="Search" onkeyup="filterTable()">
             </div>
-            
-            <p>If list view table has: id="workshopTable"</p>
-            <p>Then the search bar SHOULD work</p>
+            <h3>All Workshops</h3>
+            <table class="table table-bordered table-striped table-hover" id="workshopTable">
+                <thead>
+                    <tr>
+                        <th>Workshop Name</th>
+                        <th>Workshop Number</th>
+                        <th>Date</th
+                        <th></th>
+                        <th>Time</th>
+                        <th>End Date</th>
+                        <th>Department</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <s:iterator value="workshops">
+                        <tr>
+                            <td><s:property value="title" /></td>
+                            <td><s:property value="workshopId" /></td>
+                            <td><s:property value="eventStart"/></td>
+                            <td><s:property value="startTimeToString()"/></td>
+                            <td><s:property value="eventEnd"/></td>
+                            <td><s:property value="departmentId.departmentName"/></td>
+                            <td>
+                                <s:url action="dashboardRemoveAction" var="removeUrl">
+                                    <s:param name="workshopIdToRemove" value="workshopId" />
+                                </s:url>
+                                <a href='<s:property value="removeUrl"/>'>Workshop Details</a>
+                            </td>
+                        </tr>
+                    </s:iterator>
+                </tbody>
+            </table>
         </div>
 
 

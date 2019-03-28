@@ -57,15 +57,23 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     
     @Override
     public Workshops findByWorkshopId(Integer id) {
-        Workshops catalogue = em.createNamedQuery("Catalogue.findByWorkshopId", Workshops.class).setParameter("workshopId", id).getSingleResult();
+        Workshops catalogue = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", id).getSingleResult();
         return catalogue;
     }
     
     @Override
     public List<Workshops> getAllWorkshops() {
-        List<Workshops> catalogue = em.createNamedQuery("Catalogue.findAll", Workshops.class).getResultList();
+        List<Workshops> catalogue = em.createNamedQuery("Workshops.findAll", Workshops.class).getResultList();
         return catalogue;
     }
 
-
+    @Override
+    public void removeWorkshopById(Integer id){
+        //TODO - add remove workshop query
+    }
+    
+    @Override
+    public void removeWorkshopById(String id){
+        removeWorkshopById(Integer.valueOf(id));
+    }
 }

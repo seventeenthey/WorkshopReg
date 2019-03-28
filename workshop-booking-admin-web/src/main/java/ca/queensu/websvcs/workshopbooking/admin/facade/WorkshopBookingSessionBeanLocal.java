@@ -30,4 +30,7 @@ public interface WorkshopBookingSessionBeanLocal {
     
     public List<Workshops> getAllWorkshops();
     
+    public void removeWorkshopById(Integer id);
+    public void removeWorkshopById(String id);
+    
 }
