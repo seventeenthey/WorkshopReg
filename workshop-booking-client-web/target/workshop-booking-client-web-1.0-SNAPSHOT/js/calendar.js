@@ -123,7 +123,7 @@ var $currentPopover = null;
                             $t.data('popover', true);
                             
                             //switches to workshop details page on click
-                            window.location = "/apps/workshopbooking/client/detailsLoadAction";
+                            window.location = "/apps/workshopbooking/client/detailsLoadAction?workshopId=" + data.workshopId;
                             $t.popover({content: '<p><strong>' + time + '</strong></p>' + data.text, html: true, placement: 'auto left'}).popover('toggle');
                             return false;
                         });
@@ -320,7 +320,7 @@ var $currentPopover = null;
                     
                     var workshopColumns = workshops[i].children;
                     var workshopTitle = workshopColumns[0].innerText;
-                    var workshopNumber = workshopColumns[1].innerText;
+                    var workshopId = workshopColumns[1].innerText;
                     
                     //var startDateInfo = workshopColumns[2].innerText.split(",");
                     //var startTimeInfo = workshopColumns[3].innerText.split(",");
@@ -331,7 +331,7 @@ var $currentPopover = null;
                     var department = workshopColumns[5].innerText;  //currently not used
                     
                     //TODO - add startDate and time
-                    data.push({title:workshopTitle, start:startDate, end: startDate, text:"some text"});
+                    data.push({title:workshopTitle, start:startDate, end: startDate, text:"some text", workshopId:workshopId});
                 }
 
 //data must be sorted by start date
