@@ -224,7 +224,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
             Workshops w = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", workshopId).getSingleResult();
             List<facilitatorDataBean> facilitatorList = new ArrayList<>();
             for (Person p: w.getMyFacilitators()) {
-                facilitatorList.add(new facilitatorDataBean(p.getNetId(),p.getCommonName(),p.getCommonName()));
+                facilitatorList.add(new facilitatorDataBean(p.getNetId(),p.getCommonName()));
             }
             return facilitatorList;
         }
@@ -233,13 +233,13 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
     }
 
-    private facilitatorDataBean generateFacilBean(int facilNum) {
-        facilitatorDataBean facilBean = new facilitatorDataBean();
-        facilBean.setFacilID(String.valueOf(facilNum));
-        facilBean.setFacilName("BeCool"+facilNum);
-
-        return facilBean;
-    }
+//    private facilitatorDataBean generateFacilBean(int facilNum) {
+//        facilitatorDataBean facilBean = new facilitatorDataBean();
+//        facilBean.setFacilID(String.valueOf(facilNum));
+//        facilBean.setFacilName("BeCool"+facilNum);
+//
+//        return facilBean;
+//    }
 
 
 
