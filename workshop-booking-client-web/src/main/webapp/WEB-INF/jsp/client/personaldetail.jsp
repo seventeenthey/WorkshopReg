@@ -56,7 +56,8 @@
                                 <a class="nav-link" href='<s:property value="functionUrl"/>'>Create Workshop</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="#">Logout</a></li>
+                            <li><s:url action="dashboard" var="dashboardUrl" />
+                                <a id="loginBtn" class="nav-link" href='<s:property value="dashboardUrl"/>'>Logout</a></li>
                         </ul>
                     </div>
                 </div>

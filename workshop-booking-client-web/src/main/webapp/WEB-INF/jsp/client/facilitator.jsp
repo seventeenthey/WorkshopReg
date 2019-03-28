@@ -54,7 +54,8 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                    <s:url action="dashboard" var="dashboardUrl" />
+                    <a id="loginBtn" class="nav-link" href='<s:property value="dashboardUrl"/>'>Logout</a>
                 </li>
             </ul>
         </nav>
