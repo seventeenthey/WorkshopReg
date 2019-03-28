@@ -343,7 +343,9 @@ var $currentPopover = null;
                 $('#holder').calendar({
                     data: data
                 });
-                
+          
+filterTable();
+
 //TODO - add searching by department
 function filterTable() {
     var input, filter, i;
