@@ -106,8 +106,7 @@ public class FunctionAction extends ActionSupport implements Preparable{
             else {
                 addActionError("Data was not saved.");
             }
-            String datetime = workshopForm.getRtStDatetime();
-            addActionMessage("Test output" + datetime);
+            
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -153,6 +152,12 @@ public class FunctionAction extends ActionSupport implements Preparable{
                 addFieldError("waitlistLimit", "Wait List Limit is required.");
             }else if(workshopForm.getWaitlistLimit()>300) {
                 addFieldError("waitlistLimit", "Exceed maximun Wait List Limit (Should no more than 300).");
+            }
+            
+            //Todo: Remove after testing
+            if (!workshopForm.getRgStDateTime().isEmpty()){
+                String datetime = workshopForm.getRgStDateTime();
+                addActionMessage("Test output " + datetime +" Datetime");
             }
 
 
