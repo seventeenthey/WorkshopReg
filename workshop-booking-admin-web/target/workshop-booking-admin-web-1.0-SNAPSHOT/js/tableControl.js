@@ -66,24 +66,26 @@ function filterTable() {
     input = document.getElementById("searchKey");
     filter = input.value.toUpperCase();
     table = document.getElementById("userTable");
-    if(table == null)
+    if (table == null)
         table = document.getElementById("workshopTable");
-    
+
     tr = table.getElementsByTagName("tr");
 
     for (i = 1; i < tr.length; i++) {
-        columns = tr[i].getElementsByTagName("td");
-        name = columns[0];
-        number = columns[1];
-        
-        if (name || number) {
-            nameTxtValue = name.textContent || name.innerText;
-            numberTxtValue = number.textContent || number.innerText;
-            
-            if (nameTxtValue.toUpperCase().indexOf(filter) > -1 || numberTxtValue.indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
+        if (tr[i].id != "ignore") {
+            columns = tr[i].getElementsByTagName("td");
+            name = columns[0];
+            number = columns[1];
+
+            if (name || number) {
+                nameTxtValue = name.textContent || name.innerText;
+                numberTxtValue = number.textContent || number.innerText;
+
+                if (nameTxtValue.toUpperCase().indexOf(filter) > -1 || numberTxtValue.indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
             }
         }
     }

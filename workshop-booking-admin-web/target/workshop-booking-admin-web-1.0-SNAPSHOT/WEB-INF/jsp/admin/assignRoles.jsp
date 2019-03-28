@@ -101,7 +101,7 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <tr>
+                                <tr id="ignore">
                                     <td><s:property value="departmentId.departmentName"/></td>
                                     <td><s:property value="roleId.roleId"/></td>
                                     <td>
