@@ -7,6 +7,7 @@ package ca.queensu.websvcs.workshopbooking.client.action;
 
 import ca.queensu.websvcs.workshopbooking.client.domain.EmailInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
+import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
@@ -34,6 +35,7 @@ public class EmailEditAction extends ActionSupport implements Preparable{
     private EmailInfoForm emailForm;
     
     private Integer workshopId;
+    private Workshops workshop;
 
 
     public EmailEditAction() {
@@ -47,8 +49,8 @@ public class EmailEditAction extends ActionSupport implements Preparable{
     @Override
     public void prepare() throws Exception {
         try {
-            System.out.println("### EmailEditAction prepare running");
-        } 
+            System.out.println("### FunctionAction prepare running");
+        }
         catch (Exception e) {
             StringWriter out = new StringWriter();
             e.printStackTrace(new PrintWriter(out));
@@ -63,16 +65,19 @@ public class EmailEditAction extends ActionSupport implements Preparable{
     public String load() throws Exception{
         try {
             System.out.println("### EmailEditAction load running");
-        } 
+
+            if (workshopId != null){
+                workshop = ejb.findByWorkshopId(workshopId);
+            }
+        }
         catch (Exception e) {
             StringWriter out = new StringWriter();
             e.printStackTrace(new PrintWriter(out));
-            addActionError(createErrorMessage("Exception occurred while loading student edit screen."));
+            addActionError(createErrorMessage("Exception occurred while loading eamil edit screen."));
             log.error("***************Exception occurred in load method " + e.getMessage());
             log.error(out);
             return ERROR;
         }
-        
         return SUCCESS;
     }
     
@@ -108,27 +113,23 @@ public class EmailEditAction extends ActionSupport implements Preparable{
         try {
             System.out.println("### EmailEdit validate running");
             
-            if(emailForm.getNotifyFromName().isEmpty()){
+            if(workshop.getEmailNotificationName().isEmpty()){
                 addFieldError("notifyFromName", "[Notification Email From Name] is required.");
             }
             
-            if(emailForm.getConfirmMsg().isEmpty()){
+            if(workshop.getEmailConfirmationMsg().isEmpty()){
                 addFieldError("confirmMsg", "[Confirmation Message] is required.");
             }
             
-            if(emailForm.getConfirmMsg().isEmpty()){
-                addFieldError("confirmMsg", "[Confirmation Message] is required.");
-            }
-            
-            if(emailForm.getWaitListMsg().isEmpty()){
+            if(workshop.getEmailWaitlistMsg().isEmpty()){
                 addFieldError("waitListMsg", "[Wait List Message] is required.");
             }
             
-            if(emailForm.getCancelMsg().isEmpty()){
+            if(workshop.getEmailCancellationMsg().isEmpty()){
                 addFieldError("cancelMsg", "[Cancellation Message] is required.");
             }
             
-            if(emailForm.getEvalMsg().isEmpty()){
+            if(workshop.getEmailEvaluationMsg().isEmpty()){
                 addFieldError("evalMsg", "[Evaluation Message] is required.");
             }
             
@@ -183,6 +184,14 @@ public class EmailEditAction extends ActionSupport implements Preparable{
 
     public void setWorkshopId(Integer workshopId) {
         this.workshopId = workshopId;
+    }
+
+    public Workshops getWorkshop() {
+        return workshop;
+    }
+
+    public void setWorkshop(Workshops workshop) {
+        this.workshop = workshop;
     }
     
 

@@ -106,33 +106,34 @@
                             enctype="multipart/form-data">
 
                         <h2>Registrant Notification Messages</h2>
+                        
                         <s:fielderror/>
                         <s:textfield 
                             label="Notification Email From Name:"
-                            name="emailForm.notifyFromName"
+                            name="workshop.emailNotificationName"
                             elementCssClass="col-sm-5"/>
 
                         <s:textarea 
                             label="Confirmation Message"
-                            name="emailForm.confirmMsg"
+                            name="workshop.emailConfirmationMsg"
                             emptyOption="true"
                             elementCssClass="col-sm-9"/>
 
                         <s:textarea 
                             label="Wait List Message"
-                            name="emailForm.waitListMsg"
+                            name="workshop.emailWaitlistMsg"
                             emptyOption="true"
                             elementCssClass="col-sm-9"/>
 
                         <s:textarea 
                             label="Cancellation Message"
-                            name="emailForm.cancelMsg"
+                            name="workshop.emailCancellationMsg"
                             emptyOption="true"
                             elementCssClass="col-sm-9"/>
 
                         <s:textarea 
                             label="Evaluation Message"
-                            name="emailForm.evalMsg"
+                            name="workshop.emailEvaluationMsg"
                             emptyOption="true"
                             elementCssClass="col-sm-9"/>
 

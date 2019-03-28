@@ -41,6 +41,7 @@ CREATE TABLE WORKSHOPS (
     location VARCHAR(200) NOT NULL,
     max_participants INTEGER NOT NULL,
     current_participants INTEGER NOT NULL,
+    waitlist_limit INTEGER NOT NULL,
 	registration_start DATETIME NOT NULL,
     registration_end DATETIME NOT NULL,
     event_start DATETIME NOT NULL,
@@ -149,6 +150,7 @@ INSERT INTO DEPARTMENTS VALUES (3, "Arts & Science");
 INSERT INTO LOCATIONS VALUES ("Dunning Hall");
 INSERT INTO LOCATIONS VALUES ("Walter Light Hall");
 INSERT INTO LOCATIONS VALUES ("Goodes Hall");
+INSERT INTO LOCATIONS VALUES ("Stauffer Lib");
 
 -- ADD EVENT_STATUSES
 INSERT INTO EVENT_STATUS VALUES ("Not Posted");
@@ -160,11 +162,11 @@ INSERT INTO PERSON VALUES ("15dny", 12345678, "Daniel K.", "15dny@queensu.ca", 1
 INSERT INTO PERSON VALUES ("13tpv", 62575632, "Tanner V.", "13tpv@queensu.ca", 1, DEFAULT);
 INSERT INTO PERSON VALUES ("11ern", 85317453, "Elise N.", "11ern@queensu.ca", 1, DEFAULT);
 INSERT INTO PERSON VALUES ("emmah", 57338531, "Emma H.", "emma_h@queensu.ca", 3, 2);
-INSERT INTO WORKSHOPS VALUES (NULL, "emmah", 3, "How to Stay Awake in Class", "Learn to stay focused!", "Walter Light Hall", 100, 5, '2019-01-05 10:00:00', '2019-01-05 11:30:00', '2019-02-05 10:00:00', '2019-02-05 11:30:00', "Archived", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
-INSERT INTO WORKSHOPS VALUES (NULL, "emmah", 1, "How to Study Effectively", "Learn how to study effectively!", "Dunning Hall", 100, DEFAULT, '2019-04-01 14:00:00', '2019-04-15 16:00:00', '2019-04-16 14:00:00', '2019-04-16 16:00:00', "Posted", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
-INSERT INTO WORKSHOPS VALUES (NULL, "emmah", 2, "How to Make New Friends", "Get lots of friends!", "Goodes Hall", 100, DEFAULT, '2019-04-12 18:30:00', '2019-04-17 20:00:00', '2019-04-18 18:30:00', '2019-04-18 20:00:00', "Posted", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
-INSERT INTO WORKSHOPS VALUES (NULL, "15dny", 1, "How to Think Smart", "Think less, learn more", "Goodes Hall", 100, DEFAULT, '2019-04-02 15:45:00', '2019-04-08 17:30:00', '2019-04-09 15:45:00', '2019-04-09 17:30:00', "Posted", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
-INSERT INTO WORKSHOPS VALUES (NULL, "15dny", 3, "How to Express Yourself", "Get to know yourself before others!", "Dunning Hall", 100, DEFAULT, '2019-04-15 16:15:00', '2019-05-01 18:00:00', '2019-05-02 16:15:00', '2019-05-02 18:00:00', "Posted", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO WORKSHOPS VALUES (NULL, "emmah", 3, "How to Stay Awake in Class", "Learn to stay focused!", "Walter Light Hall", 100, 5,20, '2019-01-05 10:00:00', '2019-01-05 11:30:00', '2019-02-05 10:00:00', '2019-02-05 11:30:00', "Archived", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO WORKSHOPS VALUES (NULL, "emmah", 1, "How to Study Effectively", "Learn how to study effectively!", "Dunning Hall", 100, DEFAULT,30, '2019-04-01 14:00:00', '2019-04-15 16:00:00', '2019-04-16 14:00:00', '2019-04-16 16:00:00', "Posted", "HelloName", "Cancel Message", "Wait Message", "cancel Message", "Eval Message");
+INSERT INTO WORKSHOPS VALUES (NULL, "emmah", 2, "How to Make New Friends", "Get lots of friends!", "Goodes Hall", 100, DEFAULT,27, '2019-04-12 18:30:00', '2019-04-17 20:00:00', '2019-04-18 18:30:00', '2019-04-18 20:00:00', "Posted", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO WORKSHOPS VALUES (NULL, "15dny", 1, "How to Think Smart", "Think less, learn more", "Goodes Hall", 100, DEFAULT,28, '2019-04-02 15:45:00', '2019-04-08 17:30:00', '2019-04-09 15:45:00', '2019-04-09 17:30:00', "Posted", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO WORKSHOPS VALUES (NULL, "15dny", 3, "How to Express Yourself", "Get to know yourself before others!", "Dunning Hall", 100, DEFAULT,77, '2019-04-15 16:15:00', '2019-05-01 18:00:00', '2019-05-02 16:15:00', '2019-05-02 18:00:00', "Posted", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
 INSERT INTO REVIEWS VALUES (1, "15dny", "Loved it!");
 INSERT INTO REGISTRATIONS VALUES (1, "15dny");
 INSERT INTO REGISTRATIONS VALUES (2, "15dny");
