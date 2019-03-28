@@ -34,7 +34,7 @@ public class AttendanceAction extends ActionSupport {
     
     List<StudentDataBean> studentBeanList;
     
-    private String workshopId;
+    private Integer workshopId;
 
 
     public AttendanceAction() {
@@ -89,12 +89,14 @@ public class AttendanceAction extends ActionSupport {
         this.studentBeanList = studentBeanList;
     }
 
-    public String getWorkshopId() {
+    public Integer getWorkshopId() {
         return workshopId;
     }
 
-    public void setWorkshopId(String workshopId) {
+    public void setWorkshopId(Integer workshopId) {
         this.workshopId = workshopId;
     }
+
+
     
 }

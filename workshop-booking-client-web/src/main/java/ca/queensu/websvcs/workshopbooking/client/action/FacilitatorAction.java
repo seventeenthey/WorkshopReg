@@ -34,7 +34,7 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     
     List<facilitatorDataBean> facilBeanList;
     
-    private String workshopId;
+    private Integer workshopId;
 
     
     public FacilitatorAction() {
@@ -122,13 +122,13 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
         this.ejb = ejb;
     }
 
-    public String getWorkshopId() {
+    public Integer getWorkshopId() {
         return workshopId;
     }
 
-    public void setWorkshopId(String workshopId) {
+    public void setWorkshopId(Integer workshopId) {
         this.workshopId = workshopId;
     }
-    
+
 }
 

@@ -40,7 +40,7 @@ public class FunctionAction extends ActionSupport implements Preparable{
     private List<String> statusList;
     private List<String> locationList;
     
-    private String workshopId;
+    private Integer workshopId;
     private Workshops workshop;
 
 
@@ -73,10 +73,9 @@ public class FunctionAction extends ActionSupport implements Preparable{
         try {
             System.out.println("### FunctionAction load running");
             
-            if (workshopId != null && !workshopId.isEmpty()){
+            if (workshopId != null){
                 workshop = ejb.findByWorkshopId(workshopId);
             }
-            
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -102,6 +101,8 @@ public class FunctionAction extends ActionSupport implements Preparable{
             else {
                 addActionError("Data was not saved.");
             }
+            String datetime = workshopForm.getRtStDatetime();
+            addActionMessage("Test output" + datetime);
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -148,6 +149,8 @@ public class FunctionAction extends ActionSupport implements Preparable{
             }else if(workshopForm.getWaitlistLimit()>300) {
                 addFieldError("waitlistLimit", "Exceed maximun Wait List Limit (Should no more than 300).");
             } 
+            
+            
             
         } 
         catch (Exception e) { 
@@ -205,16 +208,15 @@ public class FunctionAction extends ActionSupport implements Preparable{
     public void setLocationList(List<String> locationList) {
         this.locationList = locationList;
     }
-    
 
-    public String getWorkshopId() {
+    public Integer getWorkshopId() {
         return workshopId;
     }
 
-    public void setWorkshopId(String workshopId) {
+    public void setWorkshopId(Integer workshopId) {
         this.workshopId = workshopId;
     }
-
+    
     public Workshops getWorkshop() {
         return workshop;
     }

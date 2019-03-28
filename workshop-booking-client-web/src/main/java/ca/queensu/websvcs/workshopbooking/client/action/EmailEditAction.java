@@ -33,7 +33,7 @@ public class EmailEditAction extends ActionSupport implements Preparable{
     
     private EmailInfoForm emailForm;
     
-    private String workshopId;
+    private Integer workshopId;
 
 
     public EmailEditAction() {
@@ -176,14 +176,14 @@ public class EmailEditAction extends ActionSupport implements Preparable{
     public void setEmailForm(EmailInfoForm emailForm) {
         this.emailForm = emailForm;
     }
-    
-    public String getWorkshopId() {
+
+    public Integer getWorkshopId() {
         return workshopId;
     }
 
-    public void setWorkshopId(String workshopId) {
+    public void setWorkshopId(Integer workshopId) {
         this.workshopId = workshopId;
     }
-
+    
 
 }

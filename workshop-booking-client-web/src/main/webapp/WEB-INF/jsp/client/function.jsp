@@ -178,13 +178,13 @@
                                 <sx:datetimepicker 
                                     label="Registration End Date" 
                                     name="workshopForm.rgEndDate" 
-                                    displayFormat="dd-MMM-yyyy"/>
+                                    displayFormat="yyyy-MM-dd"/>
                             </div>                            
                             <div class="col-md-4">
                             <sx:datetimepicker 
                                 label="Registration End Time" 
                                 name="workshopForm.rgEndTime" 
-                                displayFormat="HH:mm" 
+                                displayFormat="HH:mm:ss" 
                                 type="time"/>
                             </div>
                         </div>
