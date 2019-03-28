@@ -7,7 +7,7 @@ package ca.queensu.websvcs.workshopbooking.client.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+//import java.util.List;
 
 import java.text.DateFormat;  
 import java.text.SimpleDateFormat;  

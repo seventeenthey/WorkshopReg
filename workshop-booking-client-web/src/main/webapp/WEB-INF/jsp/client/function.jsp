@@ -114,46 +114,44 @@
                         <!--Todo: Prepopulate the form with existing information-->
                         
                         <h2>Workshop No.<s:property value="workshopId"/></h2>
-                        <h3>Workshop Name: <s:property value="workshop.Title"/></h3>
-                        
+                                              
                         <s:radio 
                             label="Status:"
                             labelposition="inline"
-                            name="workshopForm.status" 
+                            name="workshopForm.status.status" 
                             list="statusList"
                             elementCssClass="col-sm-9"/>
                         
                         <s:textfield 
                             label="Event Title:"
                             placeholder="Event Title"
-                            name="workshopForm.eventTitle"
+                            name="workshop.Title"
                             tooltip="Enter Workshop Title Here"
                             cssClass="input-sm"
-                            elementCssClass="col-sm-5"
-                            value="defaultName"/>
+                            elementCssClass="col-sm-5"/>
 
                         <s:select 
                             label="Location:"
-                            name="workshopForm.location" 
+                            name="workshop.location" 
                             list="locationList"
                             elementCssClass="col-sm-5"/>
 
                         <s:textarea 
                             label="Teaser:"
-                            name="workshopForm.teaser"
+                            name="workshop.details"
                             emptyOption="true"
                             elementCssClass="col-sm-9"/>
 
                         <s:textfield 
                             label="Maximum Participants:"
-                            name="workshopForm.maxParticipant"
+                            name="workshop.maxParticipant"
                             type="number"
                             placeholder="10"
                             elementCssClass="col-sm-2"/>
 
                         <s:textfield 
                             label="Wait List Limit:"
-                            name="workshopForm.waitlistLimit"
+                            name="workshop.currentParticipants"
                             type="number"
                             placeholder="0"
                             elementCssClass="col-sm-2"/>
@@ -163,13 +161,13 @@
                             <div class="col-md-4">
                                 <sx:datetimepicker 
                                     label="Registration Start Date" 
-                                    name="workshopForm.rgStDate" 
+                                    name="workshop.registrationStart" 
                                     displayFormat="dd-MMM-yyyy"/>
                             </div>
                             <div class="col-md-4">
                                 <sx:datetimepicker 
                                     label="Registration Start Time" 
-                                    name="workshopForm.rgStTime" 
+                                    name="workshop.registrationStart" 
                                     displayFormat="HH:mm" 
                                     type="time"/>
                             </div>
@@ -179,13 +177,13 @@
                             <div class="col-md-4">
                                 <sx:datetimepicker 
                                     label="Registration End Date" 
-                                    name="workshopForm.rgEndDate" 
+                                    name="workshop.registrationEnd" 
                                     displayFormat="yyyy-MM-dd"/>
                             </div>                            
                             <div class="col-md-4">
                             <sx:datetimepicker 
                                 label="Registration End Time" 
-                                name="workshopForm.rgEndTime" 
+                                name="workshop.registrationEnd" 
                                 displayFormat="HH:mm:ss" 
                                 type="time"/>
                             </div>
@@ -196,13 +194,13 @@
                             <div class="col-md-4">
                                 <sx:datetimepicker 
                                     label="Event Start Date" 
-                                    name="workshopForm.eventStDate" 
+                                    name="workshop.eventStart" 
                                     displayFormat="dd-MMM-yyyy"/>
                             </div>
                             <div class="col-md-4">
                                 <sx:datetimepicker 
                                     label="Event Start Time" 
-                                    name="workshopForm.eventStTime" 
+                                    name="workshop.eventStart" 
                                     displayFormat="HH:mm" 
                                     type="time"/>
                             </div>
@@ -212,13 +210,13 @@
                             <div class="col-md-4">
                                 <sx:datetimepicker 
                                     label="Event End Date" 
-                                    name="workshopForm.eventEndDate" 
+                                    name="workshop.eventEnd" 
                                     displayFormat="yyyy-MM-dd"/>
                             </div>
                             <div class="col-md-4">
                                 <sx:datetimepicker 
                                     label="Event End Time" 
-                                    name="workshopForm.eventEndTime" 
+                                    name="workshop.eventEnd" 
                                     displayFormat="HH:mm:ss" 
                                     type="time"/>  
                             </div>

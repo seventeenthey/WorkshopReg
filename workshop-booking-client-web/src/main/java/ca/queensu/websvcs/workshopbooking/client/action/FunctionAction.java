@@ -74,6 +74,8 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
             if (workshopId != null){
                 workshop = ejb.findByWorkshopId(workshopId);
+//                workshopForm.setEventTitle(workshop.getTitle());
+//                addActionMessage("Event Title " + workshop.getTitle());
             }
         }
         catch (Exception e) {
@@ -130,41 +132,33 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
             System.out.println("### StudentEditAction validate running");
 
-            if(workshopForm.getStatus().isEmpty()) {
-                addFieldError("status", "Status is required.");
-            }
+//            if(workshop.getEventStatus().getEventStatus().isEmpty()) {
+//                addFieldError("status", "Status is required.");
+//            }
 
-            if(workshopForm.getEventTitle().isEmpty()) {
+            if(workshop.getTitle().isEmpty()) {
                 addFieldError("eventTitle", "Event Title is required.");
-            }else if(workshopForm.getEventTitle().length() > 30){
+            }else if(workshop.getTitle().length() > 30){
                 addFieldError("eventTitle", "Event Title cannot exceed 30 characters.");
             }
 
-            if(workshopForm.getTeaser().isEmpty()) {
+            if(workshop.getDetails().isEmpty()) {
                 addFieldError("teaser", "Workshop Teaser is required.");
             }
 
-            if (workshopForm.getMaxParticipant() == null){
+            if (workshop.getMaxParticipants() == 0){
                 addFieldError("maxParticipant", "Maximun Participant is required.");
-            }else if(workshopForm.getMaxParticipant()>300) {
+            }else if(workshop.getMaxParticipants()>300) {
                 addFieldError("maxParticipant", "Exceed maximun Participant (Should no more than 300).");
-            }else if(workshopForm.getMaxParticipant()<10){
+            }else if(workshop.getMaxParticipants()<10){
                 addFieldError("maxParticipant","Less than minimun Participant (Should no less than 10).");
             }
 
-            if (workshopForm.getWaitlistLimit() == null){
+            if (workshop.getCurrentParticipants() == 0){
                 addFieldError("waitlistLimit", "Wait List Limit is required.");
-            }else if(workshopForm.getWaitlistLimit()>300) {
+            }else if(workshop.getCurrentParticipants()>300) {
                 addFieldError("waitlistLimit", "Exceed maximun Wait List Limit (Should no more than 300).");
             }
-            
-            //Todo: Remove after testing
-            if (!workshopForm.getRgStDateTime().isEmpty()){
-                String datetime = workshopForm.getRgStDateTime();
-                addActionMessage("Test output " + datetime +" Datetime");
-            }
-
-
 
         }
         catch (Exception e) {
