@@ -106,7 +106,12 @@
                                     <td><s:property value="roleId.roleId"/></td>
                                     <td>
                                         <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                        <a class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
+                                        <s:url action="assignRolesUpdateAction" var="updateUrl" escapeAmp="false">
+                                            <s:param name="netId" value="netId"/>
+                                            <s:param name="department" value="departmentId.departmentName"/>
+                                            <s:param name="roleId" value = "roleId.roleId" />
+                                        </s:url>
+                                        <a href='<s:property value="updateUrl"/>' class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
                                     </td>
                                 </tr>
                             </table>
@@ -117,7 +122,7 @@
                 </s:iterator>
             </table>
         </div>
-            
+
         <script src="js/tableControl.js"></script>
     </body>
 </html>

@@ -27,9 +27,10 @@ public class AssignRolesAction extends ActionSupport {
 
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.admin.action.AssignRolesAction.class);
      
-    private Person person;
     private List<Person> allPeople;
-    private String searchKey;
+    private String netId;
+    private String roleId;
+    private String department;
     
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
@@ -68,6 +69,20 @@ public class AssignRolesAction extends ActionSupport {
         return SUCCESS;
     }
     
+    public String updateRole() throws Exception {
+        System.out.println("UpdateRole of AssignRolesAction - Admin");
+        try {
+            Person person = ejb.getPersonByNetId(netId);    //find the person to update
+            person.updateRole(roleId, department);          //update the role
+            
+            allPeople = ejb.getAllPeople();
+        } catch (Exception e){
+            log.error("AssignRolesAction updateRole: exception\n {}",e.toString());
+        }
+        
+        return SUCCESS;
+    }
+    
     public List<Person> getAllPeople(){
         return allPeople;
     }
@@ -76,4 +91,27 @@ public class AssignRolesAction extends ActionSupport {
         this.allPeople = allPeople;
     }
     
+    public String getNetId(){
+        return netId;
+    }
+    
+    public void setNetId(String netId){
+        this.netId = netId;
+    }
+    
+    public String getDepartment(){
+        return department;
+    }
+    
+    public void setDepartment(String department){
+        this.department = department;
+    }
+    
+    public String getRoleId(){
+        return roleId;
+    }
+    
+    public void setRoleId(String roleId){
+        this.roleId = roleId;
+    }
 }
