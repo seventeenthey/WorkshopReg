@@ -132,14 +132,16 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
 
     @Override
-    public boolean updateWorkshopForm(Workshops workshop){
+    public boolean updateWorkshopForm(Workshops workshop, WorkshopInfoForm workshopForm){
         //
 //      Todo: Need Modified with actural success verification
 
         String netId = workshop.getTitle();
         System.out.println("WorkshopTitleTestVar "+netId);
-        Date datetime = workshop.getRegistrationStart();
-        System.out.println("WorkshopDateTestVar2 "+datetime.toString());
+        Date date=workshopForm.getRgStDate();
+        System.out.println("WorkshopRgStDateTestVar "+date.toString());
+//        Date datetime = workshop.getRegistrationStart();
+//        System.out.println("WorkshopDateTestVar2 "+datetime.toString());
 //        Person facilitator = em.createNamedQuery("Person.findByNetId", Person.class).setParameter("netId", netId).getSingleResult();
 //        Departments department = facilitator.getDepartmentId();
 //        String title = workshopForm.getEventTitle();

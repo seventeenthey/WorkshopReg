@@ -46,8 +46,6 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
     private Integer workshopId;
     private Workshops workshop;
-    private Date rgStDate;
-    private Date rgEndDate;
 
     public FunctionAction() {
         System.out.println("### FunctionAction constructor running");
@@ -110,7 +108,7 @@ public class FunctionAction extends ActionSupport implements Preparable{
 //            workshopForm.setFacilitatorId(facilitatorId);
 
             // Check if the workshopInfoForm successfully saved or not
-            boolean saveSuccessful = ejb.updateWorkshopForm(workshop);
+            boolean saveSuccessful = ejb.updateWorkshopForm(workshop,workshopForm);
             //workshop
 //            boolean saveSuccessful = true;
             if(saveSuccessful){
