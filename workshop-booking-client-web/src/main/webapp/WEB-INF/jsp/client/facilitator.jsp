@@ -59,7 +59,7 @@
                 </li>
             </ul>
         </nav>
-                
+
         <div class="function">
             <!--Main Content-->
             <div class="row">
@@ -103,7 +103,7 @@
 
                 <div class="col-md-9">
                     <s:actionmessage theme="bootstrap"/>
-                    
+
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr>
@@ -125,7 +125,7 @@
                         </tbody>
                     </table>
 
-                    
+
                     <s:form id="facilitatorEditForm" action="facilitatorExeAction?workshopId=%{workshopId}&newFacilId=%{newFacilId}"
                             theme="bootstrap" method="post" cssClass="form-vertical">
                         <s:fielderror/>
@@ -134,14 +134,14 @@
                             label="Facilitator ID:"
                             name="addFacilId"
                             elementCssClass="col-sm-3"/>
-                        
+
                         <h2>Delete a facilitator:</h2>
                         <s:textfield
                             label="Facilitator ID:"
                             name="delFacilId"
                             elementCssClass="col-sm-3"/>
-                        
-                        <s:submit 
+
+                        <s:submit
                             value="confirm"
                             cssClass="btn btn-primary"/>
 

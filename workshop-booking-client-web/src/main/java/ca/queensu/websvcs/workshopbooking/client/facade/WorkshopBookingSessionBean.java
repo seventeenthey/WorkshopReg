@@ -292,7 +292,10 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     @Transactional
     public boolean addFaciliator(Integer workshopId, String netId) {
-        System.out.println("hello15");
+        System.out.println("hello20");
+        System.out.println(workshopId);
+        System.out.println(netId);
+        netId = "11ern";
         Workshops workshop = findByWorkshopId(workshopId);
         Person p = getPersonByNetId(netId);
         workshop.addFacilitator(p);
