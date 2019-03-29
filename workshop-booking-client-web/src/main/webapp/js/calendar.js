@@ -331,7 +331,7 @@ var $currentPopover = null;
                     var department = workshopColumns[5].innerText;  //currently not used
                     
                     //TODO - add startDate and time
-                    data.push({title:workshopTitle, start:startDate, end: startDate, text:"some text", workshopId:workshopId});
+                    data.push({title:workshopTitle, start:startDate, end: endDate, text:"some text", workshopId:workshopId});
                 }
 
 //data must be sorted by start date

@@ -269,7 +269,7 @@
                             <td><s:property value="workshopId" /></td>
                             <td><s:property value="eventStart.toString()"/></td>
                             <td><s:property value="rgStTime"/></td>
-                            <td><s:property value="event_end"/></td>
+                            <td><s:property value="eventEnd.toString()"/></td>
                             <td><s:property value="departmentId.departmentName"/></td>
                             <td>
                                 <s:url action="detailsLoadAction" var="detailsUrl">
