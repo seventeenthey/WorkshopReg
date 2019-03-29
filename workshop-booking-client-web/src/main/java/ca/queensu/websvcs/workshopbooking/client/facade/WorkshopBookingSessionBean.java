@@ -139,7 +139,8 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         String title = workshopForm.getEventTitle();
         String details = workshopForm.getTeaser();
         String location = workshopForm.getLocation();
-        int maxParticipants = workshopForm.getMaxParticipant();
+        Integer maxParticipants = workshopForm.getMaxParticipant();
+        Integer waitlistLimit = workshopForm.getWaitlistLimit();
         EventStatus eventStatus = new EventStatus(workshopForm.getStatus());
 
         try {
@@ -149,7 +150,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
             Date eventStart = formatter.parse(workshopForm.getEventStDateTime());
             Date eventEnd = formatter.parse(workshopForm.getEventEndDateTime());
             System.out.println("hello2");
-            Workshops w = new Workshops(facilitator, department, title, details, location, maxParticipants, registrationStart, registrationEnd, eventStart, eventEnd, eventStatus);
+            Workshops w = new Workshops(facilitator, department, title, details, location, maxParticipants, waitlistLimit, registrationStart, registrationEnd, eventStart, eventEnd, eventStatus);
             System.out.println("hello3");
             em.persist(w);
             em.flush();
