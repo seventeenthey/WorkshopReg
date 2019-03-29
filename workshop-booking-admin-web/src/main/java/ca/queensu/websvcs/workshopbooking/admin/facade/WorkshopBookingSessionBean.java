@@ -4,6 +4,7 @@ import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.uis.services.email.ws.QueensEmailInterface;
 import ca.queensu.websvcs.workshopbooking.core.entity.Departments;
+import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import ca.queensu.websvcs.workshopbooking.core.entity.Roles;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import javax.persistence.PersistenceContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
+import javax.transaction.Transactional;
 
 /**
  * <p>WorkshopBookingSessionBean class.</p>
@@ -59,6 +61,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
     
     @Override
+    @Transactional
     public void savePerson(Person p) {
         em.persist(p);
         em.flush();
@@ -66,22 +69,25 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     
     @Override
     public Workshops findByWorkshopId(Integer id) {
-        Workshops catalogue = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", id).getSingleResult();
-        return catalogue;
+        Workshops workshop = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", id).getSingleResult();
+        return workshop;
     }
     
     @Override
     public List<Workshops> getAllWorkshops() {
-        List<Workshops> catalogue = em.createNamedQuery("Workshops.findAll", Workshops.class).getResultList();
-        return catalogue;
+        List<Workshops> workshop = em.createNamedQuery("Workshops.findAll", Workshops.class).getResultList();
+        return workshop;
     }
 
     @Override
-    public void removeWorkshopById(Integer id){
-        //TODO - add remove workshop query
+    @Transactional
+    public void removeWorkshopById(Integer workshopId){
+        Workshops workshop = findByWorkshopId(workshopId);
+        em.remove(workshop);
     }
     
     @Override
+    @Transactional
     public void removeWorkshopById(String id){
         removeWorkshopById(Integer.valueOf(id));
     }
@@ -102,5 +108,14 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         for (Departments dep: em.createNamedQuery("Departments.findAll", Departments.class).getResultList())
             departmentList.add(dep.getDepartmentName());
         return departmentList;
+    }
+    
+    @Override
+    @Transactional
+    public boolean addLocation(String locationName) {
+        Locations loc = new Locations(locationName);
+        em.persist(loc);
+        em.flush();
+        return true;
     }
 }

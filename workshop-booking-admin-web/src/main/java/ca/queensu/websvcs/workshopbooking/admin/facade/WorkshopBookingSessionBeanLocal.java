@@ -37,4 +37,5 @@ public interface WorkshopBookingSessionBeanLocal {
     public List<String> findroleList();
     public List<String> findDepartmentList();
     
+    public boolean addLocation(String locationName);
 }

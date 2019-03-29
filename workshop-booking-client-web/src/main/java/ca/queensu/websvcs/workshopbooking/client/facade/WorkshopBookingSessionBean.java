@@ -29,6 +29,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.Random;
 import static java.util.stream.Collectors.toList;
+import javax.transaction.Transactional;
 
 /**
  * <p>WorkshopBookingSessionBean class.</p>
@@ -119,6 +120,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
 
     @Override
+    @Transactional
     public List<Person> getParticipantsForWorkshop(Integer workshopId){
         // Get all participants in a workshop
         Workshops w = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", workshopId).getSingleResult();
@@ -277,4 +279,5 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public boolean registerIn(){
         return true;
     }
+
 }

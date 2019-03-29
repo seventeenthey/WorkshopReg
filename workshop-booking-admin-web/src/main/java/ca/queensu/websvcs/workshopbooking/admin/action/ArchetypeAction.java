@@ -52,9 +52,10 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
     public String remove() throws Exception {
         System.out.println("Entering Remove of ArchetypeAction - Admin");
         //This will be the real code
-        //ejb.removeWorkshopById(workshopIdToRemove);
-        //workshops = ejb.getAllWorkshops();
+        ejb.removeWorkshopById(workshopIdToRemove);
+        workshops = ejb.getAllWorkshops();
         
+        /**
         //this is a temp workaround to show the point
         workshops = ejb.getAllWorkshops();
         for(int i = 0; i < workshops.size(); i++)
@@ -62,6 +63,7 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
                 workshops.remove(i);
                 break;
             }
+        **/
         
         return SUCCESS;
     }
