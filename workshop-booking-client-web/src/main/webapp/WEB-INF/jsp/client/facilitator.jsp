@@ -128,16 +128,21 @@
                     
                     <s:form id="facilitatorEditForm" action="facilitatorExeAction?workshopId=%{workshopId}&newFacilId=%{newFacilId}"
                             theme="bootstrap" method="post" cssClass="form-vertical">
-
+                        <s:fielderror/>
                         <h2>Add a facilitator:</h2>
-
                         <s:textfield
                             label="Facilitator ID:"
-                            name="newFacilId"
+                            name="addFacilId"
+                            elementCssClass="col-sm-3"/>
+                        
+                        <h2>Delete a facilitator:</h2>
+                        <s:textfield
+                            label="Facilitator ID:"
+                            name="delFacilId"
                             elementCssClass="col-sm-3"/>
                         
                         <s:submit 
-                            value="Add"
+                            value="confirm"
                             cssClass="btn btn-primary"/>
 
                     </s:form>

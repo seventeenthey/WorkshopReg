@@ -33,7 +33,8 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     private WorkshopBookingSessionBeanLocal ejb;
     
     List<facilitatorDataBean> facilBeanList;
-    private String newFacilId;
+    private String addFacilId;
+    private String delFacilId;  // Facilitator ID will be deleted
     private Integer workshopId;
 
     
@@ -85,9 +86,10 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
         try {
             System.out.println("### FacilitatorAction execute running");
             System.out.println("hello14");
-            if (workshopId != null){
-                boolean success = ejb.addFaciliator(workshopId, newFacilId);
-            }
+//            if (!newFacilId.isEmpty()){
+//                boolean success = ejb.addFaciliator(workshopId, newFacilId);
+//            }
+        addActionMessage("New Facilitator Successfully Added.");
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -99,6 +101,25 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
         }
         return SUCCESS;
     }
+
+    @Override
+    public void validate() {
+        try {
+
+            System.out.println("### StudentEditAction validate running");
+            if (workshopId == null){
+                addFieldError("addFacil","Unable to modify facilitator.");
+            }            
+        }
+        catch (Exception e) {
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
+            addActionError(createErrorMessage("Exception occurred while validating student data."));
+            log.error("***************Exception occurred in validate method " + e.getMessage());
+            log.error(out);
+        }
+    }
+
     
     /**
      * Creates a custom error message to be used as an action error 
@@ -138,14 +159,24 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     public void setWorkshopId(Integer workshopId) {
         this.workshopId = workshopId;
     }
-    
-    public String getNewFacilId() {
-        return newFacilId;
+
+    public String getAddFacilId() {
+        return addFacilId;
     }
 
-    public void setNewFacilId(String newFacilId) {
-        this.newFacilId = newFacilId;
+    public void setAddFacilId(String addFacilId) {
+        this.addFacilId = addFacilId;
     }
+
+    public String getDelFacilId() {
+        return delFacilId;
+    }
+
+    public void setDelFacilId(String delFacilId) {
+        this.delFacilId = delFacilId;
+    }
+    
+
 
 }
 
