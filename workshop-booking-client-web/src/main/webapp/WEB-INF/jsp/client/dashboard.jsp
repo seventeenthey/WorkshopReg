@@ -280,18 +280,10 @@
                         </tr>
                     </s:iterator>
             </table>
-        </div>            
-        <footer class="footer" id="footer">
-            <div class="container-fluid copyright navbar">
-                <div class="container text-right">
-                    <p>Report an Issue</p>
-                    <p>Queen's Information & Technology Services</p>
-                </div>
-            </div>
-        </footer>
-        <div id="loggedIn"><s:property value="loggedIn"/></div>
+        </div>
+                
+        <div id="loggedIn" style="display:none"><s:property value="loggedIn"/></div>
 
-        
         <!-- JS -->
         <script src="js/tether.min.js"></script>
         <script src="js/jquery-3.2.1.min.js"></script>

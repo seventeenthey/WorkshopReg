@@ -8,9 +8,11 @@ package ca.queensu.websvcs.workshopbooking.admin.action;
 import ca.queensu.uis.sso.tools.common.SSOConstants;
 import ca.queensu.websvcs.workshopbooking.admin.facade.WorkshopBookingSessionBeanLocal;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
+import ca.queensu.websvcs.workshopbooking.core.entity.Roles;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
+import static java.lang.System.console;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +31,29 @@ public class AssignRolesAction extends ActionSupport {
      
     private List<Person> allPeople;
     private String netId;
-    private String roleId;
+    private String roleName;
     private String department;
+    private List<String> allRoles;
+    private List<String> allDepartments;
+    
+    private int listKey;
+    private String listValue;
+    
+    public int getListKey(){
+        return listKey;
+    }
+    
+    public void setListKey(int listKey){
+        this.listKey = listKey;
+    }
+    
+    public String getListValue(){
+        return listValue;
+    }
+    
+    public void setListValue(String listValue){
+        this.listValue = listValue;
+    }
     
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
@@ -55,6 +78,8 @@ public class AssignRolesAction extends ActionSupport {
         log.info("Entering execute of AssignRolesAction");
         try {            
             allPeople = ejb.getAllPeople();
+            allRoles = ejb.findroleList();
+            allDepartments = ejb.findDepartmentList();
         } catch (Exception e) {
             
             // hmm  may not need this
@@ -72,10 +97,16 @@ public class AssignRolesAction extends ActionSupport {
     public String updateRole() throws Exception {
         System.out.println("UpdateRole of AssignRolesAction - Admin");
         try {
+            System.out.println("Step 1");
             Person person = ejb.getPersonByNetId(netId);    //find the person to update
-            person.updateRole(roleId, department);          //update the role
+            System.out.println(department);
+            System.out.println(roleName);
+            person.updateRole(roleName, department);          //update the role
+            System.out.println("Step 1");
             
             allPeople = ejb.getAllPeople();
+            allRoles = ejb.findroleList();
+            allDepartments = ejb.findDepartmentList();
         } catch (Exception e){
             log.error("AssignRolesAction updateRole: exception\n {}",e.toString());
         }
@@ -107,11 +138,27 @@ public class AssignRolesAction extends ActionSupport {
         this.department = department;
     }
     
-    public String getRoleId(){
-        return roleId;
+    public String getRoleName(){
+        return roleName;
     }
     
-    public void setRoleId(String roleId){
-        this.roleId = roleId;
+    public void setRoleName(String roleName){
+        this.roleName = roleName;
+    }
+    
+    public List<String> getAllRoles(){
+        return allRoles;
+    }
+    
+    public void setAllRoles(List<String> allRoles){
+        this.allRoles = allRoles;
+    }
+    
+    public List<String> getAllDepartments(){
+        return allDepartments;
+    }
+    
+    public void setAllDepartments(List<String> allDepartments){
+        this.allDepartments = allDepartments;
     }
 }

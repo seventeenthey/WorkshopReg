@@ -3,7 +3,10 @@ package ca.queensu.websvcs.workshopbooking.admin.facade;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.uis.services.email.ws.QueensEmailInterface;
+import ca.queensu.websvcs.workshopbooking.core.entity.Departments;
+import ca.queensu.websvcs.workshopbooking.core.entity.Roles;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -81,5 +84,23 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     public void removeWorkshopById(String id){
         removeWorkshopById(Integer.valueOf(id));
+    }
+    
+    @Override
+    public List<String> findroleList(){
+//      List of all possible locations to hold a workshop
+        List<String> roleList = new ArrayList<>();
+        for (Roles role: em.createNamedQuery("Roles.findAll", Roles.class).getResultList()) {
+            roleList.add(role.getRoleName());
+        }
+        return roleList;
+    }
+    
+    @Override 
+    public List<String> findDepartmentList(){
+        List<String> departmentList = new ArrayList();
+        for (Departments dep: em.createNamedQuery("Departments.findAll", Departments.class).getResultList())
+            departmentList.add(dep.getDepartmentName());
+        return departmentList;
     }
 }

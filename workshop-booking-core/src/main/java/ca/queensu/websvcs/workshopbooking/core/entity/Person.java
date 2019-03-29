@@ -261,10 +261,8 @@ public class Person implements Serializable {
     
     //TODO - Vincent or Taylor?
     public void updateRole(int roleId, String department){
-        
     }
     
-    public void updateRole(String roleId, String department){
-        updateRole(Integer.valueOf(roleId), department);
+    public void updateRole(String roleName, String department){
     }
 }

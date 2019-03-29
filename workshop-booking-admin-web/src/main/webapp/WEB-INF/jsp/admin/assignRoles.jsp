@@ -102,22 +102,35 @@
                                 <th></th>
                                 <th></th>
                                 <tr id="ignore">
-                                    <td><s:property value="departmentId.departmentName"/></td>
-                                    <td><s:property value="roleId.roleId"/></td>
+                                    <td>
+                                        <div class="originalValue"><s:property value="departmentId.departmentName"/></div>
+                                        <div class="selector" style="display:none">
+                                            <s:select 
+                                                list="allDepartments"
+                                                value="departmentId.departmentName"/>
+                                        </div>
+                                    </td>
+                                    <td><div class="originalValue"><s:property value="roleId.roleName"/></div>
+                                        <div class="selector" style="display:none">
+                                            <s:select 
+                                                list="allRoles"
+                                                value="roleId.roleName"/>
+                                        </div>
+                                    </td>
                                     <td>
                                         <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                                         <s:url action="assignRolesUpdateAction" var="updateUrl" escapeAmp="false">
                                             <s:param name="netId" value="netId"/>
                                             <s:param name="department" value="departmentId.departmentName"/>
-                                            <s:param name="roleId" value = "roleId.roleId" />
+                                            <s:param name="roleName" value = "roleId.roleName" />
                                         </s:url>
                                         <a href='<s:property value="updateUrl"/>' class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
                                     </td>
                                 </tr>
                             </table>
                         </td>
-                        <td><s:property value="myOwnedWorkshops.size()"/>1</td>
-                        <td><s:property value="myWorkshops.size()"/>3</td>
+                        <td><s:property value="myOwnedWorkshops.size()"/></td>
+                        <td><s:property value="myWorkshops.size()"/></td>
                     </tr>
                 </s:iterator>
             </table>

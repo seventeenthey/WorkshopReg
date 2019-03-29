@@ -45,10 +45,20 @@ $(document).ready(function () {
     });
     // Edit row on edit button click
     $(document).on("click", ".edit", function () {
-        //$(this).parent("tr").find("td:not(:last-child)")
-        $(this).parents("tr").first().find("td:not(:last-child)").each(function () {
-            $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+        var dropDowns = $(this).parents("tr").first().find(".selector");
+        var texts = $(this).parents("tr").first().find(".originalValue");
+
+        texts.each(function(){
+            $(this)[0].style.display="none";
         });
+        
+        dropDowns.each(function(){
+            $(this)[0].style.display="";
+        });
+        
+       // $(this).parents("tr").first().find("td:not(:last-child)").each(function () {
+        //    $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+        //});
         $(this).parents("tr").find(".confirm, .edit").toggle();
         $(".add-new").attr("disabled", "disabled");
     });
