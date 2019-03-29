@@ -137,6 +137,9 @@
         <action name="listViewLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.ListViewAction" method="execute">
             <interceptor-ref name="baseStack"></interceptor-ref>
             <result name="success">WEB-INF/jsp/client/listview.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
         </action>
         
         <!--Function Page-->
@@ -144,69 +147,105 @@
             <interceptor-ref name="baseStack"></interceptor-ref>
             <result name="populate">WEB-INF/jsp/client/function.jsp</result>
             <result name="success">WEB-INF/jsp/client/function.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
         </action>
         
         <action name="functionExeAction" class="ca.queensu.websvcs.workshopbooking.client.action.FunctionAction" method="execute">
             <interceptor-ref name="baseValidationStack"></interceptor-ref>
             <result name="input">WEB-INF/jsp/client/function.jsp</result>
             <result name="success">WEB-INF/jsp/client/function.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
         </action>
         
         <!--Attendance Page-->
         <action name="attendanceLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.AttendanceAction" method="execute">
             <interceptor-ref name="baseStack"></interceptor-ref>
             <result name="success">WEB-INF/jsp/client/attendance.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
         </action>
         
         <action name="detailsLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.DetailsAction" method="execute">
             <interceptor-ref name="baseStack"></interceptor-ref>
             <result name="success">WEB-INF/jsp/client/details.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
         </action>
         
         <!-- Email Edit Page-->
         <action name="emaileditLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.EmailEditAction" method="load">
             <interceptor-ref name="baseStack"></interceptor-ref>
             <result name="success">WEB-INF/jsp/client/emailedit.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
         </action>
         
         <action name="emaileditExeAction" class="ca.queensu.websvcs.workshopbooking.client.action.EmailEditAction" method="execute">
             <interceptor-ref name="baseValidationStack"></interceptor-ref>
             <result name="input">WEB-INF/jsp/client/emailedit.jsp</result>
             <result name="success">WEB-INF/jsp/client/emailedit.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
         </action>
         
         <!--Facilitator Page-->
         <action name="facilitatorLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.FacilitatorAction" method="load">
             <interceptor-ref name="baseStack"></interceptor-ref>
             <result name="success">WEB-INF/jsp/client/facilitator.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
         </action>
         
         <action name="facilitatorExeAction" class="ca.queensu.websvcs.workshopbooking.client.action.FunctionAction" method="execute">
             <interceptor-ref name="baseValidationStack"></interceptor-ref>
             <result name="input">WEB-INF/jsp/client/facilitator.jsp</result>
             <result name="success">WEB-INF/jsp/client/facilitator.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
         </action>
         
         <action name="personalDetailAction" class="ca.queensu.websvcs.workshopbooking.client.action.personalDetailAction" method="execute">
             <interceptor-ref name="baseStack"></interceptor-ref>
             <result name="success">WEB-INF/jsp/client/personaldetail.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
         </action>
         
         <!--questionaire.jsp-->
         <action name="questionnaireLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.QuestionnaireAction" method="load">
             <interceptor-ref name="baseStack"></interceptor-ref>
             <result name="success">WEB-INF/jsp/client/questionnaire.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
         </action>
         
         <action name="questionnaireExeAction" class="ca.queensu.websvcs.workshopbooking.client.action.QuestionnaireAction" method="execute">
             <interceptor-ref name="baseValidationStack"></interceptor-ref>
             <result name="input">WEB-INF/jsp/client/questionnaire.jsp</result>
             <result name="success">WEB-INF/jsp/client/questionnaire.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
         </action>
         
         <action name="registerConfirmationAction" class="ca.queensu.websvcs.workshopbooking.client.action.RegisterConfirmationAction" method="execute">
             <interceptor-ref name="baseStack"></interceptor-ref>
             <result name="success">WEB-INF/jsp/client/registerConfirmation.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
         </action>
     </package>
 </struts>
