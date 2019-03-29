@@ -133,7 +133,7 @@
 
                         <s:textfield
                             label="Facilitator ID:"
-                            name="newFacilId"
+                            name=""
                             elementCssClass="col-sm-3"/>
                         
                         <s:submit 
