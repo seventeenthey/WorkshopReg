@@ -314,8 +314,20 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     @Transactional
     public boolean addAttendee(Integer workshopId, String netId) {
+        System.out.println("hello11");
+        System.out.println(workshopId);
+        System.out.println(netId);
         Attendance a = new Attendance(workshopId, netId);
         em.persist(a);
+        return true;
+    }
+    
+    @Override
+    @TransactionAttribute
+    public boolean editAttendeeStatus(Integer workshopId, String netId, boolean status) {
+        Attendance a = em.createNamedQuery("Attendance.findByWorkshopAndNetId", Attendance.class).setParameter("workshopId", workshopId).setParameter("netId", netId).getSingleResult();
+        a.setAttended(status);
+        em.merge(a);
         return true;
     }
 

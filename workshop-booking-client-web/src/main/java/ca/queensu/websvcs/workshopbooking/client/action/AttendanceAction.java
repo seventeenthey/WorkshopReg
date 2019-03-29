@@ -52,6 +52,10 @@ public class AttendanceAction extends ActionSupport {
             studentBeanList = ejb.findStudentList();
             participants = ejb.getParticipantsForWorkshop(workshopId);
             attendance = ejb.getAttendance(workshopId);
+            
+            ejb.editAttendeeStatus(workshopId, "15dny", false);
+            
+            attendance = ejb.getAttendance(workshopId);
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();

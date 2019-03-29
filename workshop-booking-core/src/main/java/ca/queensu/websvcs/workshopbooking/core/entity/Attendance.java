@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Attendance.findAll", query = "SELECT a FROM Attendance a")
     , @NamedQuery(name = "Attendance.findByWorkshopId", query = "SELECT a FROM Attendance a WHERE a.attendancePK.workshopId = :workshopId")
+    , @NamedQuery(name = "Attendance.findByWorkshopAndNetId", query = "SELECT a FROM Attendance a WHERE a.attendancePK.workshopId = :workshopId AND a.attendancePK.netId = :netId")
     , @NamedQuery(name = "Attendance.findByNetId", query = "SELECT a FROM Attendance a WHERE a.attendancePK.netId = :netId")
     , @NamedQuery(name = "Attendance.findByAttended", query = "SELECT a FROM Attendance a WHERE a.attended = :attended")})
 public class Attendance implements Serializable {
