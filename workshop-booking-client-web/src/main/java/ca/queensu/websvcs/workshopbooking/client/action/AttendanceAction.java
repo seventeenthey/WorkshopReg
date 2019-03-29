@@ -8,6 +8,7 @@ package ca.queensu.websvcs.workshopbooking.client.action;
 import ca.queensu.websvcs.workshopbooking.client.domain.StudentDataBean;
 import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
+import ca.queensu.websvcs.workshopbooking.core.entity.Attendance;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -35,6 +36,7 @@ public class AttendanceAction extends ActionSupport {
     
     List<StudentDataBean> studentBeanList;
     List<Person> participants;
+    List<Attendance> attendance;
     private Integer workshopId;
 
 
@@ -49,6 +51,7 @@ public class AttendanceAction extends ActionSupport {
             
             studentBeanList = ejb.findStudentList();
             participants = ejb.getParticipantsForWorkshop(workshopId);
+            attendance = ejb.getAttendance(workshopId);
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -98,6 +101,14 @@ public class AttendanceAction extends ActionSupport {
 
     public void setParticipants(List<Person> participants) {
         this.participants = participants;
+    }
+    
+    public List<Attendance> getAttendance() {
+        return attendance;
+    }
+
+    public void setAttendance(List<Attendance> attendance) {
+        this.attendance = attendance;
     }
 
     public Integer getWorkshopId() {

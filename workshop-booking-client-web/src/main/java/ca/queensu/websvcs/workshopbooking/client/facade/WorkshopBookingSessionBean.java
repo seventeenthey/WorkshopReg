@@ -284,6 +284,12 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
     
     @Override
+    public List<Attendance> getAttendance(Integer workshopId) {
+        List<Attendance> attendance = em.createNamedQuery("Attendance.findByWorkshopId", Attendance.class).setParameter("workshopId", workshopId).getResultList();
+        return attendance;
+    }
+    
+    @Override
     @Transactional
     public boolean addFaciliator(Integer workshopId, String netId) {
         System.out.println("hello15");

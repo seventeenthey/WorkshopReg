@@ -1,6 +1,7 @@
 package ca.queensu.websvcs.workshopbooking.client.facade;
 
 import ca.queensu.websvcs.workshopbooking.client.domain.*;
+import ca.queensu.websvcs.workshopbooking.core.entity.Attendance;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
@@ -54,6 +55,7 @@ public interface WorkshopBookingSessionBeanLocal {
     public List<Workshops> getWorkshopsForPerson(Person p);
     public List<Workshops> getWorkshopsHostedByPerson(Person p);
     
+    public List<Attendance> getAttendance(Integer workshopId);
     public List<Person> getParticipantsForWorkshop(Integer workshopId);
     public boolean addFaciliator(Integer workshopId, String netId);
     public boolean addParticipant(Integer workshopId, String netId);
