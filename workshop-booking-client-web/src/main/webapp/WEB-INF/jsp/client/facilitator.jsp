@@ -126,14 +126,14 @@
                     </table>
 
                     
-                    <s:form id="facilitatorEditForm" action="facilitatorExeAction?workshopId=%{workshopId}"
+                    <s:form id="facilitatorEditForm" action="facilitatorExeAction?workshopId=%{workshopId}&newFacilId=%{newFacilId}"
                             theme="bootstrap" method="post" cssClass="form-vertical">
 
                         <h2>Add a facilitator:</h2>
 
                         <s:textfield
                             label="Facilitator ID:"
-                            name="facilBeanList.facilID"
+                            name="newFacilId"
                             elementCssClass="col-sm-3"/>
                         
                         <s:submit 

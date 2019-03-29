@@ -33,7 +33,7 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     private WorkshopBookingSessionBeanLocal ejb;
     
     List<facilitatorDataBean> facilBeanList;
-    
+    private String newFacilId;
     private Integer workshopId;
 
     
@@ -62,7 +62,8 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     public String load() throws Exception{
         try {
             System.out.println("### FacilitatorAction load running");
-//            addActionMessage("Test Input"+workshopId);
+            //addActionMessage("Test Input"+workshopId);
+            System.out.println("hello13");
             if (workshopId != null){
                 facilBeanList = ejb.findFacilitatorList(workshopId);
             }
@@ -83,6 +84,10 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     public String execute() throws Exception {
         try {
             System.out.println("### AttendanceAction execute running");
+            System.out.println("hello14");
+            if (workshopId != null){
+                boolean success = ejb.addFaciliator(workshopId, newFacilId);
+            }
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -132,6 +137,14 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
 
     public void setWorkshopId(Integer workshopId) {
         this.workshopId = workshopId;
+    }
+    
+    public String getNewFacilId() {
+        return newFacilId;
+    }
+
+    public void setNewFacilId(String newFacilId) {
+        this.newFacilId = newFacilId;
     }
 
 }
