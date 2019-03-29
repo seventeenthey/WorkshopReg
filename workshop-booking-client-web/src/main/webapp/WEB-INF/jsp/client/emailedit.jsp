@@ -114,25 +114,25 @@
                             elementCssClass="col-sm-5"/>
 
                         <s:textarea 
-                            label="Confirmation Message"
+                            label="Confirmation Message:"
                             name="workshop.emailConfirmationMsg"
                             emptyOption="true"
                             elementCssClass="col-sm-9"/>
 
                         <s:textarea 
-                            label="Wait List Message"
+                            label="Wait List Message:"
                             name="workshop.emailWaitlistMsg"
                             emptyOption="true"
                             elementCssClass="col-sm-9"/>
 
                         <s:textarea 
-                            label="Cancellation Message"
+                            label="Cancellation Message:"
                             name="workshop.emailCancellationMsg"
                             emptyOption="true"
                             elementCssClass="col-sm-9"/>
 
                         <s:textarea 
-                            label="Evaluation Message"
+                            label="Evaluation Message:"
                             name="workshop.emailEvaluationMsg"
                             emptyOption="true"
                             elementCssClass="col-sm-9"/>
@@ -150,7 +150,28 @@
                             name="emailForm.notifyCondition"
                             list="{'Confirmation','Wait List','Cancellation','Event Full'}"/>                
 
-                        <s:submit cssClass="btn btn-primary"/>
+                        <s:submit 
+                            value="Save"
+                            cssClass="btn btn-primary"/>
+                    </s:form>
+
+                    <br/>
+                    
+                    <!--Todo: This function will be implemented later-->
+                    <s:form id="RegEmailForm" action="emailSendAction" 
+                            theme="bootstrap" method="post" cssClass="form-vertical"
+                            enctype="multipart/form-data">
+                        
+                        <h2>Customize Email Sending</h2>
+                        <s:textarea 
+                            label="Email Content:"
+                            name="customizeEmail"
+                            emptyOption="true"
+                            elementCssClass="col-sm-9"/>
+                        
+                        <s:submit 
+                            value="Send"
+                            cssClass="btn btn-primary"/>
                     </s:form>
                 </div>
             </div>
@@ -158,7 +179,7 @@
                              
         <!-- JS -->
         <script src="js/tether.min.js"></script>
-        <!--<script src="js/jquery-3.2.1.min.js"></script>-->
+        <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/searchBar.js"></script>
         <!-- End JS -->
