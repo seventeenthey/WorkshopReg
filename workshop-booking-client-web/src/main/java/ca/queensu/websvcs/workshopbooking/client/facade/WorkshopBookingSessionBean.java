@@ -130,34 +130,40 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
 
     @Override
-    public boolean updateWorkshopForm(WorkshopInfoForm workshopForm){
+    public boolean updateWorkshopForm(Workshops workshop){
+        //
 //      Todo: Need Modified with actural success verification
 
-        String netId = workshopForm.getFacilitatorId();
-        Person facilitator = em.createNamedQuery("Person.findByNetId", Person.class).setParameter("netId", netId).getSingleResult();
-        Departments department = facilitator.getDepartmentId();
-        String title = workshopForm.getEventTitle();
-        String details = workshopForm.getTeaser();
-        String location = workshopForm.getLocation();
-        int maxParticipants = workshopForm.getMaxParticipant();
-        EventStatus eventStatus = new EventStatus(workshopForm.getStatus());
+        String netId = workshop.getTitle();
+        System.out.println("WorkshopTitleTestVar "+netId);
+        Date datetime = workshop.getRegistrationStart();
+        System.out.println("WorkshopDateTestVar2 "+datetime.toString());
+//        Person facilitator = em.createNamedQuery("Person.findByNetId", Person.class).setParameter("netId", netId).getSingleResult();
+//        Departments department = facilitator.getDepartmentId();
+//        String title = workshopForm.getEventTitle();
+//        String details = workshopForm.getTeaser();
+//        String location = workshopForm.getLocation();
+//        int maxParticipants = workshopForm.getMaxParticipant();
+//        EventStatus eventStatus = new EventStatus(workshopForm.getStatus());
 
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date registrationStart = formatter.parse(workshopForm.getRgStDateTime());
-            Date registrationEnd = formatter.parse(workshopForm.getRgEndDateTime());
-            Date eventStart = formatter.parse(workshopForm.getEventStDateTime());
-            Date eventEnd = formatter.parse(workshopForm.getEventEndDateTime());
-            System.out.println("hello2");
-            Workshops w = new Workshops(facilitator, department, title, details, location, maxParticipants, registrationStart, registrationEnd, eventStart, eventEnd, eventStatus);
-            System.out.println("hello3");
-            em.persist(w);
-            em.flush();
-            return true;
-        } catch (Exception e) {
-            System.out.println("Error parsing date");
-            throw new EJBException(e);
-        }
+//        try {
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            Date registrationStart = formatter.parse(workshopForm.getRgStDateTime());
+//            Date registrationEnd = formatter.parse(workshopForm.getRgEndDateTime());
+//            Date eventStart = formatter.parse(workshopForm.getEventStDateTime());
+//            Date eventEnd = formatter.parse(workshopForm.getEventEndDateTime());
+//            System.out.println("hello2");
+//            Workshops w = new Workshops(facilitator, department, title, details, location, maxParticipants, registrationStart, registrationEnd, eventStart, eventEnd, eventStatus);
+//            System.out.println("hello3");
+//            em.persist(w);
+//            em.flush();
+//            return true;
+//        } catch (Exception e) {
+//            System.out.println("Error parsing date");
+//            throw new EJBException(e);
+//        }
+        boolean success = true;
+        return success;
     }
 
 /**

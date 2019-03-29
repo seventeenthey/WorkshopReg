@@ -46,6 +46,8 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
     private Integer workshopId;
     private Workshops workshop;
+    private Date rgStDate;
+    private Date rgEndDate;
 
     public FunctionAction() {
         System.out.println("### FunctionAction constructor running");
@@ -74,6 +76,8 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
             if (workshopId != null){
                 workshop = ejb.findByWorkshopId(workshopId);
+//                rgStDate = workshop.getRegistrationStart();
+//                System.out.println("TestRgStDateInput "+rgStDate.toString());
 //                workshopForm.setEventTitle(workshop.getTitle());
 //                addActionMessage("Event Title " + workshop.getTitle());
             }
@@ -100,12 +104,15 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
             HttpServletRequest request = ServletActionContext.getRequest();
             HttpSession session = request.getSession();
-
-            String facilitatorId = (String) session.getAttribute(SSOConstants.NET_ID);
-            workshopForm.setFacilitatorId(facilitatorId);
+            
+//            Todo: Still in testing; need implement
+//            String facilitatorId = (String) session.getAttribute(SSOConstants.NET_ID);
+//            workshopForm.setFacilitatorId(facilitatorId);
 
             // Check if the workshopInfoForm successfully saved or not
-            boolean saveSuccessful = ejb.updateWorkshopForm(workshopForm);
+            boolean saveSuccessful = ejb.updateWorkshopForm(workshop);
+            //workshop
+//            boolean saveSuccessful = true;
             if(saveSuccessful){
                 addActionMessage("Workshop Information Successfully saved");
             }
@@ -146,13 +153,13 @@ public class FunctionAction extends ActionSupport implements Preparable{
                 addFieldError("teaser", "Workshop Teaser is required.");
             }
 
-            if (workshop.getMaxParticipants() == 0){
-                addFieldError("maxParticipant", "Maximun Participant is required.");
-            }else if(workshop.getMaxParticipants()>300) {
-                addFieldError("maxParticipant", "Exceed maximun Participant (Should no more than 300).");
-            }else if(workshop.getMaxParticipants()<10){
-                addFieldError("maxParticipant","Less than minimun Participant (Should no less than 10).");
-            }
+//            if (workshop.getMaxParticipants() == 0){
+//                addFieldError("maxParticipant", "Maximun Participant is required.");
+//            }else if(workshop.getMaxParticipants()>300) {
+//                addFieldError("maxParticipant", "Exceed maximun Participant (Should no more than 300).");
+//            }else if(workshop.getMaxParticipants()<10){
+//                addFieldError("maxParticipant","Less than minimun Participant (Should no less than 10).");
+//            }
 
             if (workshop.getCurrentParticipants() == 0){
                 addFieldError("waitlistLimit", "Wait List Limit is required.");
