@@ -118,9 +118,10 @@
                         <s:radio 
                             label="Status:"
                             labelposition="inline"
-                            name="workshopForm.status.status" 
+                            name="workshopForm.eventStatus" 
                             list="statusList"
-                            elementCssClass="col-sm-9"/>
+                            elementCssClass="col-sm-9"
+                            value="3"/>
                         
                         <s:textfield 
                             label="Event Title:"
@@ -135,6 +136,14 @@
                             name="workshop.location" 
                             list="locationList"
                             elementCssClass="col-sm-5"/>
+                        
+                        <s:textfield 
+                            label="Add Location:"
+                            placeholder=""
+                            name="workshopForm.location"
+                            tooltip="Add new workshop location place"
+                            cssClass="input-sm"
+                            elementCssClass="col-sm-5"/>
 
                         <s:textarea 
                             label="Teaser:"
@@ -144,16 +153,12 @@
 
                         <s:textfield 
                             label="Maximum Participants:"
-                            name="workshop.maxParticipant"
-                            type="number"
-                            placeholder="10"
+                            name="workshop.maxParticipants"
                             elementCssClass="col-sm-2"/>
 
                         <s:textfield 
                             label="Wait List Limit:"
-                            name="workshop.currentParticipants"
-                            type="number"
-                            placeholder="0"
+                            name="workshop.waitlistLimit"
                             elementCssClass="col-sm-2"/>
 
                         <!--Registration Start/End Date/Time-->
@@ -245,6 +250,13 @@
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/searchBar.js"></script>
+        
+        <!--Controls Visibility -->
+        <!--This control needs to be after all other elements AND any other .js that affect visibility, and these two lines need to be in this order-->
+        <div id="role" style="display:none"><s:property value="person.roleId.roleId"/></div> 
+        <script src="js/visibility.js"></script>
+        <!--End Visibility Control-->
+        
         <!-- End JS -->
     </body>
 

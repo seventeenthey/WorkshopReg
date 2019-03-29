@@ -67,19 +67,19 @@
                         </div>
                         <div class="card-body">
                             <ul class="nav flex-column">
-                                <li class="nav-item">
+                                <li class="workshopCreator nav-item">
                                     <s:url action="functionLoadAction" var="functionUrl">
                                         <s:param name="workshopId" value="workshopId"/>
                                     </s:url>
                                     <a href='<s:property value="functionUrl"/>'>Event Setup</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="workshopCreator nav-item">
                                     <s:url action="facilitatorLoadAction" var="facilitatorUrl" >
                                         <s:param name="workshopId" value="workshopId"/>
                                     </s:url>
                                     <a href='<s:property value="facilitatorUrl"/>'>Facilitators</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="workshopCreator nav-item">
                                     <s:url action="emaileditLoadAction" var="emaileditUrl" >
                                         <s:param name="workshopId" value="workshopId"/>
                                     </s:url>

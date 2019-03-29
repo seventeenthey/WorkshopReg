@@ -16,17 +16,17 @@ var workshopCreatorElements = $('.workshopCreator');
 var facilitatorElements = $('.facilitator');
         
 //if role is less than super admin, hide super admin elements
+if (role < 5)
+    hideElements(superAdminElements,5);
+
 if (role < 4)
-    hideElements(superAdminElements,4);
+    hideElements(departmentalAdminElements,4);
 
 if (role < 3)
-    hideElements(departmentalAdminElements,3);
+    hideElements(workshopCreatorElements,3);
 
 if (role < 2)
-    hideElements(workshopCreatorElements,2);
-
-if (role < 1)
-    hideElements(facilitatorElements,1);
+    hideElements(facilitatorElements,2);
 
 function hideElements(elements, minRole){
     if(role < minRole)

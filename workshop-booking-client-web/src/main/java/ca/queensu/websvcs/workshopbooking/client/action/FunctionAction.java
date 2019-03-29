@@ -10,6 +10,7 @@ import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
+import ca.queensu.websvcs.workshopbooking.core.entity.EventStatus;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
@@ -113,6 +114,8 @@ public class FunctionAction extends ActionSupport implements Preparable{
 //            boolean saveSuccessful = true;
             if(saveSuccessful){
                 addActionMessage("Workshop Information Successfully saved");
+//                EventStatus status = workshop.getEventStatus();
+//                addActionMessage("WorkshopStatusTest" + status.getEventStatus());
             }
             else {
                 addActionError("Data was not saved.");
@@ -151,18 +154,20 @@ public class FunctionAction extends ActionSupport implements Preparable{
                 addFieldError("teaser", "Workshop Teaser is required.");
             }
 
-//            if (workshop.getMaxParticipants() == 0){
-//                addFieldError("maxParticipant", "Maximun Participant is required.");
-//            }else if(workshop.getMaxParticipants()>300) {
-//                addFieldError("maxParticipant", "Exceed maximun Participant (Should no more than 300).");
-//            }else if(workshop.getMaxParticipants()<10){
-//                addFieldError("maxParticipant","Less than minimun Participant (Should no less than 10).");
-//            }
+            if (workshop.getMaxParticipants() == null){
+                addFieldError("maxParticipant", "Maximun Participant is required.");
+            }else if(workshop.getMaxParticipants()>300) {
+                addFieldError("maxParticipant", "Exceed maximun Participant (Should no more than 300).");
+            }else if(workshop.getMaxParticipants()<10){
+                addFieldError("maxParticipant","Less than minimun Participant (Should no less than 10).");
+            }
 
-            if (workshop.getCurrentParticipants() == 0){
+            if (workshop.getWaitlistLimit() == null){
                 addFieldError("waitlistLimit", "Wait List Limit is required.");
-            }else if(workshop.getCurrentParticipants()>300) {
+            }else if(workshop.getWaitlistLimit()>300) {
                 addFieldError("waitlistLimit", "Exceed maximun Wait List Limit (Should no more than 300).");
+            }else if(workshop.getWaitlistLimit()>workshop.getMaxParticipants()) {
+                addFieldError("waitlistLimit", "Wait List Limit cannot exceed Maximun Participants number.");
             }
 
         }

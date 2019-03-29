@@ -15,11 +15,15 @@ DROP TABLE IF EXISTS EVENT_STATUS;
 
 CREATE TABLE PERSON (
     net_id VARCHAR(10) NOT NULL PRIMARY KEY,
+    -- Todo: Should this empl_id have the same var as net_id? 
     empl_id INTEGER NOT NULL,
     common_name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     role_id INTEGER NOT NULL,
-    department_id INTEGER NOT NULL
+    department_id INTEGER,
+    -- add assumption: user do not need to belong to a department
+    foreign key (department_id) references departments(department_id) on delete set null,
+    foreign key (role_id) references roles(role_id) on delete cascade
 );
 
 CREATE TABLE ROLES (
@@ -63,20 +67,27 @@ CREATE TABLE FACILITATORS (
 CREATE TABLE REGISTRATIONS (
     workshop_id INTEGER NOT NULL,
     net_id VARCHAR(10) NOT NULL,
-    PRIMARY KEY(workshop_id, net_id)
+    attend boolean NOT NULL,
+    PRIMARY KEY(workshop_id, net_id),
+    foreign key (workshop_id) references workshops(workshop_id) on delete cascade,
+    foreign key (net_id) references person(net_id) on delete cascade
 );
 
 CREATE TABLE WAITLIST (
     workshop_id INTEGER NOT NULL,
     net_id VARCHAR(10) NOT NULL,
-    PRIMARY KEY(workshop_id, net_id)
+    PRIMARY KEY(workshop_id, net_id),
+    foreign key (workshop_id) references workshops(workshop_id) on delete cascade,
+    foreign key (net_id) references person(net_id) on delete cascade
 );
 
 CREATE TABLE REVIEWS (
     workshop_id INTEGER NOT NULL,
     net_id VARCHAR(10) NOT NULL,
     review VARCHAR(1000) NOT NULL,
-    PRIMARY KEY(workshop_id, net_id)
+    PRIMARY KEY(workshop_id, net_id),
+    foreign key (workshop_id) references workshops(workshop_id) on delete cascade,
+    foreign key (net_id) references person(net_id) on delete cascade
 );
 
 CREATE TABLE LOCATIONS (
@@ -167,11 +178,13 @@ INSERT INTO WORKSHOPS VALUES (NULL, "emmah", 1, "How to Study Effectively", "Lea
 INSERT INTO WORKSHOPS VALUES (NULL, "emmah", 2, "How to Make New Friends", "Get lots of friends!", "Goodes Hall", 100, DEFAULT,27, '2019-04-12 18:30:00', '2019-04-17 20:00:00', '2019-04-18 18:30:00', '2019-04-18 20:00:00', "Posted", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
 INSERT INTO WORKSHOPS VALUES (NULL, "15dny", 1, "How to Think Smart", "Think less, learn more", "Goodes Hall", 100, DEFAULT,28, '2019-04-02 15:45:00', '2019-04-08 17:30:00', '2019-04-09 15:45:00', '2019-04-09 17:30:00', "Posted", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
 INSERT INTO WORKSHOPS VALUES (NULL, "15dny", 3, "How to Express Yourself", "Get to know yourself before others!", "Dunning Hall", 100, DEFAULT,77, '2019-04-15 16:15:00', '2019-05-01 18:00:00', '2019-05-02 16:15:00', '2019-05-02 18:00:00', "Posted", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
-INSERT INTO REGISTRATIONS VALUES (1, "15dny");
-INSERT INTO REGISTRATIONS VALUES (2, "15dny");
-INSERT INTO REGISTRATIONS VALUES (3, "15dny");
-INSERT INTO REGISTRATIONS VALUES (2, "13tpv");
-INSERT INTO REGISTRATIONS VALUES (3, "13tpv");
-INSERT INTO REGISTRATIONS VALUES (1, "11ern");
+INSERT INTO REVIEWS VALUES (1, "15dny", "Loved it!");
+
+INSERT INTO REGISTRATIONS VALUES (1, "15dny",true);
+INSERT INTO REGISTRATIONS VALUES (2, "15dny",true);
+INSERT INTO REGISTRATIONS VALUES (3, "15dny",true);
+INSERT INTO REGISTRATIONS VALUES (2, "13tpv",false);
+INSERT INTO REGISTRATIONS VALUES (3, "13tpv",false);
+INSERT INTO REGISTRATIONS VALUES (1, "11ern",false);
 INSERT INTO FACILITATORS VALUES (1, "emmah");
 INSERT INTO FACILITATORS VALUES (1, "13tpv");
