@@ -99,19 +99,15 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <!--Workshop Information Gathering-->
                 <div class="col-md-9">
                     <s:actionmessage theme="bootstrap"/>
                     <s:actionerror theme="bootstrap"/>
                     
-                    <s:form id="workshopEditForm" action="functionExeAction" 
+                    <s:form id="workshopEditForm" action="functionExeAction?workshopId=%{workshopId}"
                             theme="bootstrap" method="post" cssClass="form-vertical">
-                        
                         <s:fielderror/>
-                        
-                        <!--Todo: Will be hidden if the workshop is newly created-->
-                        <!--Todo: Prepopulate the form with existing information-->
                         
                         <h2>Workshop No.<s:property value="workshopId"/></h2>
                                               

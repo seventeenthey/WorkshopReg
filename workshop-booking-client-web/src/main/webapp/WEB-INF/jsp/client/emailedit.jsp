@@ -101,7 +101,7 @@
                     <s:actionmessage theme="bootstrap"/>
                     <s:actionerror theme="bootstrap"/>
                     
-                    <s:form id="RegEmailForm" action="emaileditExeAction" 
+                    <s:form id="RegEmailForm" action="emaileditExeAction?workshopId=%{workshopId}" 
                             theme="bootstrap" method="post" cssClass="form-vertical"
                             enctype="multipart/form-data">
 

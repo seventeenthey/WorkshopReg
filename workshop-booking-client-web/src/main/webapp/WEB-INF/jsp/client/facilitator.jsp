@@ -126,7 +126,7 @@
                     </table>
 
                     
-                    <s:form id="facilitatorEditForm" action="facilitatorExeAction"
+                    <s:form id="facilitatorEditForm" action="facilitatorExeAction?workshopId=%{workshopId}"
                             theme="bootstrap" method="post" cssClass="form-vertical">
 
                         <h2>Add a facilitator:</h2>
