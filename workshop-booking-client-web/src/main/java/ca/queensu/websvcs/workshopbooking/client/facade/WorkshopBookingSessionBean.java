@@ -117,7 +117,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
         return locationList;
     }
-    
+
     @Override
     public List<Person> getParticipantsForWorkshop(Integer workshopId){
         // Get all participants in a workshop

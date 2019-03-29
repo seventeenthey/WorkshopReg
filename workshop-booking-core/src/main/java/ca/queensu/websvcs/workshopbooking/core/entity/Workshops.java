@@ -47,6 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Workshops.findByLocation", query = "SELECT w FROM Workshops w WHERE w.location = :location")
     , @NamedQuery(name = "Workshops.findByMaxParticipants", query = "SELECT w FROM Workshops w WHERE w.maxParticipants = :maxParticipants")
     , @NamedQuery(name = "Workshops.findByCurrentParticipants", query = "SELECT w FROM Workshops w WHERE w.currentParticipants = :currentParticipants")
+    , @NamedQuery(name = "Workshops.findByWaitlistLimit", query = "SELECT w FROM Workshops w WHERE w.waitlistLimit = :waitlistLimit")
     , @NamedQuery(name = "Workshops.findByRegistrationStart", query = "SELECT w FROM Workshops w WHERE w.registrationStart = :registrationStart")
     , @NamedQuery(name = "Workshops.findByRegistrationEnd", query = "SELECT w FROM Workshops w WHERE w.registrationEnd = :registrationEnd")
     , @NamedQuery(name = "Workshops.findByEventStart", query = "SELECT w FROM Workshops w WHERE w.eventStart = :eventStart")
@@ -78,10 +79,13 @@ public class Workshops implements Serializable {
     private String location;
     @Basic(optional = false)
     @Column(name = "max_participants")
-    private int maxParticipants;
+    private Integer maxParticipants;
     @Basic(optional = false)
     @Column(name = "current_participants")
-    private int currentParticipants;
+    private Integer currentParticipants;
+    @Basic(optional = false)
+    @Column(name = "waitlist_limit")
+    private Integer waitlistLimit;
     @Basic(optional = false)
     @Column(name = "registration_start")
     @Temporal(TemporalType.TIMESTAMP)
@@ -149,8 +153,8 @@ public class Workshops implements Serializable {
     }
 
     public Workshops(Person workshopCreatorId, Departments departmentId, String title, String details, 
-            String location, int maxParticipants, Date registrationStart, Date registrationEnd, 
-            Date eventStart, Date eventEnd, EventStatus eventStatus) {
+            String location, Integer maxParticipants, Integer waitlistLimit, Date registrationStart, 
+            Date registrationEnd, Date eventStart, Date eventEnd, EventStatus eventStatus) {
         this.workshopId = null;
         this.workshopCreatorId = workshopCreatorId;
         this.departmentId = departmentId;
@@ -159,6 +163,7 @@ public class Workshops implements Serializable {
         this.location = location;
         this.maxParticipants = maxParticipants;
         this.currentParticipants = 0;
+        this.waitlistLimit = waitlistLimit;
         this.registrationStart = registrationStart;
         this.registrationEnd = registrationEnd;
         this.eventStart = eventStart;
@@ -203,7 +208,7 @@ public class Workshops implements Serializable {
         this.location = location;
     }
 
-    public int getMaxParticipants() {
+    public Integer getMaxParticipants() {
         return maxParticipants;
     }
 
@@ -211,12 +216,20 @@ public class Workshops implements Serializable {
         this.maxParticipants = maxParticipants;
     }
 
-    public int getCurrentParticipants() {
+    public Integer getCurrentParticipants() {
         return currentParticipants;
     }
 
     public void setCurrentParticipants(int currentParticipants) {
         this.currentParticipants = currentParticipants;
+    }
+    
+    public Integer getWaitlistLimit() {
+        return this.waitlistLimit;
+    }
+    
+    public void setWaitlistLimit(Integer waitlistLimit) {
+        this.waitlistLimit = waitlistLimit;
     }
 
     public Date getRegistrationStart() {
@@ -310,7 +323,7 @@ public class Workshops implements Serializable {
         this.reviewsCollection = reviewsCollection;
     }
     **/
-
+    
     public Departments getDepartmentId() {
         return departmentId;
     }
