@@ -6,6 +6,7 @@ import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.uis.services.email.ws.QueensEmailInterface;
 import ca.queensu.websvcs.workshopbooking.client.domain.EmailInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
+import ca.queensu.websvcs.workshopbooking.core.entity.Attendance;
 import ca.queensu.websvcs.workshopbooking.core.entity.Departments;
 import ca.queensu.websvcs.workshopbooking.core.entity.EventStatus;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
@@ -279,6 +280,42 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
 
     // questionaire.jsp
     public boolean registerIn(){
+        return true;
+    }
+    
+    @Override
+    public List<Attendance> getAttendance(Integer workshopId) {
+        List<Attendance> attendance = em.createNamedQuery("Attendance.findByWorkshopId", Attendance.class).setParameter("workshopId", workshopId).getResultList();
+        return attendance;
+    }
+    
+    @Override
+    @Transactional
+    public boolean addFaciliator(Integer workshopId, String netId) {
+        System.out.println("hello20");
+        System.out.println(workshopId);
+        System.out.println(netId);
+        netId = "11ern";
+        Workshops workshop = findByWorkshopId(workshopId);
+        Person p = getPersonByNetId(netId);
+        workshop.addFacilitator(p);
+        return true;
+    }
+    
+    @Override
+    @Transactional
+    public boolean addParticipant(Integer workshopId, String netId) {
+        Workshops workshop = findByWorkshopId(workshopId);
+        Person p = getPersonByNetId(netId);
+        workshop.addRegistrant(p);
+        return true;
+    }
+    
+    @Override
+    @Transactional
+    public boolean addAttendee(Integer workshopId, String netId) {
+        Attendance a = new Attendance(workshopId, netId);
+        em.persist(a);
         return true;
     }
 

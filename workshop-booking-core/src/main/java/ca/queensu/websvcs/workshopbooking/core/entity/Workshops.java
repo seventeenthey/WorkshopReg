@@ -133,17 +133,20 @@ public class Workshops implements Serializable {
     @ManyToOne(optional = false)
     private Person workshopCreatorId;
     
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "REGISTRATIONS", joinColumns = {
         @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id")}, inverseJoinColumns = {
         @JoinColumn(name = "net_id", referencedColumnName = "net_id")})
     private List<Person> myRegistrants;
     
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "FACILITATORS", joinColumns = {
         @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id")}, inverseJoinColumns = {
         @JoinColumn(name = "facilitator_id", referencedColumnName = "net_id")})
     private List<Person> myFacilitators;
+    
+    @OneToMany(mappedBy = "workshops", cascade = CascadeType.ALL)
+    private List<Attendance> myAttendance;
 
     public Workshops() {
     }
@@ -401,6 +404,16 @@ public class Workshops implements Serializable {
         this.myFacilitators.add(p);
         p.getOwnedWorkshops().add(this);
     }
+    
+    @XmlTransient
+    public List<Attendance> getMyAttendance() {
+        return myAttendance;
+    }
+
+    public void setMyAttendance(List<Attendance> myAttendance) {
+        this.myAttendance = myAttendance;
+    }
+    
     
     public String startTimeToString(){
         String output = "";

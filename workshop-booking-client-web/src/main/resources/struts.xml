@@ -205,7 +205,7 @@
             </result>       
         </action>
         
-        <action name="facilitatorExeAction" class="ca.queensu.websvcs.workshopbooking.client.action.FunctionAction" method="execute">
+        <action name="facilitatorExeAction" class="ca.queensu.websvcs.workshopbooking.client.action.FacilitatorAction" method="execute">
             <interceptor-ref name="baseValidationStack"></interceptor-ref>
             <result name="input">WEB-INF/jsp/client/facilitator.jsp</result>
             <result name="success">WEB-INF/jsp/client/facilitator.jsp</result>

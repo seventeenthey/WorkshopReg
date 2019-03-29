@@ -31,23 +31,24 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
 
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
-    
+
     List<facilitatorDataBean> facilBeanList;
-    
+    private String addFacilId;
+    private String delFacilId;  // Facilitator ID will be deleted
     private Integer workshopId;
 
-    
+
     public FacilitatorAction() {
         System.out.println("### FacilitatorAction constructor running");
     }
-    
+
     @Override
     public void prepare() throws Exception {
         try {
             System.out.println("### FacilitatorAction prepare running");
 //            addActionMessage(workshopId.toString());
-            
-        } 
+
+        }
         catch (Exception e) {
             StringWriter out = new StringWriter();
             e.printStackTrace(new PrintWriter(out));
@@ -57,16 +58,17 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
         }
     }
 
-    
+
     @SkipValidation
     public String load() throws Exception{
         try {
             System.out.println("### FacilitatorAction load running");
-//            addActionMessage("Test Input"+workshopId);
+            //addActionMessage("Test Input"+workshopId);
+            System.out.println("hello13");
             if (workshopId != null){
                 facilBeanList = ejb.findFacilitatorList(workshopId);
             }
-        } 
+        }
         catch (Exception e) {
             StringWriter out = new StringWriter();
             e.printStackTrace(new PrintWriter(out));
@@ -75,14 +77,19 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
             log.error(out);
             return ERROR;
         }
-        
+
         return SUCCESS;
     }
-    
+
     @Override
     public String execute() throws Exception {
         try {
-            System.out.println("### AttendanceAction execute running");
+            System.out.println("### FacilitatorAction execute running");
+            System.out.println("hello14");
+            if (workshopId != null){
+                boolean success = ejb.addFaciliator(workshopId, newFacilId);
+                facilBeanList = ejb.findFacilitatorList(workshopId);
+            }
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -94,10 +101,29 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
         }
         return SUCCESS;
     }
-    
+
+    @Override
+    public void validate() {
+        try {
+
+            System.out.println("### StudentEditAction validate running");
+            if (workshopId == null){
+                addFieldError("addFacil","Unable to modify facilitator.");
+            }
+        }
+        catch (Exception e) {
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
+            addActionError(createErrorMessage("Exception occurred while validating student data."));
+            log.error("***************Exception occurred in validate method " + e.getMessage());
+            log.error(out);
+        }
+    }
+
+
     /**
-     * Creates a custom error message to be used as an action error 
-     * 
+     * Creates a custom error message to be used as an action error
+     *
      * @param customMessage message to be used as the action error text
      * @return the created error message
      */
@@ -108,8 +134,8 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
 
         return customMessage + msgAppend;
     }
-    
-    
+
+
     public List<facilitatorDataBean> getFacilBeanList() {
         return facilBeanList;
     }
@@ -117,7 +143,7 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     public void setFacilBeanList(List<facilitatorDataBean> facilBeanList) {
         this.facilBeanList = facilBeanList;
     }
-    
+
     public WorkshopBookingSessionBeanLocal getEjb() {
         return ejb;
     }
@@ -134,5 +160,22 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
         this.workshopId = workshopId;
     }
 
-}
+    public String getAddFacilId() {
+        return addFacilId;
+    }
 
+    public void setAddFacilId(String addFacilId) {
+        this.addFacilId = addFacilId;
+    }
+
+    public String getDelFacilId() {
+        return delFacilId;
+    }
+
+    public void setDelFacilId(String delFacilId) {
+        this.delFacilId = delFacilId;
+    }
+
+
+
+}
