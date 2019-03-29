@@ -169,7 +169,7 @@ INSERT INTO EVENT_STATUS VALUES ("Posted");
 INSERT INTO EVENT_STATUS VALUES ("Archived");
 
 -- ADD FAKE DATA
-INSERT INTO PERSON VALUES ("15dny", 12345678, "Daniel K.", "15dny@queensu.ca", 1, 2);
+INSERT INTO PERSON VALUES ("15dny", 12345678, "Daniel K.", "15dny@queensu.ca", 3, 2);
 INSERT INTO PERSON VALUES ("13tpv", 62575632, "Tanner V.", "13tpv@queensu.ca", 1, DEFAULT);
 INSERT INTO PERSON VALUES ("11ern", 85317453, "Elise N.", "11ern@queensu.ca", 1, DEFAULT);
 INSERT INTO PERSON VALUES ("emmah", 57338531, "Emma H.", "emma_h@queensu.ca", 3, 2);

@@ -15,6 +15,7 @@
 
         <!-- Bootstrap core CSS -->
         <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
+        <link href="<%=request.getContextPath()%>/css/datatables.min.css" rel="stylesheet">
         <!-- Custom styles for this template -->
         <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">       
 
@@ -63,17 +64,17 @@
 
         <div class="container" >
             <h3>Workshops You Are Registered For</h3>
-            <table class="table table-bordered table-striped table-hover" id="registeredWorkshops">
+            <table class="table table-bordered table-striped table-hover table-sm" id="registeredWorkshops">
                 <thead>
                     <tr>
-                        <th>Workshop Name</th>
-                        <th>Workshop Number</th>
-                        <th>Date</th
-                        <th></th>
-                        <th>Time</th>
-                        <th>End Date</th>
-                        <th>Department</th>
-                        <th>Edit</th>
+                        <th class="th-sm">Workshop Name</th>
+                        <th class="th-sm">Workshop Number</th>
+                        <th class="th-sm">Date</th
+                        <th class="th-sm"></th>
+                        <th class="th-sm">Time</th>
+                        <th class="th-sm">End Date</th>
+                        <th class="th-sm">Department</th>
+                        <th class="th-sm">Edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,18 +100,17 @@
             <div id="noRegWorkshopsMsg" style="display:none">You are not currently registered for any workshops.</div>
 
             <h3>Workshops You Have Attended</h3>
-            <table class="table table-bordered table-striped table-hover" id="pastWorkshops">
-                <caption style="caption-side:top"><h3>Workshops You Have Attended</h3></caption>
+            <table class="table table-bordered table-striped table-hover table-sm" id="pastWorkshops">
                 <thead>
                     <tr>
-                        <th>Workshop Name</th>
-                        <th>Workshop Number</th>
-                        <th>Date</th
-                        <th></th>
-                        <th>Time</th>
-                        <th>Registration End Date</th>
-                        <th>Department</th>
-                        <th>Edit</th>
+                        <th class="th-sm">Workshop Name</th>
+                        <th class="th-sm">Workshop Number</th>
+                        <th class="th-sm">Date</th
+                        <th class="th-sm"></th>
+                        <th class="th-sm">Time</th>
+                        <th class="th-sm">Registration End Date</th>
+                        <th class="th-sm">Department</th>
+                        <th class="th-sm">Edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -135,17 +135,17 @@
 
             <div id="noPastWorkshopsMsg" style="display:none">You have not attended any workshops in the past.</div>
 
-            <table class="workshopCreator table table-bordered table-striped table-hover" id="createdWorkshops">
+            <table class="workshopCreator table table-bordered table-striped table-hover table-sm" id="createdWorkshops">
                 <caption style="caption-side:top"><h3>Workshops You have Created</h3></caption>
                 <thead>
                     <tr>
-                        <th>Workshop Name</th>
-                        <th>Workshop Number</th>
-                        <th>Date</th
-                        <th></th>
-                        <th>Time</th>
-                        <th>Department</th>
-                        <th>Edit</th>
+                        <th class="th-sm">Workshop Name</th>
+                        <th class="th-sm">Workshop Number</th>
+                        <th class="th-sm">Date</th
+                        <th class="th-sm"></th>
+                        <th class="th-sm">Time</th>
+                        <th class="th-sm">Department</th>
+                        <th class="th-sm">Edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -175,8 +175,9 @@
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/searchBar.js"></script>
+        <script src="js/datatables.min.js"></script>
+        <script src="js/listViewTableFilter.js"></script>
         <script src="js/listViewTableManager.js"></script>
-        
         
         <!--Controls Visibility -->
         <!--This control needs to be after all other elements, and these two lines need to be in this order-->
