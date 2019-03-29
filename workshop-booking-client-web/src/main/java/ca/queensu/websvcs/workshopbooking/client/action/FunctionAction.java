@@ -10,7 +10,7 @@ import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
-import ca.queensu.websvcs.workshopbooking.core.entity.EventStatus;
+//import ca.queensu.websvcs.workshopbooking.core.entity.EventStatus;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
@@ -47,7 +47,7 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
     private Integer workshopId;
     private Workshops workshop;
-
+    
     public FunctionAction() {
         System.out.println("### FunctionAction constructor running");
     }
@@ -75,10 +75,6 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
             if (workshopId != null){
                 workshop = ejb.findByWorkshopId(workshopId);
-//                rgStDate = workshop.getRegistrationStart();
-//                System.out.println("TestRgStDateInput "+rgStDate.toString());
-//                workshopForm.setEventTitle(workshop.getTitle());
-//                addActionMessage("Event Title " + workshop.getTitle());
             }
         }
         catch (Exception e) {
@@ -114,8 +110,6 @@ public class FunctionAction extends ActionSupport implements Preparable{
 //            boolean saveSuccessful = true;
             if(saveSuccessful){
                 addActionMessage("Workshop Information Successfully saved");
-//                EventStatus status = workshop.getEventStatus();
-//                addActionMessage("WorkshopStatusTest" + status.getEventStatus());
             }
             else {
                 addActionError("Data was not saved.");

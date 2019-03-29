@@ -114,10 +114,11 @@
                         <s:radio 
                             label="Status:"
                             labelposition="inline"
-                            name="workshopForm.eventStatus" 
+                            name="workshop.eventStatus.eventStatus" 
                             list="statusList"
-                            elementCssClass="col-sm-9"
-                            value="3"/>
+                            elementCssClass="col-sm-9"/>
+
+                        
                         
                         <s:textfield 
                             label="Event Title:"
