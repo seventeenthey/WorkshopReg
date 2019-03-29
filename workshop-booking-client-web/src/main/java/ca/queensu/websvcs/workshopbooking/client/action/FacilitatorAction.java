@@ -83,7 +83,7 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     @Override
     public String execute() throws Exception {
         try {
-            System.out.println("### AttendanceAction execute running");
+            System.out.println("### FacilitatorAction execute running");
             System.out.println("hello14");
             if (workshopId != null){
                 boolean success = ejb.addFaciliator(workshopId, newFacilId);
