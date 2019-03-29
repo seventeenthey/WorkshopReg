@@ -87,6 +87,7 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
             System.out.println("hello14");
             if (workshopId != null){
                 boolean success = ejb.addFaciliator(workshopId, newFacilId);
+                facilBeanList = ejb.findFacilitatorList(workshopId);
             }
         }
         catch (Exception e) {
