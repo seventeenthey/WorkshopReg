@@ -72,7 +72,6 @@
                         <div class="card bg-info">
                             <h4 class="card-header">Registered Status: </h4>
                             <p class='card-body text-white' id="registeredStatus">Not Registered</p> <!--This needs to say: "Registered", "Not Registered", or "WaitListed" -->
-                            <s:property value="workshop.personCollection1"/>
                         </div>
                     </div>
                     <div class="col-sm-4 my-2">
@@ -92,7 +91,11 @@
                     <div class="col-sm-4 my-2">
                         <div class="card bg-info">
                             <h4  class="card-header">Facilitator: </h4>
-                            <p class='card-body text-white'><s:property value="workshop.workshopHostId.commonName"/></p>
+                            <div class='card-body text-white'>
+                                <s:iterator value="workshop.myFacilitators">
+                                    <p><s:property value="commonName"/></p>
+                                </s:iterator>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-4 my-2">

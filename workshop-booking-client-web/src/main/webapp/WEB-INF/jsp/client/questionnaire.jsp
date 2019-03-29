@@ -68,7 +68,7 @@
                     <s:url action="listViewLoadAction" var="listViewUrl" />
                     <a class="nav-link" href='<s:property value="listViewUrl"/>'>My Workshops</a>
                 </li>
-                <li class="nav-item">
+                <li class="workshopCreator nav-item">
                     <s:url action="functionLoadAction" var="functionUrl" />
                     <a class="nav-link" href='<s:property value="functionUrl"/>'>Create Workshop</a>
                 </li>
