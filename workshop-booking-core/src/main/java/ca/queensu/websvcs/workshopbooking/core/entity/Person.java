@@ -75,11 +75,14 @@ public class Person implements Serializable {
     @ManyToOne(optional = false)
     private Roles roleId;
     
-    @ManyToMany(mappedBy = "myRegistrants")
+    @ManyToMany(mappedBy = "myRegistrants", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Workshops> myWorkshops;
     
-    @ManyToMany(mappedBy = "myFacilitators")
+    @ManyToMany(mappedBy = "myFacilitators", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Workshops> myOwnedWorkshops;
+    
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private List<Attendance> myWorkshopAttendance;
 
     public Person() {
     }
@@ -234,6 +237,16 @@ public class Person implements Serializable {
         this.myOwnedWorkshops.add(w);
         w.getMyFacilitators().add(this);
     }
+    
+    @XmlTransient
+    public List<Attendance> getMyWorkshopAttendance() {
+        return myWorkshopAttendance;
+    }
+    
+    public void setMyWorkshopAttendance(List<Attendance> workshops) {
+        this.myWorkshopAttendance = workshops;
+    }
+    
 
     public List<Workshops> getUpcomingWorkshops(){
         Date today = new Date();

@@ -9,6 +9,14 @@
     <class>ca.queensu.websvcs.workshopbooking.Workshops</class>
     <class>ca.queensu.websvcs.workshopbooking.EventStatus</class>
     <class>ca.queensu.websvcs.workshopbooking.Departments</class>
+    <class>testpack.EventStatus</class>
+    <class>testpack.Departments</class>
+    <class>testpack.Workshops</class>
+    <class>testpack.Attendance</class>
+    <class>testpack.Reviews</class>
+    <class>testpack.Locations</class>
+    <class>testpack.Person</class>
+    <class>testpack.Roles</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/workshopbooking"/>
