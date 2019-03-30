@@ -162,9 +162,18 @@
         </action>
         
         <!--Attendance Page-->
-        <action name="attendanceLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.AttendanceAction" method="execute">
+        <action name="attendanceLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.AttendanceAction" method="load">
             <interceptor-ref name="baseStack"></interceptor-ref>
             <result name="success">WEB-INF/jsp/client/attendance.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
+        </action>
+        
+        <action name="attendanceExeAction" class="ca.queensu.websvcs.workshopbooking.client.action.AttendanceAction" method="execute">
+            <interceptor-ref name="baseStack"></interceptor-ref>
+            <result name="success">WEB-INF/jsp/client/attendance.jsp</result>
+            <result name="input">WEB-INF/jsp/client/attendance.jsp</result>
             <result name="error" type="redirectAction">
                 <param name="actionName">dashboard</param>
             </result>       

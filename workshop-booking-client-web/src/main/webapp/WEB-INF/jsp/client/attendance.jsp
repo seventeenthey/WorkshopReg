@@ -97,31 +97,30 @@
                 </div>
 
             <div class="col-md-9">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>Student-ID</th>
-                            <th>Name</th>
-                            <th>Attendance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <s:iterator value="participants">
+                
+                <s:actionmessage theme="bootstrap"/>
+                <s:form action="attendanceExeAction?workshopId=%{workshopId}" 
+                        theme="bootstrap" method="post">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
                             <tr>
-                                <td>
-                                    <s:property value="netId" />
-                                </td>
-                                <td>
-                                    <s:property value="commonName" />
-                                </td>
-                                <td><s:checkbox
-                                    name="studentBeanList.attendance"/>
-                                </td>
+                                <th>Student-ID</th>
+                                <th>Name</th>
+                                <th>Attendance</th>
                             </tr>
-                        </s:iterator>
-                    </tbody>
-                </table>
-
+                        </thead>
+                        <tbody>
+                            <s:iterator value="participants">
+                                <tr>
+                                    <td><s:property value="netId" /></td>
+                                    <td><s:property value="commonName" /></td>
+                                    <td><s:checkbox name="attendanceList.attendance" fieldValue="true"/></td>
+                                </tr>
+                            </s:iterator>
+                        </tbody>
+                    </table>
+                    <s:submit value="submit" cssClass="btn btn-primary"/>
+                </s:form>
             </div>
 
         </div>
