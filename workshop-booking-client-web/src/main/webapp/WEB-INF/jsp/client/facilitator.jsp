@@ -126,7 +126,7 @@
                     </table>
 
 
-                    <s:form id="facilitatorEditForm" action="facilitatorExeAction?workshopId=%{workshopId}&newFacilId=%{newFacilId}"
+                    <s:form id="facilitatorEditForm" action="facilitatorExeAction?workshopId=%{workshopId}"
                             theme="bootstrap" method="post" cssClass="form-vertical">
                         <s:fielderror/>
                         <h2>Add a facilitator:</h2>

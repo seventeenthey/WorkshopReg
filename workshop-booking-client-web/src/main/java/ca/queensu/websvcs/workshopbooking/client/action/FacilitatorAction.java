@@ -64,7 +64,6 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
         try {
             System.out.println("### FacilitatorAction load running");
             //addActionMessage("Test Input"+workshopId);
-            System.out.println("hello13");
             if (workshopId != null){
                 facilBeanList = ejb.findFacilitatorList(workshopId);
             }
@@ -85,9 +84,19 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     public String execute() throws Exception {
         try {
             System.out.println("### FacilitatorAction execute running");
-            System.out.println("hello14");
+            System.out.println("hello13");
             if (workshopId != null){
-                boolean success = ejb.addFaciliator(workshopId, addFacilId);
+                System.out.println("hello14");
+                System.out.println("addFacilId=" + addFacilId);
+                System.out.println("delFacilId=" + delFacilId);
+                if (addFacilId != null && !addFacilId.isEmpty()) {
+                    System.out.println("Entering addFaciliator: " + addFacilId);
+                    ejb.addFacilitator(workshopId, addFacilId);
+                }
+                if (delFacilId != null && !delFacilId.isEmpty()) {
+                    System.out.println("Entering removeFaciliator: " + delFacilId);
+                    ejb.removeFacilitator(workshopId, delFacilId);
+                }
                 facilBeanList = ejb.findFacilitatorList(workshopId);
             }
         }

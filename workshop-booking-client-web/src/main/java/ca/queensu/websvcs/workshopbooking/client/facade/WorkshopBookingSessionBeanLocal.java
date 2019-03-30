@@ -57,7 +57,8 @@ public interface WorkshopBookingSessionBeanLocal {
     
     public List<Attendance> getAttendance(Integer workshopId);
     public List<Person> getParticipantsForWorkshop(Integer workshopId);
-    public boolean addFaciliator(Integer workshopId, String netId);
+    public boolean addFacilitator(Integer workshopId, String netId);
+    public boolean removeFacilitator(Integer workshopId, String netId);
     public boolean addParticipant(Integer workshopId, String netId);
     
     public boolean addAttendee(Integer workshopId, String netId);

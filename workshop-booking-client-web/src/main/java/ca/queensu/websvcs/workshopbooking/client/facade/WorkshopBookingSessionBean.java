@@ -291,14 +291,25 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     
     @Override
     @Transactional
-    public boolean addFaciliator(Integer workshopId, String netId) {
-        System.out.println("hello20");
+    public boolean addFacilitator(Integer workshopId, String netId) {
+        System.out.println("hello15");
         System.out.println(workshopId);
         System.out.println(netId);
-        netId = "11ern";
         Workshops workshop = findByWorkshopId(workshopId);
         Person p = getPersonByNetId(netId);
         workshop.addFacilitator(p);
+        return true;
+    }
+    
+    @Override
+    @Transactional
+    public boolean removeFacilitator(Integer workshopId, String netId) {
+        System.out.println("hello16");
+        System.out.println(workshopId);
+        System.out.println(netId);
+        Workshops workshop = findByWorkshopId(workshopId);
+        Person p = getPersonByNetId(netId);
+        workshop.removeFacilitator(p);
         return true;
     }
     
@@ -323,7 +334,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
     
     @Override
-    @TransactionAttribute
+    @Transactional
     public boolean editAttendeeStatus(Integer workshopId, String netId, boolean status) {
         Attendance a = em.createNamedQuery("Attendance.findByWorkshopAndNetId", Attendance.class).setParameter("workshopId", workshopId).setParameter("netId", netId).getSingleResult();
         a.setAttended(status);

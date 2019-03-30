@@ -53,7 +53,7 @@ public class AttendanceAction extends ActionSupport {
             participants = ejb.getParticipantsForWorkshop(workshopId);
             attendance = ejb.getAttendance(workshopId);
             
-            ejb.editAttendeeStatus(workshopId, "15dny", false);
+            ejb.editAttendeeStatus(workshopId, "HostForAll", false);
             
             attendance = ejb.getAttendance(workshopId);
         } 

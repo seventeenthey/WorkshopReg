@@ -405,6 +405,11 @@ public class Workshops implements Serializable {
         p.getOwnedWorkshops().add(this);
     }
     
+    public void removeFacilitator(Person p) {
+        this.myFacilitators.remove(p);
+        p.getOwnedWorkshops().remove(this);
+    }
+    
     @XmlTransient
     public List<Attendance> getMyAttendance() {
         return myAttendance;
