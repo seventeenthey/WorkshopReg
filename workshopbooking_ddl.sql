@@ -178,9 +178,9 @@ INSERT INTO PERSON VALUES ("13tpv", 62575632, "Tanner V.", "13tpv@queensu.ca", 1
 INSERT INTO PERSON VALUES ("11ern", 85317453, "Elise N.", "11ern@queensu.ca", 1, DEFAULT);
 INSERT INTO PERSON VALUES ("emmah", 57338531, "Emma H.", "emma_h@queensu.ca", 3, 2);
 INSERT INTO PERSON VALUES ("HostForAll", 11111111, "TestHoster", "test.host@queensu.ca", 2, 1);
-INSERT INTO PERSON VALUES ("AdminArcher", 99999999, "Sterling Archer", "archer@queensu.ca", 5, 4);
-INSERT INTO PERSON VALUES ("DeptKrieger", 88888888, "Dr. Krieger", "krieger@queensu.ca", 4, 4);
-INSERT INTO PERSON VALUES ("CreatorCheryl", 77777777, "Cheryl Tunt", "cheryl@queensu.ca", 3, 4);
+INSERT INTO PERSON VALUES ("Admin_A", 99999999, "Sterling Archer", "archer@queensu.ca", 5, 4);
+INSERT INTO PERSON VALUES ("D_Krieger", 88888888, "Dr. Krieger", "krieger@queensu.ca", 4, 4);
+INSERT INTO PERSON VALUES ("Creator", 77777777, "Cheryl Tunt", "cheryl@queensu.ca", 3, 4);
 INSERT INTO PERSON VALUES ("HostLana", 66666666, "Lana Kane", "lana.k@queensu.ca", 2, 4);
 
 INSERT INTO WORKSHOPS VALUES (NULL, "emmah", 3, "How to Stay Awake in Class", "Learn to stay focused!", "Walter Light Hall", 100, 5,20, '2019-01-05 10:00:00', '2019-01-05 11:30:00', '2019-02-05 10:00:00', '2019-02-05 11:30:00', "Archived", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
