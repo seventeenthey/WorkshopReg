@@ -89,8 +89,6 @@
                 <th>Name</th>
                 <th>Net ID</th>
                 <th>Roles</th>
-                <th>Workshops Created</th>
-                <th>Workshops Registered For</th>
 
                 <s:iterator value="allPeople">
                     <tr>
@@ -105,7 +103,7 @@
                                     <td>
                                         <div class="originalValue"><s:property value="departmentId.departmentName"/></div>
                                         <div class="selector" style="display:none">
-                                            <s:select 
+                                            <s:select class="sel"
                                                 list="allDepartments"
                                                 value="departmentId.departmentName"/>
                                         </div>
@@ -113,6 +111,7 @@
                                     <td><div class="originalValue"><s:property value="roleId.roleName"/></div>
                                         <div class="selector" style="display:none">
                                             <s:select 
+                                                class = "sel"
                                                 list="allRoles"
                                                 value="roleId.roleName"/>
                                         </div>
@@ -124,13 +123,11 @@
                                             <s:param name="department" value="departmentId.departmentName"/>
                                             <s:param name="roleName" value = "roleId.roleName" />
                                         </s:url>
-                                        <a href='<s:property value="updateUrl"/>' class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
+                                        <a onclick='handleUpdate(this, "<s:property value="netId"/>")' class="confirm" title="ConfirmEdit" data-toggle="tooltip" style="display:none"><i class="material-icons check">&#xe5ca;</i></a>
                                     </td>
                                 </tr>
                             </table>
                         </td>
-                        <td><s:property value="myOwnedWorkshops.size()"/></td>
-                        <td><s:property value="myWorkshops.size()"/></td>
                     </tr>
                 </s:iterator>
             </table>

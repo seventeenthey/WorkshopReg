@@ -24,6 +24,11 @@ $(document).ready(function () {
     $(".add").click(function () {});
     // Confirm edit row on confirm button click
     $(document).on("click", ".confirm", function () {
+        
+        /*
+          
+         
+        
         var empty = false;
         var input = $(this).parents("tr").find('input[type="text"]');
         input.each(function () {
@@ -42,6 +47,7 @@ $(document).ready(function () {
             $(this).parents("tr").find(".confirm, .edit").toggle();
             $(".add-new").removeAttr("disabled");
         }
+        */
     });
     // Edit row on edit button click
     $(document).on("click", ".edit", function () {
@@ -70,6 +76,26 @@ $(document).ready(function () {
 
 
 });
+
+/*
+handleUpdate = (event) => {
+    //let nameOfFunction = this[event.target.name];
+    let data1 = event.target.getAttribute('depData');
+    console.log(data1);
+}
+*/
+
+//There were issues with the <s:select> properly updating values and sending them as params so this workaround was made
+function handleUpdate(confirmButton, netId){
+    var rows = confirmButton.parentElement.parentElement.children;
+    var depSelector = rows[0].children[1].querySelectorAll(".sel")[0];
+    var roleSelector = rows[1].children[1].querySelectorAll(".sel")[0];
+    
+    var department = depSelector.options[depSelector.selectedIndex].text
+    var role = roleSelector.options[roleSelector.selectedIndex].text
+    
+    window.location = "/apps/workshopbooking/admin/assignRolesUpdateAction?netId="+netId+"&department="+department+"&roleName="+role;
+}
 
 function filterTable() {
     var input, filter, table, tr, name, number, i, nameTxtValue, numberTxtValue, columns;

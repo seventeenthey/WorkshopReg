@@ -97,12 +97,8 @@ public class AssignRolesAction extends ActionSupport {
     public String updateRole() throws Exception {
         System.out.println("UpdateRole of AssignRolesAction - Admin");
         try {
-            System.out.println("Step 1");
             Person person = ejb.getPersonByNetId(netId);    //find the person to update
-            System.out.println(department);
-            System.out.println(roleName);
             person.updateRole(roleName, department);          //update the role
-            System.out.println("Step 1");
             
             allPeople = ejb.getAllPeople();
             allRoles = ejb.findroleList();
@@ -131,10 +127,12 @@ public class AssignRolesAction extends ActionSupport {
     }
     
     public String getDepartment(){
+        System.out.println("getDepartment ss" + department);
         return department;
     }
     
     public void setDepartment(String department){
+        System.out.println("setDepartment ss" + department);
         this.department = department;
     }
     
