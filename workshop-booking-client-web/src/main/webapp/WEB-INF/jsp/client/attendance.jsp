@@ -130,6 +130,13 @@
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/searchBar.js"></script>
+        
+        <!--Controls Visibility -->
+        <!--This control needs to be after all other elements AND any other .js that affect visibility, and these two lines need to be in this order-->
+        <div id="role" style="display:none"><s:property value="person.roleId.roleId"/></div> 
+        <script src="js/visibility.js"></script>
+        <!--End Visibility Control-->
+        
         <!-- End JS -->
     </body>
 </html>

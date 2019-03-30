@@ -5,6 +5,7 @@
  */
 package ca.queensu.websvcs.workshopbooking.client.action;
 
+import ca.queensu.uis.sso.tools.common.SSOConstants;
 import ca.queensu.websvcs.workshopbooking.client.domain.StudentDataBean;
 import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
@@ -20,8 +21,11 @@ import java.io.StringWriter;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
 /**
@@ -42,6 +46,7 @@ public class AttendanceAction extends ActionSupport implements Preparable{
     List<Attendance> attendance;
     private Integer workshopId;
     private Workshops workshop;
+    private Person person;
 
 
     public AttendanceAction() {
@@ -52,6 +57,13 @@ public class AttendanceAction extends ActionSupport implements Preparable{
     public void prepare() throws Exception {
         try {
             System.out.println("### Attendance Action prepare running");
+            
+            HttpServletRequest request = ServletActionContext.getRequest();
+            HttpSession session = request.getSession();
+
+            //set person based on NetID
+            String userNetId = (String) session.getAttribute(SSOConstants.NET_ID);
+            person = ejb.getPersonByNetId(userNetId);
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -72,7 +84,7 @@ public class AttendanceAction extends ActionSupport implements Preparable{
                 workshop = ejb.findByWorkshopId(workshopId);
                 participants = ejb.getParticipantsForWorkshop(workshopId);
                 attendance = ejb.getAttendance(workshopId);
-                ejb.editAttendeeStatus(workshopId, "HostForAll", false);
+//                ejb.editAttendeeStatus(workshopId, "HostForAll", false);
                 attendance = ejb.getAttendance(workshopId);
             }
            
@@ -155,6 +167,22 @@ public class AttendanceAction extends ActionSupport implements Preparable{
 
     public void setWorkshopId(Integer workshopId) {
         this.workshopId = workshopId;
+    }
+
+    public Workshops getWorkshop() {
+        return workshop;
+    }
+
+    public void setWorkshop(Workshops workshop) {
+        this.workshop = workshop;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
 
