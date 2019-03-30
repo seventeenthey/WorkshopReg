@@ -128,15 +128,17 @@
                     <s:url action="personalDetailAction" var="personalDetailUrl" />
                     <a href='<s:property value="personalDetailUrl"/>' style="color:white">Cancel Registration</a>
                 </li>
-
+                
                 <!--Workshop Management-->
-                <li type="button" class="btn btn-primary faciliator">
-                    <s:url action="functionLoadAction" var="functionUrl">
-                        <s:param name="workshopId" value="workshopId"/>
-                    </s:url>
-                    <a href='<s:property value="functionUrl"/>' style="color:white">Advanced Options</a>
-                </li>
-
+                <div class="facilitator">
+                    <li type="button" class="btn btn-primary">
+                        <s:url action="functionLoadAction" var="functionUrl">
+                            <s:param name="workshopId" value="workshopId"/>
+                        </s:url>
+                        <a href='<s:property value="functionUrl"/>' style="color:white">Advanced Options</a>
+                    </li>
+                </div>
+                                
                 <!--Todo: Add a Review Form for Attendee to fill out after the workshop ends-->
 
             </ul>

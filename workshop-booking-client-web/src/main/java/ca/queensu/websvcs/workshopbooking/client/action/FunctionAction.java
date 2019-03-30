@@ -9,6 +9,7 @@ import ca.queensu.uis.sso.tools.common.SSOConstants;
 import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
+import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 //import ca.queensu.websvcs.workshopbooking.core.entity.EventStatus;
 import static com.opensymphony.xwork2.Action.ERROR;
@@ -47,6 +48,7 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
     private Integer workshopId;
     private Workshops workshop;
+    private Person person;
     
     public FunctionAction() {
         System.out.println("### FunctionAction constructor running");
@@ -58,6 +60,13 @@ public class FunctionAction extends ActionSupport implements Preparable{
             System.out.println("### FunctionAction prepare running");
             statusList = ejb.findstatusList();
             locationList = ejb.findlocationList();
+            
+            HttpServletRequest request = ServletActionContext.getRequest();
+            HttpSession session = request.getSession();
+
+            //set person based on NetID
+            String userNetId = (String) session.getAttribute(SSOConstants.NET_ID);
+            person = ejb.getPersonByNetId(userNetId);
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -235,6 +244,14 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
     public void setWorkshop(Workshops workshop) {
         this.workshop = workshop;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
 }

@@ -5,8 +5,10 @@
  */
 package ca.queensu.websvcs.workshopbooking.client.action;
 
+import ca.queensu.uis.sso.tools.common.SSOConstants;
 import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
+import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -16,8 +18,11 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 
 /**
  *
@@ -33,6 +38,7 @@ public class DetailsAction extends ActionSupport implements Preparable {
 
     private String workshopId;
     private Workshops workshop;
+    private Person person;
   
     public DetailsAction() {
         System.out.println("### DetailsAction constructor running");
@@ -42,7 +48,13 @@ public class DetailsAction extends ActionSupport implements Preparable {
     public void prepare() throws Exception {
         System.out.println("### DetailsAction Prepare running");
         System.out.println("wkrshop # : " + workshopId);
-        //workshop = ejb.findWorkshopByNum(workshopNumber);
+        
+        HttpServletRequest request = ServletActionContext.getRequest();
+        HttpSession session = request.getSession();
+        
+        //set person based on NetID
+        String userNetId = (String) session.getAttribute(SSOConstants.NET_ID);
+        person = ejb.getPersonByNetId(userNetId);
     }
      
     @Override
@@ -119,4 +131,13 @@ public class DetailsAction extends ActionSupport implements Preparable {
     public void setWorkshopId(String workshopId){
         this.workshopId = workshopId;
     }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+    
 }
