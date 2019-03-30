@@ -15,13 +15,15 @@
 
         <!-- Bootstrap core CSS -->
         <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
-        <link href="<%=request.getContextPath()%>/css/datatables.min.css" rel="stylesheet">
-        <!-- Custom styles for this template -->
-        <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">       
+        
+        
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+        
+        <link href="<%=request.getContextPath()%>/css/datatables.min.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">       
         <!-- Bursary styles -->
         <!--<link href="<%=request.getContextPath()%>/css/bursaryapp.css" rel="stylesheet">-->
         <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>

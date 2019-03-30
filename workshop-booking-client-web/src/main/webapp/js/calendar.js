@@ -312,10 +312,9 @@ var $currentPopover = null;
                      * 0 - name
                      * 1 - number
                      * 2 - Date
-                     * 3 - Start Time
-                     * 4 - Endtime
-                     * 5 - Department
-                     * 6 - clickable link ----- probably don't try and use that here
+                     * 3 - Endtime
+                     * 4 - Department
+                     * 5 - clickable link ----- probably don't try and use that here
                      */
                     
                     var workshopColumns = workshops[i].children;
@@ -327,8 +326,8 @@ var $currentPopover = null;
                     
                     //var startDate = new Date(startDateInfo[0], startDateInfo[1], startDateInfo[2], startTimeInfo[0], startTimeInfo[1]);
                     var startDate = new Date(workshopColumns[2].innerText);
-                    var endDate = new Date(workshopColumns[4].innerText); //currently not used
-                    var department = workshopColumns[5].innerText;  //currently not used
+                    var endDate = new Date(workshopColumns[3].innerText); //currently not used
+                    var department = workshopColumns[4].innerText;  //currently not used
                     
                     //TODO - add startDate and time
                     data.push({title:workshopTitle, start:startDate, end: endDate, text:"some text", workshopId:workshopId});
