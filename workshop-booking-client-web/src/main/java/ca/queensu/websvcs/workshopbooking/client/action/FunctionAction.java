@@ -106,21 +106,17 @@ public class FunctionAction extends ActionSupport implements Preparable{
         try {
             System.out.println("### FunctionAction execute running");
 
-            HttpServletRequest request = ServletActionContext.getRequest();
-            HttpSession session = request.getSession();
-            
-//            Todo: Still in testing; need implement
-//            String facilitatorId = (String) session.getAttribute(SSOConstants.NET_ID);
-//            workshopForm.setFacilitatorId(facilitatorId);
-
-            // Check if the workshopInfoForm successfully saved or not
-            boolean saveSuccessful = ejb.updateWorkshopForm(workshop,workshopForm);
-            //workshop
-//            boolean saveSuccessful = true;
-            if(saveSuccessful){
-                addActionMessage("Workshop Information Successfully saved");
+            boolean successful = false;
+            if (workshopId != null) {
+                successful = ejb.updateWorkshop(workshopId, workshop, workshopForm);
+                workshop = ejb.findByWorkshopId(workshopId);
+            } else {
+                successful = ejb.createWorkshop(person, workshop, workshopForm);
             }
-            else {
+
+            if (successful) {
+                addActionMessage("Workshop Information Successfully saved");
+            } else {
                 addActionError("Data was not saved.");
             }
             

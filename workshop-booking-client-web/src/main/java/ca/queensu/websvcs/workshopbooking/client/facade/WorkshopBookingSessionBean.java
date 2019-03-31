@@ -14,6 +14,7 @@ import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import ca.queensu.websvcs.workshopbooking.core.entity.Roles;
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,44 +132,61 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
         return participants;
     }
+    
+    @Override
+    @Transactional
+    public boolean createWorkshop(Person creator, Workshops workshop, WorkshopInfoForm workshopForm) {
+        
+        workshop.setWorkshopCreatorId(creator);
+        workshop.setDepartmentId(creator.getDepartmentId());
+        workshop.setEmailNotificationName("");
+        workshop.setEmailConfirmationMsg("");
+        workshop.setEmailWaitlistMsg("");
+        workshop.setEmailCancellationMsg("");
+        workshop.setEmailEvaluationMsg("");
+        
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            workshop.setRegistrationStart(formatter.parse(workshopForm.getRgStDateTime()));
+            workshop.setRegistrationEnd(formatter.parse(workshopForm.getRgEndDateTime()));
+            workshop.setEventStart(formatter.parse(workshopForm.getEventStDateTime()));
+            workshop.setEventEnd(formatter.parse(workshopForm.getEventEndDateTime()));
+        } catch (ParseException e) {
+            System.out.println("Error parsing date");
+            throw new EJBException(e);
+        }
+        
+        em.persist(workshop);
+        return true;
+    }
 
     @Override
-    public boolean updateWorkshopForm(Workshops workshop, WorkshopInfoForm workshopForm){
-        //
-//      Todo: Need Modified with actural success verification
+    @Transactional
+    public boolean updateWorkshop(Integer workshopId, Workshops workshop, WorkshopInfoForm workshopForm) {
+        
+        Workshops oldWorkshop = findByWorkshopId(workshopId);
+        workshop.setWorkshopId(workshopId);
+        workshop.setWorkshopCreatorId(oldWorkshop.getWorkshopCreatorId());
+        workshop.setDepartmentId(oldWorkshop.getDepartmentId());
+        workshop.setEmailNotificationName(oldWorkshop.getEmailNotificationName());
+        workshop.setEmailConfirmationMsg(oldWorkshop.getEmailConfirmationMsg());
+        workshop.setEmailWaitlistMsg(oldWorkshop.getEmailWaitlistMsg());
+        workshop.setEmailCancellationMsg(oldWorkshop.getEmailCancellationMsg());
+        workshop.setEmailEvaluationMsg(oldWorkshop.getEmailEvaluationMsg());
 
-        String netId = workshop.getTitle();
-        System.out.println("WorkshopTitleTestVar "+netId);
-        Date date=workshopForm.getRgStDate();
-        System.out.println("WorkshopRgStDateTestVar "+date.toString());
-//        Date datetime = workshop.getRegistrationStart();
-//        System.out.println("WorkshopDateTestVar2 "+datetime.toString());
-//        Person facilitator = em.createNamedQuery("Person.findByNetId", Person.class).setParameter("netId", netId).getSingleResult();
-//        Departments department = facilitator.getDepartmentId();
-//        String title = workshopForm.getEventTitle();
-//        String details = workshopForm.getTeaser();
-//        String location = workshopForm.getLocation();
-//        int maxParticipants = workshopForm.getMaxParticipant();
-//        EventStatus eventStatus = new EventStatus(workshopForm.getStatus());
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            workshop.setRegistrationStart(formatter.parse(workshopForm.getRgStDateTime()));
+            workshop.setRegistrationEnd(formatter.parse(workshopForm.getRgEndDateTime()));
+            workshop.setEventStart(formatter.parse(workshopForm.getEventStDateTime()));
+            workshop.setEventEnd(formatter.parse(workshopForm.getEventEndDateTime()));
+        } catch (ParseException e) {
+            System.out.println("Error parsing date");
+            throw new EJBException(e);
+        }
 
-//        try {
-//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            Date registrationStart = formatter.parse(workshopForm.getRgStDateTime());
-//            Date registrationEnd = formatter.parse(workshopForm.getRgEndDateTime());
-//            Date eventStart = formatter.parse(workshopForm.getEventStDateTime());
-//            Date eventEnd = formatter.parse(workshopForm.getEventEndDateTime());
-//            System.out.println("hello2");
-//            Workshops w = new Workshops(facilitator, department, title, details, location, maxParticipants, registrationStart, registrationEnd, eventStart, eventEnd, eventStatus);
-//            System.out.println("hello3");
-//            em.persist(w);
-//            em.flush();
-//            return true;
-//        } catch (Exception e) {
-//            System.out.println("Error parsing date");
-//            throw new EJBException(e);
-//        }
-        boolean success = true;
-        return success;
+        em.merge(workshop);
+        return true;
     }
 
 /**

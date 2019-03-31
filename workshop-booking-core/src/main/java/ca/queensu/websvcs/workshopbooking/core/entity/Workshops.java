@@ -46,7 +46,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Workshops.findByDetails", query = "SELECT w FROM Workshops w WHERE w.details = :details")
     , @NamedQuery(name = "Workshops.findByLocation", query = "SELECT w FROM Workshops w WHERE w.location = :location")
     , @NamedQuery(name = "Workshops.findByMaxParticipants", query = "SELECT w FROM Workshops w WHERE w.maxParticipants = :maxParticipants")
-    , @NamedQuery(name = "Workshops.findByCurrentParticipants", query = "SELECT w FROM Workshops w WHERE w.currentParticipants = :currentParticipants")
     , @NamedQuery(name = "Workshops.findByWaitlistLimit", query = "SELECT w FROM Workshops w WHERE w.waitlistLimit = :waitlistLimit")
     , @NamedQuery(name = "Workshops.findByRegistrationStart", query = "SELECT w FROM Workshops w WHERE w.registrationStart = :registrationStart")
     , @NamedQuery(name = "Workshops.findByRegistrationEnd", query = "SELECT w FROM Workshops w WHERE w.registrationEnd = :registrationEnd")
@@ -80,9 +79,6 @@ public class Workshops implements Serializable {
     @Basic(optional = false)
     @Column(name = "max_participants")
     private Integer maxParticipants;
-    @Basic(optional = false)
-    @Column(name = "current_participants")
-    private Integer currentParticipants;
     @Basic(optional = false)
     @Column(name = "waitlist_limit")
     private Integer waitlistLimit;
@@ -168,7 +164,6 @@ public class Workshops implements Serializable {
         this.details = details;
         this.location = location;
         this.maxParticipants = maxParticipants;
-        this.currentParticipants = 0;
         this.waitlistLimit = waitlistLimit;
         this.registrationStart = registrationStart;
         this.registrationEnd = registrationEnd;
@@ -218,16 +213,8 @@ public class Workshops implements Serializable {
         return maxParticipants;
     }
 
-    public void setMaxParticipants(int maxParticipants) {
+    public void setMaxParticipants(Integer maxParticipants) {
         this.maxParticipants = maxParticipants;
-    }
-
-    public Integer getCurrentParticipants() {
-        return currentParticipants;
-    }
-
-    public void setCurrentParticipants(int currentParticipants) {
-        this.currentParticipants = currentParticipants;
     }
     
     public Integer getWaitlistLimit() {
