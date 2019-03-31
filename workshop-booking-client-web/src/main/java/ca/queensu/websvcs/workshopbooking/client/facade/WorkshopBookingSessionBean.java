@@ -11,6 +11,7 @@ import ca.queensu.websvcs.workshopbooking.core.entity.Departments;
 import ca.queensu.websvcs.workshopbooking.core.entity.EventStatus;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
+import ca.queensu.websvcs.workshopbooking.core.entity.Reviews;
 import ca.queensu.websvcs.workshopbooking.core.entity.Roles;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -126,12 +127,27 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public List<Person> getParticipantsForWorkshop(Integer workshopId){
         // Get all participants in a workshop
         Workshops w = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", workshopId).getSingleResult();
-        List<Person> participants = new ArrayList<>();
-        for (Person p: w.getMyRegistrants()) {
-            participants.add(p);
-        }
-        return participants;
+        return w.getMyRegistrants();
     }
+    
+    @Override
+    @Transactional
+    public boolean addParticipant(Integer workshopId, String netId) {
+        Workshops workshop = findByWorkshopId(workshopId);
+        Person p = getPersonByNetId(netId);
+        workshop.addRegistrant(p);
+        return true;
+    }
+    
+    @Override
+    @Transactional
+    public boolean removeParticipant(Integer workshopId, String netId) {
+        Workshops workshop = findByWorkshopId(workshopId);
+        Person p = getPersonByNetId(netId);
+        workshop.removeRegistrant(p);
+        return true;
+    }
+    
     
     @Override
     @Transactional
@@ -191,17 +207,21 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
 
 /**
  * emailedit.jsp
- * @param emailForm
- * @return
+    * @param workshopId
+    * @param emailForm
+    * @return
  */
     @Override
-    public boolean updateEmailForm(EmailInfoForm emailForm){
-//        Todo: Need Modified with actural success verification
-        try{
-            return true;
-        }catch(Exception e) {
-            throw  new EJBException(e);
-        }
+    @Transactional
+    public boolean updateEmailForm(Integer workshopId, Workshops workshopData, EmailInfoForm emailForm) {
+        Workshops workshop = findByWorkshopId(workshopId);
+        workshop.setEmailNotificationName(workshopData.getEmailNotificationName());
+        workshop.setEmailConfirmationMsg(workshopData.getEmailConfirmationMsg());
+        workshop.setEmailWaitlistMsg(workshopData.getEmailWaitlistMsg());
+        workshop.setEmailCancellationMsg(workshopData.getEmailCancellationMsg());
+        workshop.setEmailEvaluationMsg(workshopData.getEmailEvaluationMsg());
+        em.merge(workshop);
+        return true;
     }
 
     @Override
@@ -302,12 +322,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
     
     @Override
-    public List<Attendance> getAttendance(Integer workshopId) {
-        List<Attendance> attendance = em.createNamedQuery("Attendance.findByWorkshopId", Attendance.class).setParameter("workshopId", workshopId).getResultList();
-        return attendance;
-    }
-    
-    @Override
     @Transactional
     public boolean addFacilitator(Integer workshopId, String netId) {
         Workshops workshop = findByWorkshopId(workshopId);
@@ -326,12 +340,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
     
     @Override
-    @Transactional
-    public boolean addParticipant(Integer workshopId, String netId) {
-        Workshops workshop = findByWorkshopId(workshopId);
-        Person p = getPersonByNetId(netId);
-        workshop.addRegistrant(p);
-        return true;
+    public List<Attendance> getAttendance(Integer workshopId) {
+        List<Attendance> attendance = em.createNamedQuery("Attendance.findByWorkshopId", Attendance.class).setParameter("workshopId", workshopId).getResultList();
+        return attendance;
     }
     
     @Override
@@ -348,6 +359,30 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         Attendance a = em.createNamedQuery("Attendance.findByWorkshopAndNetId", Attendance.class).setParameter("workshopId", workshopId).setParameter("netId", netId).getSingleResult();
         a.setAttended(status);
         em.merge(a);
+        return true;
+    }
+    
+    @Override
+    public List<Reviews> getReviews(Integer workshopId) {
+        List<Reviews> myReviews = em.createNamedQuery("Reviews.findByWorkshopId", Reviews.class).setParameter("workshopId", workshopId).getResultList();
+        return myReviews;
+    }
+    
+    @Override
+    @Transactional
+    public boolean addReview(Integer workshopId, String netId, String review) {
+        Reviews newReview = em.createNamedQuery("Reviews.findByWorkshopAndNetId", Reviews.class).setParameter("workshopId", workshopId).setParameter("netId", netId).getSingleResult();
+        newReview.setReview(review);
+        em.merge(newReview);
+        return true;
+    }
+    
+    @Override
+    @Transactional
+    public boolean editReview(Integer workshopId, String netId, String editedReview) {
+        Reviews review = em.createNamedQuery("Reviews.findByWorkshopAndNetId", Reviews.class).setParameter("workshopId", workshopId).setParameter("netId", netId).getSingleResult();
+        review.setReview(editedReview);
+        em.merge(review);
         return true;
     }
 

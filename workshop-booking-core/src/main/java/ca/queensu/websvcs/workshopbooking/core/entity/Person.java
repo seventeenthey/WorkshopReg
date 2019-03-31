@@ -181,6 +181,11 @@ public class Person implements Serializable {
         w.getMyRegistrants().add(this);
     }
     
+    public void removeWorkshop(Workshops w) {
+        this.myWorkshops.remove(w);
+        w.getMyRegistrants().remove(this);
+    }
+    
     @XmlTransient
     public List<Workshops> getOwnedWorkshops() {
         return myOwnedWorkshops;

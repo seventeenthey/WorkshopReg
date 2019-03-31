@@ -5,6 +5,7 @@ import ca.queensu.websvcs.workshopbooking.core.entity.Attendance;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
+import ca.queensu.websvcs.workshopbooking.core.entity.Reviews;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,7 +30,7 @@ public interface WorkshopBookingSessionBeanLocal {
     //
     
     // emailedit.jsp
-    public boolean updateEmailForm(EmailInfoForm emailForm);
+    public boolean updateEmailForm(Integer workshopId, Workshops workshop, EmailInfoForm emailForm);
     
     // questionnaire.jsp
     public boolean registerIn();
@@ -56,12 +57,18 @@ public interface WorkshopBookingSessionBeanLocal {
     public List<Workshops> getWorkshopsForPerson(Person p);
     public List<Workshops> getWorkshopsHostedByPerson(Person p);
     
-    public List<Attendance> getAttendance(Integer workshopId);
+    public boolean addParticipant(Integer workshopId, String netId);
     public List<Person> getParticipantsForWorkshop(Integer workshopId);
+    public boolean removeParticipant(Integer workshopId, String netId);
+    
     public boolean addFacilitator(Integer workshopId, String netId);
     public boolean removeFacilitator(Integer workshopId, String netId);
-    public boolean addParticipant(Integer workshopId, String netId);
     
+    public List<Attendance> getAttendance(Integer workshopId);
     public boolean addAttendee(Integer workshopId, String netId);
     public boolean editAttendeeStatus(Integer workshopId, String netId, boolean status);
+    
+    public List<Reviews> getReviews(Integer workshopId);
+    public boolean addReview(Integer workshopId, String netId, String review);
+    public boolean editReview(Integer workshopId, String netId, String editedReview);
 }

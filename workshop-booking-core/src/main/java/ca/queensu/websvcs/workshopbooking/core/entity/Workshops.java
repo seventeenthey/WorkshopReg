@@ -370,6 +370,11 @@ public class Workshops implements Serializable {
         p.getAllWorkshops().add(this);
     }
     
+    public void removeRegistrant(Person p) {
+        this.myRegistrants.remove(p);
+        p.getAllWorkshops().remove(this);
+    }
+    
     @XmlTransient
     public List<Person> getMyFacilitators() {
         return myFacilitators;
