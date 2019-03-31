@@ -6,6 +6,7 @@ import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.websvcs.workshopbooking.core.entity.Reviews;
+import ca.queensu.websvcs.workshopbooking.core.entity.Waitlist;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -59,6 +60,7 @@ public interface WorkshopBookingSessionBeanLocal {
 
     public boolean addParticipant(Integer workshopId, String netId);
     public List<Person> getParticipantsForWorkshop(Integer workshopId);
+    public boolean addParticipant(Integer workshopId, String netId);
     public boolean removeParticipant(Integer workshopId, String netId);
 
     public boolean addFacilitator(Integer workshopId, String netId);
@@ -73,5 +75,9 @@ public interface WorkshopBookingSessionBeanLocal {
     public List<Reviews> getReviews(Integer workshopId);
     public boolean addReview(Integer workshopId, String netId, String review);
     public boolean editReview(Integer workshopId, String netId, String editedReview);
+    public boolean removeReview(Integer workshopId, String netId);
 
+    public List<Waitlist> getWaitlist(Integer workshopId);
+    public boolean addToWaitlist(Integer workshopId, String netId);
+    public boolean removeFromWaitlist(Integer workshopId, String netId);
 }

@@ -119,7 +119,9 @@
 
                 <!--Workshop Register-->
                 <li type="button" class="btn btn-primary" id="registerBtn">
-                    <s:url action="questionnaireLoadAction" var="questionnaireUrl" />
+                    <s:url action="questionnaireLoadAction" var="questionnaireUrl" >
+                        <s:param name="workshopId" value="workshopId"/>
+                    </s:url>
                     <a href='<s:property value="questionnaireUrl"/>' style="color:white">Register</a>
                 </li>
 

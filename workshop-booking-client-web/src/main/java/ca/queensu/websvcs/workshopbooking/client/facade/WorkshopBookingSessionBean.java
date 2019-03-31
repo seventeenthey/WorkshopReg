@@ -13,11 +13,13 @@ import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import ca.queensu.websvcs.workshopbooking.core.entity.Reviews;
 import ca.queensu.websvcs.workshopbooking.core.entity.Roles;
+import ca.queensu.websvcs.workshopbooking.core.entity.Waitlist;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Date;
 import javax.ejb.EJBException;
@@ -135,7 +137,17 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public boolean addParticipant(Integer workshopId, String netId) {
         Workshops workshop = findByWorkshopId(workshopId);
         Person p = getPersonByNetId(netId);
-        workshop.addRegistrant(p);
+        System.out.println("hello15");
+        if (getParticipantsForWorkshop(workshopId).size() < workshop.getMaxParticipants()) {
+            System.out.println("registered!");
+            workshop.addRegistrant(p);
+        } else if (getWaitlist(workshopId).size() < workshop.getWaitlistLimit()) { // add to waitlist if it's not full
+            System.out.println("added to waitlist!");
+            addToWaitlist(workshopId, netId);
+        } else { // waitlist full!
+            System.out.println("waitlist full...");
+            return true;
+        }
         return true;
     }
 
@@ -145,6 +157,14 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         Workshops workshop = findByWorkshopId(workshopId);
         Person p = getPersonByNetId(netId);
         workshop.removeRegistrant(p);
+
+        List<Waitlist> waitlist = getWaitlist(workshopId);
+        if (waitlist.size() > 0) {
+            waitlist.sort(Comparator.comparing(Waitlist::getDatetimeApplied));
+            String nextPersonId = waitlist.get(0).getPerson().getNetId();
+            removeFromWaitlist(workshopId, nextPersonId);
+            addParticipant(workshopId, nextPersonId);
+        }
         return true;
     }
 
@@ -208,6 +228,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
 /**
  * emailedit.jsp
     * @param workshopId
+    * @param workshopData
     * @param emailForm
     * @return
  */
@@ -262,8 +283,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
 
     @Override
+    @Transactional
     public void savePerson(Person p) {
-        em.persist(p);
+        em.merge(p);
         em.flush();
     }
 
@@ -372,7 +394,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
             throw  new EJBException(e);
         }
     }
-        
+
     @Override
     public List<Reviews> getReviews(Integer workshopId) {
         List<Reviews> myReviews = em.createNamedQuery("Reviews.findByWorkshopId", Reviews.class).setParameter("workshopId", workshopId).getResultList();
@@ -382,9 +404,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     @Transactional
     public boolean addReview(Integer workshopId, String netId, String review) {
-        Reviews newReview = em.createNamedQuery("Reviews.findByWorkshopAndNetId", Reviews.class).setParameter("workshopId", workshopId).setParameter("netId", netId).getSingleResult();
+        Reviews newReview = new Reviews(workshopId, netId);
         newReview.setReview(review);
-        em.merge(newReview);
+        em.persist(newReview);
         return true;
     }
 
@@ -396,6 +418,38 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.merge(review);
         return true;
 
+    }
+
+    @Override
+    @Transactional
+    public boolean removeReview(Integer workshopId, String netId) {
+        Reviews review = em.createNamedQuery("Review.findByWorkshopAndNetId", Reviews.class).setParameter("workshopId", workshopId).setParameter("netId", netId).getSingleResult();
+        em.remove(review);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public List<Waitlist> getWaitlist(Integer workshopId) {
+        List<Waitlist> waitlist = em.createNamedQuery("Waitlist.findByWorkshopId", Waitlist.class).setParameter("workshopId", workshopId).getResultList();
+        return waitlist;
+    }
+
+    @Override
+    @Transactional
+    public boolean addToWaitlist(Integer workshopId, String netId) {
+        Waitlist waitlister = new Waitlist(workshopId, netId);
+        waitlister.setDatetimeApplied(new Date());
+        em.persist(waitlister);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean removeFromWaitlist(Integer workshopId, String netId) {
+        Waitlist waitlist = em.createNamedQuery("Waitlist.findByWorkshopAndNetId", Waitlist.class).setParameter("workshopId", workshopId).setParameter("netId", netId).getSingleResult();
+        em.remove(waitlist);
+        return true;
     }
 
 }
