@@ -49,6 +49,7 @@ public class AttendanceAction extends ActionSupport implements Preparable{
     List<Attendance> attendance;
     private Integer workshopId;
     private Workshops workshop;
+    private Person person;
 
 
 
