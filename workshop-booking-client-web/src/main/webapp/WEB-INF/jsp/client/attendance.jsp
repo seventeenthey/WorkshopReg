@@ -73,7 +73,7 @@
                                     </s:url>
                                     <a href='<s:property value="functionUrl"/>'>Event Setup</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="workshopCreator nav-item">
                                     <s:url action="copyworkshopLoadAction" var="copyworkshopUrl">
                                         <s:param name="workshopId" value="workshopId"/>
                                     </s:url>

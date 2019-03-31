@@ -172,14 +172,14 @@
                                 <sx:datetimepicker 
                                     label="Registration Start Date" 
                                     name="workshopForm.rgStDate" 
-                                    displayFormat="dd-MMM-yyyy"
+                                    displayFormat="dd-MM-yyyy"
                                     value="workshop.registrationStart"/>
                             </div>
                             <div class="col-md-4">
                                 <sx:datetimepicker 
                                     label="Registration Start Time" 
                                     name="workshopForm.rgStTime" 
-                                    displayFormat="HH:mm:ss" 
+                                    displayFormat="HH:mm" 
                                     type="time"
                                     value="workshop.registrationStart"/>
                             </div>
@@ -190,14 +190,14 @@
                                 <sx:datetimepicker 
                                     label="Registration End Date" 
                                     name="workshopForm.rgEndDate"
-                                    displayFormat="yyyy-MM-dd"
+                                    displayFormat="dd-MM-yyyy"
                                     value="workshop.registrationEnd" />
                             </div>                            
                             <div class="col-md-4">
                             <sx:datetimepicker 
                                 label="Registration End Time" 
                                 name="workshopForm.rgEndTime" 
-                                displayFormat="HH:mm:ss" 
+                                displayFormat="HH:mm" 
                                 type="time"
                                 value="workshop.registrationEnd"/>
                             </div>
@@ -209,14 +209,14 @@
                                 <sx:datetimepicker 
                                     label="Event Start Date" 
                                     name="workshopForm.eventStDate" 
-                                    displayFormat="dd-MMM-yyyy"
+                                    displayFormat="dd-MM-yyyy"
                                     value="workshop.eventStart"/>
                             </div>
                             <div class="col-md-4">
                                 <sx:datetimepicker 
                                     label="Event Start Time" 
                                     name="workshopForm.eventStTime" 
-                                    displayFormat="HH:mm:ss" 
+                                    displayFormat="HH:mm" 
                                     type="time"
                                     value="workshop.eventStart"/>
                             </div>
@@ -227,14 +227,14 @@
                                 <sx:datetimepicker 
                                     label="Event End Date" 
                                     name="workshopForm.eventEndDate" 
-                                    displayFormat="yyyy-MM-dd"
+                                    displayFormat="dd-MM-yyyy"
                                     value="workshop.eventEnd"/>
                             </div>
                             <div class="col-md-4">
                                 <sx:datetimepicker 
                                     label="Event End Time" 
                                     name="workshopForm.eventEndTime" 
-                                    displayFormat="HH:mm:ss" 
+                                    displayFormat="HH:mm"   
                                     type="time"
                                     value="workshop.eventEnd"/>  
                             </div>

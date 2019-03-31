@@ -168,7 +168,20 @@ public class FunctionAction extends ActionSupport implements Preparable{
             }else if(workshop.getWaitlistLimit()>workshop.getMaxParticipants()) {
                 addFieldError("waitlistLimit", "Wait List Limit cannot exceed Maximun Participants number.");
             }
-
+            
+            if (workshopForm.getRgStDate()==null || workshopForm.getRgEndDate()==null){
+                addFieldError("rgStDate", "Registration Date is required.");
+            }else if (workshopForm.getRgStDate().compareTo(workshopForm.getRgEndDate()) > 0){
+                addFieldError("rgStDate", "Invalid Registration Period.");
+            }
+            
+            //Event can only hold in one day
+            if (workshopForm.getEventStDate()== null || workshopForm.getEventEndDate() == null){
+                addFieldError("rgStDate", "Event Date is required.");
+            }else if (workshopForm.getEventStDate().compareTo(workshopForm.getEventEndDate()) != 0){
+                addFieldError("eventStDate", "Invalid Event Period (can only in one day).");
+            }
+            
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
