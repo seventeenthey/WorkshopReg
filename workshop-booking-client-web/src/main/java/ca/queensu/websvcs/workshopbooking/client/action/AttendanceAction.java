@@ -18,11 +18,14 @@ import com.opensymphony.xwork2.Preparable;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
-import java.util.List;
 import javax.ejb.EJB;
+import static jdk.nashorn.internal.objects.ArrayBufferView.length;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.validation.SkipValidation;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -42,6 +45,7 @@ public class AttendanceAction extends ActionSupport implements Preparable{
     List<Attendance> attendance;
     private Integer workshopId;
     private Workshops workshop;
+    private Boolean att;
 
 
     public AttendanceAction() {
@@ -66,16 +70,12 @@ public class AttendanceAction extends ActionSupport implements Preparable{
     @SkipValidation
     public String load() throws Exception{
         try {
-            System.out.println("### EmailEditAction load running");
+            System.out.println("### AttendanceAction load running");
             
               if (workshopId != null){
                 workshop = ejb.findByWorkshopId(workshopId);
-                participants = ejb.getParticipantsForWorkshop(workshopId);
-                attendance = ejb.getAttendance(workshopId);
-                ejb.editAttendeeStatus(workshopId, "HostForAll", false);
-                attendance = ejb.getAttendance(workshopId);
-            }
-           
+                attendance = ejb.getAttendance(workshopId);  
+              }
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -92,12 +92,22 @@ public class AttendanceAction extends ActionSupport implements Preparable{
     public String execute() throws Exception {
         try {
             System.out.println("### AttendanceAction execute running");
+            attendance = ejb.getAttendance(workshopId);
+            Attendance attend;
+            for (int i = 0; i < attendance.size(); i++) {
+                attend = attendance.get(i);
+                System.out.println(attend.getAttended());
+                ejb.editAttendeeStatus(workshopId, attend.getPerson().getNetId(),attend.getAttended());
+            }
             
-            //studentBeanList = ejb.findStudentList();
-            participants = ejb.getParticipantsForWorkshop(workshopId);
             attendance = ejb.getAttendance(workshopId);
-            ejb.editAttendeeStatus(workshopId, "HostForAll", false);
-            attendance = ejb.getAttendance(workshopId);
+            boolean saveSuccessful = ejb.updateAttendance(attendance);
+            if(saveSuccessful){
+                addActionMessage("Attendance Successfully saved");
+            }
+            else {
+                addActionError("Attendance was not saved.");
+            }
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();

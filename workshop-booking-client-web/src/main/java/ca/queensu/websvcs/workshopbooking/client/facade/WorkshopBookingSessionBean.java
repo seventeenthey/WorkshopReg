@@ -332,5 +332,15 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.merge(a);
         return true;
     }
+    
+    @Override
+    public boolean updateAttendance(List<Attendance> attendance) {
+        try {
+            return true;
+        }
+        catch(Exception e) {
+            throw  new EJBException(e);
+        }
+    }
 
 }
