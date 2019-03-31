@@ -118,17 +118,14 @@ public class Workshops implements Serializable {
     @ManyToMany
     private Collection<Person> personCollection2;
     
-    /**
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workshops")
-    private Collection<Reviews> reviewsCollection;
-    **/
-    
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     @ManyToOne(optional = false)
     private Departments departmentId;
+    
     @JoinColumn(name = "event_status", referencedColumnName = "event_status")
     @ManyToOne(optional = false)
     private EventStatus eventStatus;
+    
     @JoinColumn(name = "workshop_creator_id", referencedColumnName = "net_id")
     @ManyToOne(optional = false)
     private Person workshopCreatorId;
@@ -147,6 +144,12 @@ public class Workshops implements Serializable {
     
     @OneToMany(mappedBy = "workshops", cascade = CascadeType.ALL)
     private List<Attendance> myAttendance;
+    
+    @OneToMany(mappedBy = "workshops", cascade = CascadeType.ALL)
+    private List<Waitlist> myWaitlist;
+    
+    @OneToMany(mappedBy = "workshops", cascade = CascadeType.ALL)
+    private List<Reviews> myReviews;
 
     public Workshops() {
     }
@@ -315,17 +318,6 @@ public class Workshops implements Serializable {
     public void setPersonCollection2(Collection<Person> personCollection2) {
         this.personCollection2 = personCollection2;
     }
-
-    /**
-    @XmlTransient
-    public Collection<Reviews> getReviewsCollection() {
-        return reviewsCollection;
-    }
-
-    public void setReviewsCollection(Collection<Reviews> reviewsCollection) {
-        this.reviewsCollection = reviewsCollection;
-    }
-    **/
     
     public Departments getDepartmentId() {
         return departmentId;
@@ -417,6 +409,24 @@ public class Workshops implements Serializable {
 
     public void setMyAttendance(List<Attendance> myAttendance) {
         this.myAttendance = myAttendance;
+    }
+    
+    @XmlTransient
+    public List<Waitlist> getMyWaitlist() {
+        return myWaitlist;
+    }
+
+    public void setMyWaitlist(List<Waitlist> myWaitlist) {
+        this.myWaitlist = myWaitlist;
+    }
+    
+    @XmlTransient
+    public List<Reviews> getMyReviews() {
+        return myReviews;
+    }
+
+    public void setMyReviews(List<Reviews> myReviews) {
+        this.myReviews = myReviews;
     }
     
     
