@@ -19,6 +19,7 @@ import javax.persistence.PersistenceContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
+import javax.persistence.NamedQuery;
 import javax.transaction.Transactional;
 
 /**
@@ -117,5 +118,27 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.persist(loc);
         em.flush();
         return true;
+    }
+    
+    @Override
+    @Transactional
+    public void updateRole(String netId, int roleId, String department) {
+        Person p = getPersonByNetId(netId);
+        Roles r = em.createNamedQuery("Roles.findByRoleId", Roles.class).setParameter("roleId", roleId).getSingleResult();
+        Departments d = em.createNamedQuery("Departments.findByDepartmentName", Departments.class).setParameter("departmentName", department).getSingleResult();
+        p.setRoleId(r);
+        p.setDepartmentId(d);
+        em.merge(p);
+    }
+    
+    @Override
+    @Transactional
+    public void updateRole(String netId, String roleName, String department) {
+        Person p = getPersonByNetId(netId);
+        Roles r = em.createNamedQuery("Roles.findByRoleName", Roles.class).setParameter("roleName", roleName).getSingleResult();
+        Departments d = em.createNamedQuery("Departments.findByDepartmentName", Departments.class).setParameter("departmentName", department).getSingleResult();
+        p.setRoleId(r);
+        p.setDepartmentId(d);
+        em.merge(p);
     }
 }

@@ -21,6 +21,21 @@
         <!--<link href="<%=request.getContextPath()%>/css/bursaryapp.css" rel="stylesheet">-->
         <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/css?family=Arvo|Playfair+Display|Raleway|Roboto" rel="stylesheet">
+        
+        <script type="text/javascript">
+            function checkAll(){
+             var listc = document.getElementsByName("listCheck");
+             if(document.getElementById("CheckAll").checked==true){
+              for(var i=0;i<listc.length;i++){
+               listc[i].checked=true;
+              }
+             }else{
+              for(var i=0;i<listc.length;i++){
+               listc[i].checked=false;
+              }
+             }
+            }
+        </script>
 
     </head>
     <body>
@@ -103,10 +118,8 @@
                 </div>
 
             <div class="col-md-9">
-                
                 <s:actionmessage theme="bootstrap"/>
-                <s:form action="attendanceExeAction?workshopId=%{workshopId}" 
-                        theme="bootstrap" method="post">
+                <s:form action="attendanceExeAction?workshopId=%{workshopId}" method="post">
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr>
@@ -116,11 +129,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <s:iterator value="participants">
+                            <s:iterator value="attendance" var="attend">
                                 <tr>
-                                    <td><s:property value="netId" /></td>
-                                    <td><s:property value="commonName" /></td>
-                                    <td><s:checkbox name="attendanceList.attendance" fieldValue="true"/></td>
+                                    <td><s:property value="person.netId"/></td>
+                                    <td><s:property value="person.commonName"/></td>
+                                    <td><s:checkbox name="attended" value="attended"/></td>
                                 </tr>
                             </s:iterator>
                         </tbody>

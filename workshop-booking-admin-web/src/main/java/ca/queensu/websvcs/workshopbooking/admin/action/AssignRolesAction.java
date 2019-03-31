@@ -98,7 +98,7 @@ public class AssignRolesAction extends ActionSupport {
         System.out.println("UpdateRole of AssignRolesAction - Admin");
         try {
             Person person = ejb.getPersonByNetId(netId);    //find the person to update
-            person.updateRole(roleName, department);          //update the role
+            ejb.updateRole(netId, roleName, department);          //update the role
             
             allPeople = ejb.getAllPeople();
             allRoles = ejb.findroleList();

@@ -131,7 +131,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         Workshops w = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", workshopId).getSingleResult();
         return w.getMyRegistrants();
     }
-    
+
     @Override
     @Transactional
     public boolean addParticipant(Integer workshopId, String netId) {
@@ -150,14 +150,14 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
         return true;
     }
-    
+
     @Override
     @Transactional
     public boolean removeParticipant(Integer workshopId, String netId) {
         Workshops workshop = findByWorkshopId(workshopId);
         Person p = getPersonByNetId(netId);
         workshop.removeRegistrant(p);
-        
+
         List<Waitlist> waitlist = getWaitlist(workshopId);
         if (waitlist.size() > 0) {
             waitlist.sort(Comparator.comparing(Waitlist::getDatetimeApplied));
@@ -167,11 +167,12 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
         return true;
     }
-    
-    
+
+
     @Override
     @Transactional
     public boolean createWorkshop(Person creator, Workshops workshop, WorkshopInfoForm workshopForm) {
+
         workshop.setWorkshopCreatorId(creator);
         workshop.setDepartmentId(creator.getDepartmentId());
         workshop.setEmailNotificationName("");
@@ -179,7 +180,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         workshop.setEmailWaitlistMsg("");
         workshop.setEmailCancellationMsg("");
         workshop.setEmailEvaluationMsg("");
-        
+
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             workshop.setRegistrationStart(formatter.parse(workshopForm.getRgStDateTime()));
@@ -190,7 +191,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
             System.out.println("Error parsing date");
             throw new EJBException(e);
         }
-        
+
         em.persist(workshop);
         return true;
     }
@@ -198,7 +199,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     @Transactional
     public boolean updateWorkshop(Integer workshopId, Workshops workshop, WorkshopInfoForm workshopForm) {
-        
+
         Workshops oldWorkshop = findByWorkshopId(workshopId);
         workshop.setWorkshopId(workshopId);
         workshop.setWorkshopCreatorId(oldWorkshop.getWorkshopCreatorId());
@@ -336,7 +337,12 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public List<Workshops> getUpcomingWorkshopsByPerson(Person p) {
         return p.getUpcomingWorkshops();
     }
-    
+
+    // questionaire.jsp
+    public boolean registerIn(){
+        return true;
+    }
+
     @Override
     @Transactional
     public boolean addFacilitator(Integer workshopId, String netId) {
@@ -345,7 +351,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         workshop.addFacilitator(p);
         return true;
     }
-    
+
     @Override
     @Transactional
     public boolean removeFacilitator(Integer workshopId, String netId) {
@@ -354,13 +360,13 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         workshop.removeFacilitator(p);
         return true;
     }
-    
+
     @Override
     public List<Attendance> getAttendance(Integer workshopId) {
         List<Attendance> attendance = em.createNamedQuery("Attendance.findByWorkshopId", Attendance.class).setParameter("workshopId", workshopId).getResultList();
         return attendance;
     }
-    
+
     @Override
     @Transactional
     public boolean addAttendee(Integer workshopId, String netId) {
@@ -368,7 +374,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.persist(a);
         return true;
     }
-    
+
     @Override
     @Transactional
     public boolean editAttendeeStatus(Integer workshopId, String netId, boolean status) {
@@ -377,13 +383,24 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.merge(a);
         return true;
     }
-    
+
+    @Override
+
+    public boolean updateAttendance(List<Attendance> attendance) {
+        try {
+            return true;
+        }
+        catch(Exception e) {
+            throw  new EJBException(e);
+        }
+    }
+
     @Override
     public List<Reviews> getReviews(Integer workshopId) {
         List<Reviews> myReviews = em.createNamedQuery("Reviews.findByWorkshopId", Reviews.class).setParameter("workshopId", workshopId).getResultList();
         return myReviews;
     }
-    
+
     @Override
     @Transactional
     public boolean addReview(Integer workshopId, String netId, String review) {
@@ -392,7 +409,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.persist(newReview);
         return true;
     }
-    
+
     @Override
     @Transactional
     public boolean editReview(Integer workshopId, String netId, String editedReview) {
@@ -400,8 +417,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         review.setReview(editedReview);
         em.merge(review);
         return true;
+
     }
-    
+
     @Override
     @Transactional
     public boolean removeReview(Integer workshopId, String netId) {
@@ -409,14 +427,14 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.remove(review);
         return true;
     }
-    
+
     @Override
     @Transactional
     public List<Waitlist> getWaitlist(Integer workshopId) {
         List<Waitlist> waitlist = em.createNamedQuery("Waitlist.findByWorkshopId", Waitlist.class).setParameter("workshopId", workshopId).getResultList();
         return waitlist;
     }
-    
+
     @Override
     @Transactional
     public boolean addToWaitlist(Integer workshopId, String netId) {
@@ -425,7 +443,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.persist(waitlister);
         return true;
     }
-    
+
     @Override
     @Transactional
     public boolean removeFromWaitlist(Integer workshopId, String netId) {
