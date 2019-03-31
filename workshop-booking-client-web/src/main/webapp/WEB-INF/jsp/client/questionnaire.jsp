@@ -121,5 +121,6 @@
         </footer>
 
         <script src="js/searchBar.js"></script>
+        <script src="js/visibility.js"></script>
     </body>
 </html>
