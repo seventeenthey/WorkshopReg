@@ -114,6 +114,14 @@ public class ListViewAction extends ActionSupport implements Preparable{
         workshopsHosted = workshops;
     }
     
+    public List<Workshops> getPastWorkshops(){
+        return pastWorkshops;
+    }
+    
+    public void setPastWorkshops(List<Workshops> pastWorkshops){
+        this.pastWorkshops = pastWorkshops;
+    }
+    
     public WorkshopBookingSessionBeanLocal getEjb() {
         return ejb;
     }

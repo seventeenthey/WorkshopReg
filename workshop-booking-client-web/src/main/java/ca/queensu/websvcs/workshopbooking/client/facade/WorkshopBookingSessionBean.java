@@ -307,12 +307,12 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
 
     @Override
-    public List<Workshops> getPastWorkshopsByPerson(Person p){
+    public List<Workshops> getPastWorkshopsByPerson(Person p) {
         return p.getPastWorkshops();
     }
 
     @Override
-    public List<Workshops> getUpcomingWorkshopsByPerson(Person p){
+    public List<Workshops> getUpcomingWorkshopsByPerson(Person p) {
         return p.getUpcomingWorkshops();
     }
 
