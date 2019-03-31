@@ -257,10 +257,4 @@ public class Person implements Serializable {
         return past;
     }
     
-    //TODO - Vincent or Taylor?
-    public void updateRole(int roleId, String department){
-    }
-    
-    public void updateRole(String roleName, String department){
-    }
 }

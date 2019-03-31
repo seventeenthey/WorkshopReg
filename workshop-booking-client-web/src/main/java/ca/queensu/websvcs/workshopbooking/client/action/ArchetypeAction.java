@@ -52,7 +52,7 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
      */
     @Override
     public void prepare() throws Exception {
-        workshopBeanList = ejb.findWorkshopList();
+        //workshopBeanList = ejb.findWorkshopList();
     }
 
     /**

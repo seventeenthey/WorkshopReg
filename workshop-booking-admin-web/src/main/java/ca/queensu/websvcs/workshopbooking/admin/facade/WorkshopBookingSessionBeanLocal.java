@@ -38,4 +38,7 @@ public interface WorkshopBookingSessionBeanLocal {
     public List<String> findDepartmentList();
     
     public boolean addLocation(String locationName);
+    
+    public void updateRole(String netId, int roleId, String department);
+    public void updateRole(String netId, String roleName, String department);
 }
