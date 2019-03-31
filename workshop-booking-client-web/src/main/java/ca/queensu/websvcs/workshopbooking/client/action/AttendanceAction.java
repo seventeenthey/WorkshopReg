@@ -5,6 +5,7 @@
  */
 package ca.queensu.websvcs.workshopbooking.client.action;
 
+import ca.queensu.uis.sso.tools.common.SSOConstants;
 import ca.queensu.websvcs.workshopbooking.client.domain.StudentDataBean;
 import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
@@ -20,8 +21,11 @@ import java.io.StringWriter;
 import java.util.Date;
 import javax.ejb.EJB;
 import static jdk.nashorn.internal.objects.ArrayBufferView.length;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,26 +40,33 @@ public class AttendanceAction extends ActionSupport implements Preparable{
     private static final long serialVersionUID = 1L;
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.client.action.AttendanceAction.class);
 
-    
+
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
-    
+
     //List<StudentDataBean> studentBeanList;
     List<Person> participants;
     List<Attendance> attendance;
     private Integer workshopId;
     private Workshops workshop;
-    private Boolean att;
+
 
 
     public AttendanceAction() {
         System.out.println("### AttendanceAction constructor running");
     }
-    
+
     @Override
     public void prepare() throws Exception {
         try {
             System.out.println("### Attendance Action prepare running");
+
+            HttpServletRequest request = ServletActionContext.getRequest();
+            HttpSession session = request.getSession();
+
+            //set person based on NetID
+            String userNetId = (String) session.getAttribute(SSOConstants.NET_ID);
+            person = ejb.getPersonByNetId(userNetId);
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -65,16 +76,16 @@ public class AttendanceAction extends ActionSupport implements Preparable{
             log.error(out);
         }
     }
-    
-    
+
+
     @SkipValidation
     public String load() throws Exception{
         try {
             System.out.println("### AttendanceAction load running");
-            
+
               if (workshopId != null){
                 workshop = ejb.findByWorkshopId(workshopId);
-                attendance = ejb.getAttendance(workshopId);  
+                attendance = ejb.getAttendance(workshopId);
               }
         }
         catch (Exception e) {
@@ -87,7 +98,7 @@ public class AttendanceAction extends ActionSupport implements Preparable{
         }
         return SUCCESS;
     }
-    
+
     @Override
     public String execute() throws Exception {
         try {
@@ -99,7 +110,7 @@ public class AttendanceAction extends ActionSupport implements Preparable{
                 System.out.println(attend.getAttended());
                 ejb.editAttendeeStatus(workshopId, attend.getPerson().getNetId(),attend.getAttended());
             }
-            
+
             attendance = ejb.getAttendance(workshopId);
             boolean saveSuccessful = ejb.updateAttendance(attendance);
             if(saveSuccessful){
@@ -108,7 +119,7 @@ public class AttendanceAction extends ActionSupport implements Preparable{
             else {
                 addActionError("Attendance was not saved.");
             }
-        } 
+        }
         catch (Exception e) {
             StringWriter out = new StringWriter();
             e.printStackTrace(new PrintWriter(out));
@@ -119,10 +130,10 @@ public class AttendanceAction extends ActionSupport implements Preparable{
         }
         return SUCCESS;
     }
-    
+
     /**
-     * Creates a custom error message to be used as an action error 
-     * 
+     * Creates a custom error message to be used as an action error
+     *
      * @param customMessage message to be used as the action error text
      * @return the created error message
      */
@@ -133,8 +144,8 @@ public class AttendanceAction extends ActionSupport implements Preparable{
 
         return customMessage + msgAppend;
     }
-    
-    
+
+
     public WorkshopBookingSessionBeanLocal getEjb() {
         return ejb;
     }
@@ -150,7 +161,7 @@ public class AttendanceAction extends ActionSupport implements Preparable{
     public void setParticipants(List<Person> participants) {
         this.participants = participants;
     }
-    
+
     public List<Attendance> getAttendance() {
         return attendance;
     }
@@ -167,6 +178,22 @@ public class AttendanceAction extends ActionSupport implements Preparable{
         this.workshopId = workshopId;
     }
 
+    public Workshops getWorkshop() {
+        return workshop;
+    }
 
-    
+    public void setWorkshop(Workshops workshop) {
+        this.workshop = workshop;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+
+
 }

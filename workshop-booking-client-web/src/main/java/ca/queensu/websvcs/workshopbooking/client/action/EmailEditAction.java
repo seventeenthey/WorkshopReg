@@ -88,13 +88,16 @@ public class EmailEditAction extends ActionSupport implements Preparable{
             System.out.println("### EmailEditAction execute running");
             
             // Check if the emailForm successfully saved or not
-            boolean saveSuccessful = ejb.updateEmailForm(emailForm);
+            boolean saveSuccessful = ejb.updateEmailForm(workshopId, workshop, emailForm);
             if(saveSuccessful){
                 addActionMessage("Email Information Successfully saved");
             }
             else {
                 addActionError("Data was not saved.");
             }
+            
+            workshop = ejb.findByWorkshopId(workshopId);
+            
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();

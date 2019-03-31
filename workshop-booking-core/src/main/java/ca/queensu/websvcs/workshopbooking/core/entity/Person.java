@@ -7,7 +7,6 @@ package ca.queensu.websvcs.workshopbooking.core.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -57,20 +56,10 @@ public class Person implements Serializable {
     @Column(name = "email")
     private String email;
     
-    /**
-    @ManyToMany(mappedBy = "personCollection")
-    private Collection<Workshops> workshopsCollection;
-    @ManyToMany(mappedBy = "personCollection1")
-    private Collection<Workshops> workshopsCollection1;
-    @ManyToMany(mappedBy = "personCollection2")
-    private Collection<Workshops> workshopsCollection2;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
-    private Collection<Reviews> reviewsCollection;
-    **/
-    
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     @ManyToOne(optional = false)
     private Departments departmentId;
+    
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     @ManyToOne(optional = false)
     private Roles roleId;
@@ -83,6 +72,12 @@ public class Person implements Serializable {
     
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Attendance> myWorkshopAttendance;
+    
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private List<Waitlist> myWorkshopWaitlist;
+    
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private List<Reviews> myWorkshopReviews;
 
     public Person() {
     }
@@ -129,44 +124,6 @@ public class Person implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    /**
-    @XmlTransient
-    public Collection<Workshops> getWorkshopsCollection() {
-        return workshopsCollection;
-    }
-
-    public void setWorkshopsCollection(Collection<Workshops> workshopsCollection) {
-        this.workshopsCollection = workshopsCollection;
-    }
-
-    @XmlTransient
-    public Collection<Workshops> getWorkshopsCollection1() {
-        return workshopsCollection1;
-    }
-
-    public void setWorkshopsCollection1(Collection<Workshops> workshopsCollection1) {
-        this.workshopsCollection1 = workshopsCollection1;
-    }
-
-    @XmlTransient
-    public Collection<Workshops> getWorkshopsCollection2() {
-        return workshopsCollection2;
-    }
-
-    public void setWorkshopsCollection2(Collection<Workshops> workshopsCollection2) {
-        this.workshopsCollection2 = workshopsCollection2;
-    }
-
-    @XmlTransient
-    public Collection<Reviews> getReviewsCollection() {
-        return reviewsCollection;
-    }
-
-    public void setReviewsCollection(Collection<Reviews> reviewsCollection) {
-        this.reviewsCollection = reviewsCollection;
-    }
-    **/
 
     public Departments getDepartmentId() {
         return departmentId;
@@ -224,6 +181,11 @@ public class Person implements Serializable {
         w.getMyRegistrants().add(this);
     }
     
+    public void removeWorkshop(Workshops w) {
+        this.myWorkshops.remove(w);
+        w.getMyRegistrants().remove(this);
+    }
+    
     @XmlTransient
     public List<Workshops> getOwnedWorkshops() {
         return myOwnedWorkshops;
@@ -252,7 +214,25 @@ public class Person implements Serializable {
         this.myWorkshopAttendance = workshops;
     }
     
+    @XmlTransient
+    public List<Waitlist> getMyWorkshopWaitlist() {
+        return myWorkshopWaitlist;
+    }
+    
+    public void setMyWorkshopWaitlist(List<Waitlist> myWorkshopWaitlist) {
+        this.myWorkshopWaitlist = myWorkshopWaitlist;
+    }
+    
+    @XmlTransient
+    public List<Reviews> getMyWorkshopReviews() {
+        return myWorkshopReviews;
+    }
+    
+    public void setMyWorkshopReviews(List<Reviews> myWorkshopReviews) {
+        this.myWorkshopReviews = myWorkshopReviews;
+    }
 
+    
     public List<Workshops> getUpcomingWorkshops(){
         Date today = new Date();
         List<Workshops> allWorkshops = getAllWorkshops();

@@ -262,7 +262,6 @@
                     <th class="th-sm">Workshop Name</th>
                     <th class="th-sm">Workshop Number</th>
                     <th class="th-sm">Date</th>
-                    <th class="th-sm">Start Time</th>
                     <th class="th-sm">End Date</th>
                     <th class="th-sm">Department</th>
                     <th class="th-sm">Details</th>
@@ -273,7 +272,6 @@
                         <td><s:property value="title" /></td>
                         <td><s:property value="workshopId" /></td>
                         <td><s:property value="eventStart.toString()"/></td>
-                        <td><s:property value="rgStTime"/></td>
                         <td><s:property value="eventEnd.toString()"/></td>
                         <td><s:property value="departmentId.departmentName"/></td>
                         <td>

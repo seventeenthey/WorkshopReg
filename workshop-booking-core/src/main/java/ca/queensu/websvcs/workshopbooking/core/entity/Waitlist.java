@@ -6,6 +6,7 @@
 package ca.queensu.websvcs.workshopbooking.core.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -15,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -22,22 +25,22 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Vincent
  */
 @Entity
-@Table(name = "reviews")
+@Table(name = "waitlist")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Reviews.findAll", query = "SELECT r FROM Reviews r")
-    , @NamedQuery(name = "Reviews.findByWorkshopId", query = "SELECT r FROM Reviews r WHERE r.reviewsPK.workshopId = :workshopId")
-    , @NamedQuery(name = "Reviews.findByWorkshopAndNetId", query = "SELECT a FROM Reviews a WHERE a.reviewsPK.workshopId = :workshopId AND a.reviewsPK.netId = :netId")
-    , @NamedQuery(name = "Reviews.findByNetId", query = "SELECT r FROM Reviews r WHERE r.reviewsPK.netId = :netId")
-    , @NamedQuery(name = "Reviews.findByReview", query = "SELECT r FROM Reviews r WHERE r.review = :review")})
-public class Reviews implements Serializable {
+    @NamedQuery(name = "Waitlist.findAll", query = "SELECT w FROM Waitlist w")
+    , @NamedQuery(name = "Waitlist.findByWorkshopId", query = "SELECT w FROM Waitlist w WHERE w.waitlistPK.workshopId = :workshopId")
+    , @NamedQuery(name = "Waitlist.findByNetId", query = "SELECT w FROM Waitlist w WHERE w.waitlistPK.netId = :netId")
+    , @NamedQuery(name = "Waitlist.findByDatetimeApplied", query = "SELECT w FROM Waitlist w WHERE w.datetimeApplied = :datetimeApplied")})
+public class Waitlist implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected ReviewsPK reviewsPK;
+    protected WaitlistPK waitlistPK;
     @Basic(optional = false)
-    @Column(name = "review")
-    private String review;
+    @Column(name = "datetime_applied")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date datetimeApplied;
     @JoinColumn(name = "net_id", referencedColumnName = "net_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Person person;
@@ -45,36 +48,36 @@ public class Reviews implements Serializable {
     @ManyToOne(optional = false)
     private Workshops workshops;
 
-    public Reviews() {
+    public Waitlist() {
     }
 
-    public Reviews(ReviewsPK reviewsPK) {
-        this.reviewsPK = reviewsPK;
+    public Waitlist(WaitlistPK waitlistPK) {
+        this.waitlistPK = waitlistPK;
     }
 
-    public Reviews(ReviewsPK reviewsPK, String review) {
-        this.reviewsPK = reviewsPK;
-        this.review = review;
+    public Waitlist(WaitlistPK waitlistPK, Date datetimeApplied) {
+        this.waitlistPK = waitlistPK;
+        this.datetimeApplied = datetimeApplied;
     }
 
-    public Reviews(int workshopId, String netId) {
-        this.reviewsPK = new ReviewsPK(workshopId, netId);
+    public Waitlist(int workshopId, String netId) {
+        this.waitlistPK = new WaitlistPK(workshopId, netId);
     }
 
-    public ReviewsPK getReviewsPK() {
-        return reviewsPK;
+    public WaitlistPK getWaitlistPK() {
+        return waitlistPK;
     }
 
-    public void setReviewsPK(ReviewsPK reviewsPK) {
-        this.reviewsPK = reviewsPK;
+    public void setWaitlistPK(WaitlistPK waitlistPK) {
+        this.waitlistPK = waitlistPK;
     }
 
-    public String getReview() {
-        return review;
+    public Date getDatetimeApplied() {
+        return datetimeApplied;
     }
 
-    public void setReview(String review) {
-        this.review = review;
+    public void setDatetimeApplied(Date datetimeApplied) {
+        this.datetimeApplied = datetimeApplied;
     }
 
     public Person getPerson() {
@@ -96,18 +99,18 @@ public class Reviews implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (reviewsPK != null ? reviewsPK.hashCode() : 0);
+        hash += (waitlistPK != null ? waitlistPK.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Reviews)) {
+        if (!(object instanceof Waitlist)) {
             return false;
         }
-        Reviews other = (Reviews) object;
-        if ((this.reviewsPK == null && other.reviewsPK != null) || (this.reviewsPK != null && !this.reviewsPK.equals(other.reviewsPK))) {
+        Waitlist other = (Waitlist) object;
+        if ((this.waitlistPK == null && other.waitlistPK != null) || (this.waitlistPK != null && !this.waitlistPK.equals(other.waitlistPK))) {
             return false;
         }
         return true;
@@ -115,7 +118,7 @@ public class Reviews implements Serializable {
 
     @Override
     public String toString() {
-        return "ca.queensu.websvcs.workshopbooking.Reviews[ reviewsPK=" + reviewsPK + " ]";
+        return "testpack.Waitlist[ waitlistPK=" + waitlistPK + " ]";
     }
     
 }

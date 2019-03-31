@@ -11,9 +11,11 @@ import ca.queensu.websvcs.workshopbooking.core.entity.Departments;
 import ca.queensu.websvcs.workshopbooking.core.entity.EventStatus;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
+import ca.queensu.websvcs.workshopbooking.core.entity.Reviews;
 import ca.queensu.websvcs.workshopbooking.core.entity.Roles;
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,65 +127,101 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public List<Person> getParticipantsForWorkshop(Integer workshopId){
         // Get all participants in a workshop
         Workshops w = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", workshopId).getSingleResult();
-        List<Person> participants = new ArrayList<>();
-        for (Person p: w.getMyRegistrants()) {
-            participants.add(p);
-        }
-        return participants;
+        return w.getMyRegistrants();
     }
 
     @Override
-    public boolean updateWorkshopForm(Workshops workshop, WorkshopInfoForm workshopForm){
-        //
-//      Todo: Need Modified with actural success verification
+    @Transactional
+    public boolean addParticipant(Integer workshopId, String netId) {
+        Workshops workshop = findByWorkshopId(workshopId);
+        Person p = getPersonByNetId(netId);
+        workshop.addRegistrant(p);
+        return true;
+    }
 
-        String netId = workshop.getTitle();
-        System.out.println("WorkshopTitleTestVar "+netId);
-        Date date=workshopForm.getRgStDate();
-        System.out.println("WorkshopRgStDateTestVar "+date.toString());
-//        Date datetime = workshop.getRegistrationStart();
-//        System.out.println("WorkshopDateTestVar2 "+datetime.toString());
-//        Person facilitator = em.createNamedQuery("Person.findByNetId", Person.class).setParameter("netId", netId).getSingleResult();
-//        Departments department = facilitator.getDepartmentId();
-//        String title = workshopForm.getEventTitle();
-//        String details = workshopForm.getTeaser();
-//        String location = workshopForm.getLocation();
-//        int maxParticipants = workshopForm.getMaxParticipant();
-//        EventStatus eventStatus = new EventStatus(workshopForm.getStatus());
+    @Override
+    @Transactional
+    public boolean removeParticipant(Integer workshopId, String netId) {
+        Workshops workshop = findByWorkshopId(workshopId);
+        Person p = getPersonByNetId(netId);
+        workshop.removeRegistrant(p);
+        return true;
+    }
 
-//        try {
-//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            Date registrationStart = formatter.parse(workshopForm.getRgStDateTime());
-//            Date registrationEnd = formatter.parse(workshopForm.getRgEndDateTime());
-//            Date eventStart = formatter.parse(workshopForm.getEventStDateTime());
-//            Date eventEnd = formatter.parse(workshopForm.getEventEndDateTime());
-//            System.out.println("hello2");
-//            Workshops w = new Workshops(facilitator, department, title, details, location, maxParticipants, registrationStart, registrationEnd, eventStart, eventEnd, eventStatus);
-//            System.out.println("hello3");
-//            em.persist(w);
-//            em.flush();
-//            return true;
-//        } catch (Exception e) {
-//            System.out.println("Error parsing date");
-//            throw new EJBException(e);
-//        }
-        boolean success = true;
-        return success;
+
+    @Override
+    @Transactional
+    public boolean createWorkshop(Person creator, Workshops workshop, WorkshopInfoForm workshopForm) {
+
+        workshop.setWorkshopCreatorId(creator);
+        workshop.setDepartmentId(creator.getDepartmentId());
+        workshop.setEmailNotificationName("");
+        workshop.setEmailConfirmationMsg("");
+        workshop.setEmailWaitlistMsg("");
+        workshop.setEmailCancellationMsg("");
+        workshop.setEmailEvaluationMsg("");
+
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            workshop.setRegistrationStart(formatter.parse(workshopForm.getRgStDateTime()));
+            workshop.setRegistrationEnd(formatter.parse(workshopForm.getRgEndDateTime()));
+            workshop.setEventStart(formatter.parse(workshopForm.getEventStDateTime()));
+            workshop.setEventEnd(formatter.parse(workshopForm.getEventEndDateTime()));
+        } catch (ParseException e) {
+            System.out.println("Error parsing date");
+            throw new EJBException(e);
+        }
+
+        em.persist(workshop);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean updateWorkshop(Integer workshopId, Workshops workshop, WorkshopInfoForm workshopForm) {
+
+        Workshops oldWorkshop = findByWorkshopId(workshopId);
+        workshop.setWorkshopId(workshopId);
+        workshop.setWorkshopCreatorId(oldWorkshop.getWorkshopCreatorId());
+        workshop.setDepartmentId(oldWorkshop.getDepartmentId());
+        workshop.setEmailNotificationName(oldWorkshop.getEmailNotificationName());
+        workshop.setEmailConfirmationMsg(oldWorkshop.getEmailConfirmationMsg());
+        workshop.setEmailWaitlistMsg(oldWorkshop.getEmailWaitlistMsg());
+        workshop.setEmailCancellationMsg(oldWorkshop.getEmailCancellationMsg());
+        workshop.setEmailEvaluationMsg(oldWorkshop.getEmailEvaluationMsg());
+
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            workshop.setRegistrationStart(formatter.parse(workshopForm.getRgStDateTime()));
+            workshop.setRegistrationEnd(formatter.parse(workshopForm.getRgEndDateTime()));
+            workshop.setEventStart(formatter.parse(workshopForm.getEventStDateTime()));
+            workshop.setEventEnd(formatter.parse(workshopForm.getEventEndDateTime()));
+        } catch (ParseException e) {
+            System.out.println("Error parsing date");
+            throw new EJBException(e);
+        }
+
+        em.merge(workshop);
+        return true;
     }
 
 /**
  * emailedit.jsp
- * @param emailForm
- * @return
+    * @param workshopId
+    * @param emailForm
+    * @return
  */
     @Override
-    public boolean updateEmailForm(EmailInfoForm emailForm){
-//        Todo: Need Modified with actural success verification
-        try{
-            return true;
-        }catch(Exception e) {
-            throw  new EJBException(e);
-        }
+    @Transactional
+    public boolean updateEmailForm(Integer workshopId, Workshops workshopData, EmailInfoForm emailForm) {
+        Workshops workshop = findByWorkshopId(workshopId);
+        workshop.setEmailNotificationName(workshopData.getEmailNotificationName());
+        workshop.setEmailConfirmationMsg(workshopData.getEmailConfirmationMsg());
+        workshop.setEmailWaitlistMsg(workshopData.getEmailWaitlistMsg());
+        workshop.setEmailCancellationMsg(workshopData.getEmailCancellationMsg());
+        workshop.setEmailEvaluationMsg(workshopData.getEmailEvaluationMsg());
+        em.merge(workshop);
+        return true;
     }
 
     @Override
@@ -269,12 +307,12 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
 
     @Override
-    public List<Workshops> getPastWorkshopsByPerson(Person p){
+    public List<Workshops> getPastWorkshopsByPerson(Person p) {
         return p.getPastWorkshops();
     }
 
     @Override
-    public List<Workshops> getUpcomingWorkshopsByPerson(Person p){
+    public List<Workshops> getUpcomingWorkshopsByPerson(Person p) {
         return p.getUpcomingWorkshops();
     }
 
@@ -282,13 +320,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public boolean registerIn(){
         return true;
     }
-    
-    @Override
-    public List<Attendance> getAttendance(Integer workshopId) {
-        List<Attendance> attendance = em.createNamedQuery("Attendance.findByWorkshopId", Attendance.class).setParameter("workshopId", workshopId).getResultList();
-        return attendance;
-    }
-    
+
     @Override
     @Transactional
     public boolean addFacilitator(Integer workshopId, String netId) {
@@ -297,7 +329,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         workshop.addFacilitator(p);
         return true;
     }
-    
+
     @Override
     @Transactional
     public boolean removeFacilitator(Integer workshopId, String netId) {
@@ -306,16 +338,13 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         workshop.removeFacilitator(p);
         return true;
     }
-    
+
     @Override
-    @Transactional
-    public boolean addParticipant(Integer workshopId, String netId) {
-        Workshops workshop = findByWorkshopId(workshopId);
-        Person p = getPersonByNetId(netId);
-        workshop.addRegistrant(p);
-        return true;
+    public List<Attendance> getAttendance(Integer workshopId) {
+        List<Attendance> attendance = em.createNamedQuery("Attendance.findByWorkshopId", Attendance.class).setParameter("workshopId", workshopId).getResultList();
+        return attendance;
     }
-    
+
     @Override
     @Transactional
     public boolean addAttendee(Integer workshopId, String netId) {
@@ -323,7 +352,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.persist(a);
         return true;
     }
-    
+
     @Override
     @Transactional
     public boolean editAttendeeStatus(Integer workshopId, String netId, boolean status) {
@@ -332,8 +361,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.merge(a);
         return true;
     }
-    
+
     @Override
+
     public boolean updateAttendance(List<Attendance> attendance) {
         try {
             return true;
@@ -341,6 +371,29 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         catch(Exception e) {
             throw  new EJBException(e);
         }
+
+    public List<Reviews> getReviews(Integer workshopId) {
+        List<Reviews> myReviews = em.createNamedQuery("Reviews.findByWorkshopId", Reviews.class).setParameter("workshopId", workshopId).getResultList();
+        return myReviews;
+    }
+
+    @Override
+    @Transactional
+    public boolean addReview(Integer workshopId, String netId, String review) {
+        Reviews newReview = em.createNamedQuery("Reviews.findByWorkshopAndNetId", Reviews.class).setParameter("workshopId", workshopId).setParameter("netId", netId).getSingleResult();
+        newReview.setReview(review);
+        em.merge(newReview);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean editReview(Integer workshopId, String netId, String editedReview) {
+        Reviews review = em.createNamedQuery("Reviews.findByWorkshopAndNetId", Reviews.class).setParameter("workshopId", workshopId).setParameter("netId", netId).getSingleResult();
+        review.setReview(editedReview);
+        em.merge(review);
+        return true;
+
     }
 
 }

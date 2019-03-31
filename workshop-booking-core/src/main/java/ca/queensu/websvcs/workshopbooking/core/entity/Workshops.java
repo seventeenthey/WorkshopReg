@@ -46,7 +46,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Workshops.findByDetails", query = "SELECT w FROM Workshops w WHERE w.details = :details")
     , @NamedQuery(name = "Workshops.findByLocation", query = "SELECT w FROM Workshops w WHERE w.location = :location")
     , @NamedQuery(name = "Workshops.findByMaxParticipants", query = "SELECT w FROM Workshops w WHERE w.maxParticipants = :maxParticipants")
-    , @NamedQuery(name = "Workshops.findByCurrentParticipants", query = "SELECT w FROM Workshops w WHERE w.currentParticipants = :currentParticipants")
     , @NamedQuery(name = "Workshops.findByWaitlistLimit", query = "SELECT w FROM Workshops w WHERE w.waitlistLimit = :waitlistLimit")
     , @NamedQuery(name = "Workshops.findByRegistrationStart", query = "SELECT w FROM Workshops w WHERE w.registrationStart = :registrationStart")
     , @NamedQuery(name = "Workshops.findByRegistrationEnd", query = "SELECT w FROM Workshops w WHERE w.registrationEnd = :registrationEnd")
@@ -80,9 +79,6 @@ public class Workshops implements Serializable {
     @Basic(optional = false)
     @Column(name = "max_participants")
     private Integer maxParticipants;
-    @Basic(optional = false)
-    @Column(name = "current_participants")
-    private Integer currentParticipants;
     @Basic(optional = false)
     @Column(name = "waitlist_limit")
     private Integer waitlistLimit;
@@ -118,17 +114,14 @@ public class Workshops implements Serializable {
     @ManyToMany
     private Collection<Person> personCollection2;
     
-    /**
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workshops")
-    private Collection<Reviews> reviewsCollection;
-    **/
-    
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     @ManyToOne(optional = false)
     private Departments departmentId;
+    
     @JoinColumn(name = "event_status", referencedColumnName = "event_status")
     @ManyToOne(optional = false)
     private EventStatus eventStatus;
+    
     @JoinColumn(name = "workshop_creator_id", referencedColumnName = "net_id")
     @ManyToOne(optional = false)
     private Person workshopCreatorId;
@@ -147,6 +140,12 @@ public class Workshops implements Serializable {
     
     @OneToMany(mappedBy = "workshops", cascade = CascadeType.ALL)
     private List<Attendance> myAttendance;
+    
+    @OneToMany(mappedBy = "workshops", cascade = CascadeType.ALL)
+    private List<Waitlist> myWaitlist;
+    
+    @OneToMany(mappedBy = "workshops", cascade = CascadeType.ALL)
+    private List<Reviews> myReviews;
 
     public Workshops() {
     }
@@ -165,7 +164,6 @@ public class Workshops implements Serializable {
         this.details = details;
         this.location = location;
         this.maxParticipants = maxParticipants;
-        this.currentParticipants = 0;
         this.waitlistLimit = waitlistLimit;
         this.registrationStart = registrationStart;
         this.registrationEnd = registrationEnd;
@@ -215,16 +213,8 @@ public class Workshops implements Serializable {
         return maxParticipants;
     }
 
-    public void setMaxParticipants(int maxParticipants) {
+    public void setMaxParticipants(Integer maxParticipants) {
         this.maxParticipants = maxParticipants;
-    }
-
-    public Integer getCurrentParticipants() {
-        return currentParticipants;
-    }
-
-    public void setCurrentParticipants(int currentParticipants) {
-        this.currentParticipants = currentParticipants;
     }
     
     public Integer getWaitlistLimit() {
@@ -315,17 +305,6 @@ public class Workshops implements Serializable {
     public void setPersonCollection2(Collection<Person> personCollection2) {
         this.personCollection2 = personCollection2;
     }
-
-    /**
-    @XmlTransient
-    public Collection<Reviews> getReviewsCollection() {
-        return reviewsCollection;
-    }
-
-    public void setReviewsCollection(Collection<Reviews> reviewsCollection) {
-        this.reviewsCollection = reviewsCollection;
-    }
-    **/
     
     public Departments getDepartmentId() {
         return departmentId;
@@ -391,6 +370,11 @@ public class Workshops implements Serializable {
         p.getAllWorkshops().add(this);
     }
     
+    public void removeRegistrant(Person p) {
+        this.myRegistrants.remove(p);
+        p.getAllWorkshops().remove(this);
+    }
+    
     @XmlTransient
     public List<Person> getMyFacilitators() {
         return myFacilitators;
@@ -417,6 +401,24 @@ public class Workshops implements Serializable {
 
     public void setMyAttendance(List<Attendance> myAttendance) {
         this.myAttendance = myAttendance;
+    }
+    
+    @XmlTransient
+    public List<Waitlist> getMyWaitlist() {
+        return myWaitlist;
+    }
+
+    public void setMyWaitlist(List<Waitlist> myWaitlist) {
+        this.myWaitlist = myWaitlist;
+    }
+    
+    @XmlTransient
+    public List<Reviews> getMyReviews() {
+        return myReviews;
+    }
+
+    public void setMyReviews(List<Reviews> myReviews) {
+        this.myReviews = myReviews;
     }
     
     

@@ -32,7 +32,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
  *
  * @author dwesl
  */
-public class FunctionAction extends ActionSupport implements Preparable{
+public class CopyWorkshopAction extends ActionSupport implements Preparable{
 
     private static final long serialVersionUID = 1L;
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.client.action.FunctionAction.class);
@@ -42,15 +42,14 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
     private WorkshopInfoForm workshopForm;
 
-    // This list populates the radio buttons for workshop status
-    private List<String> statusList;
-    private List<String> locationList;
-
     private Integer workshopId;
     private Workshops workshop;
     private Person person;
     
-    public FunctionAction() {
+    private Boolean basicCheck;
+    private Boolean emailCheck;
+    
+    public CopyWorkshopAction() {
         System.out.println("### FunctionAction constructor running");
     }
 
@@ -58,8 +57,6 @@ public class FunctionAction extends ActionSupport implements Preparable{
     public void prepare() throws Exception {
         try {
             System.out.println("### FunctionAction prepare running");
-            statusList = ejb.findstatusList();
-            locationList = ejb.findlocationList();
             
             HttpServletRequest request = ServletActionContext.getRequest();
             HttpSession session = request.getSession();
@@ -84,6 +81,7 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
             if (workshopId != null){
                 workshop = ejb.findByWorkshopId(workshopId);
+                basicCheck = true;
             }
         }
         catch (Exception e) {
@@ -108,14 +106,18 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
             boolean successful = false;
             if (workshopId != null) {
-                successful = ejb.updateWorkshop(workshopId, workshop, workshopForm);
-                workshop = ejb.findByWorkshopId(workshopId);
+                if (basicCheck = true){ //
+    //                Todo: Add create new workshop with same basic info and different workshopId here
+                      // workshopId = createRandomWorkshopId();
+    //                successful = ejb.createWorkshop(person, workshop, workshopForm);
+                      successful = true;            
+                }
             } else {
-                successful = ejb.createWorkshop(person, workshop, workshopForm);
+                successful = false;
             }
 
             if (successful) {
-                addActionMessage("Workshop Information Successfully saved");
+                addActionMessage("Workshop Successfully Copied");
             } else {
                 addActionError("Data was not saved.");
             }
@@ -142,33 +144,10 @@ public class FunctionAction extends ActionSupport implements Preparable{
 //            if(workshop.getEventStatus().getEventStatus().isEmpty()) {
 //                addFieldError("status", "Status is required.");
 //            }
-
-            if(workshop.getTitle().isEmpty()) {
-                addFieldError("eventTitle", "Event Title is required.");
-            }else if(workshop.getTitle().length() > 30){
-                addFieldError("eventTitle", "Event Title cannot exceed 30 characters.");
+            if (workshopId == null){
+                addFieldError("workshopId","No workshop exists.");
             }
-
-            if(workshop.getDetails().isEmpty()) {
-                addFieldError("teaser", "Workshop Teaser is required.");
-            }
-
-            if (workshop.getMaxParticipants() == null){
-                addFieldError("maxParticipant", "Maximun Participant is required.");
-            }else if(workshop.getMaxParticipants()>300) {
-                addFieldError("maxParticipant", "Exceed maximun Participant (Should no more than 300).");
-            }else if(workshop.getMaxParticipants()<10){
-                addFieldError("maxParticipant","Less than minimun Participant (Should no less than 10).");
-            }
-
-            if (workshop.getWaitlistLimit() == null){
-                addFieldError("waitlistLimit", "Wait List Limit is required.");
-            }else if(workshop.getWaitlistLimit()>300) {
-                addFieldError("waitlistLimit", "Exceed maximun Wait List Limit (Should no more than 300).");
-            }else if(workshop.getWaitlistLimit()>workshop.getMaxParticipants()) {
-                addFieldError("waitlistLimit", "Wait List Limit cannot exceed Maximun Participants number.");
-            }
-
+            
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -210,22 +189,6 @@ public class FunctionAction extends ActionSupport implements Preparable{
         this.workshopForm = workshopForm;
     }
 
-    public List<String> getStatusList() {
-        return statusList;
-    }
-
-    public void setStatusList(List<String> statusList) {
-        this.statusList = statusList;
-    }
-
-    public List<String> getLocationList() {
-        return locationList;
-    }
-
-    public void setLocationList(List<String> locationList) {
-        this.locationList = locationList;
-    }
-
     public Integer getWorkshopId() {
         return workshopId;
     }
@@ -250,4 +213,22 @@ public class FunctionAction extends ActionSupport implements Preparable{
         this.person = person;
     }
 
+    public Boolean getBasicCheck() {
+        return basicCheck;
+    }
+
+    public void setBasicCheck(Boolean basicCheck) {
+        this.basicCheck = basicCheck;
+    }
+
+    public Boolean getEmailCheck() {
+        return emailCheck;
+    }
+
+    public void setEmailCheck(Boolean emailCheck) {
+        this.emailCheck = emailCheck;
+    }
+
+    
+    
 }

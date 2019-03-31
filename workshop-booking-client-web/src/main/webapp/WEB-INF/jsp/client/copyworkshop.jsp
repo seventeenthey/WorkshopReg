@@ -1,3 +1,9 @@
+<%-- 
+    Document   : copyworkshop
+    Created on : 31-Mar-2019, 2:59:53 PM
+    Author     : sylvi
+--%>
+
 <!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -113,135 +119,23 @@
                     <s:actionmessage theme="bootstrap"/>
                     <s:actionerror theme="bootstrap"/>
                     
-                    <s:form id="workshopEditForm" action="functionExeAction?workshopId=%{workshopId}"
+                    <!--todo: Random a new workshopId for this new workshop-->
+                    <s:form id="workshopEditForm" action="copyworkshopExeAction?workshopId=%{workshopId}"
                             theme="bootstrap" method="post" cssClass="form-vertical">
                         <s:fielderror/>
-                        
-                        <h2>Workshop No.<s:property value="workshopId"/></h2>
-                                              
-                        <s:radio 
-                            label="Status:"
-                            labelposition="inline"
-                            name="workshop.eventStatus.eventStatus" 
-                            list="statusList"
-                            elementCssClass="col-sm-9"/>
-
-                        
-                        
-                        <s:textfield 
-                            label="Event Title:"
-                            placeholder="Event Title"
-                            name="workshop.Title"
-                            tooltip="Enter Workshop Title Here"
-                            cssClass="input-sm"
-                            elementCssClass="col-sm-5"/>
-
-                        <s:select 
-                            label="Location:"
-                            name="workshop.location" 
-                            list="locationList"
-                            elementCssClass="col-sm-5"/>
-                        
-                        <s:textfield 
-                            label="Add Location:"
-                            placeholder=""
-                            name="workshopForm.location"
-                            tooltip="Add new workshop location place"
-                            cssClass="input-sm"
-                            elementCssClass="col-sm-5"/>
-
-                        <s:textarea 
-                            label="Teaser:"
-                            name="workshop.details"
-                            emptyOption="true"
-                            elementCssClass="col-sm-9"/>
-
-                        <s:textfield 
-                            label="Maximum Participants:"
-                            name="workshop.maxParticipants"
-                            elementCssClass="col-sm-2"/>
-
-                        <s:textfield 
-                            label="Wait List Limit:"
-                            name="workshop.waitlistLimit"
-                            elementCssClass="col-sm-2"/>
-
-                        <!--Registration Start/End Date/Time-->
-                        <div class="workshopdatetime row">
-                            <div class="col-md-4">
-                                <sx:datetimepicker 
-                                    label="Registration Start Date" 
-                                    name="workshopForm.rgStDate" 
-                                    displayFormat="dd-MMM-yyyy"
-                                    value="workshop.registrationStart"/>
-                            </div>
-                            <div class="col-md-4">
-                                <sx:datetimepicker 
-                                    label="Registration Start Time" 
-                                    name="workshopForm.rgStTime" 
-                                    displayFormat="HH:mm:ss" 
-                                    type="time"
-                                    value="workshop.registrationStart"/>
-                            </div>
-                        </div>
-
-                        <div class="workshopdatetime row">
-                            <div class="col-md-4">
-                                <sx:datetimepicker 
-                                    label="Registration End Date" 
-                                    name="workshopForm.rgEndDate"
-                                    displayFormat="yyyy-MM-dd"
-                                    value="workshop.registrationEnd" />
-                            </div>                            
-                            <div class="col-md-4">
-                            <sx:datetimepicker 
-                                label="Registration End Time" 
-                                name="workshopForm.rgEndTime" 
-                                displayFormat="HH:mm:ss" 
-                                type="time"
-                                value="workshop.registrationEnd"/>
-                            </div>
-                        </div>
-
-                        <!--Event Start/End Date/Time-->
-                        <div class="workshopdatetime row">
-                            <div class="col-md-4">
-                                <sx:datetimepicker 
-                                    label="Event Start Date" 
-                                    name="workshopForm.eventStDate" 
-                                    displayFormat="dd-MMM-yyyy"
-                                    value="workshop.eventStart"/>
-                            </div>
-                            <div class="col-md-4">
-                                <sx:datetimepicker 
-                                    label="Event Start Time" 
-                                    name="workshopForm.eventStTime" 
-                                    displayFormat="HH:mm:ss" 
-                                    type="time"
-                                    value="workshop.eventStart"/>
-                            </div>
-                        </div>
-
-                        <div class="workshopdatetime row">
-                            <div class="col-md-4">
-                                <sx:datetimepicker 
-                                    label="Event End Date" 
-                                    name="workshopForm.eventEndDate" 
-                                    displayFormat="yyyy-MM-dd"
-                                    value="workshop.eventEnd"/>
-                            </div>
-                            <div class="col-md-4">
-                                <sx:datetimepicker 
-                                    label="Event End Time" 
-                                    name="workshopForm.eventEndTime" 
-                                    displayFormat="HH:mm:ss" 
-                                    type="time"
-                                    value="workshop.eventEnd"/>  
-                            </div>
-                        </div>
-                        
+                            <s:checkbox
+                                label="*Copy all basic workshop information."
+                                name="basicCheck"
+                                value="basicCheck"
+                                required="required"/>
+                            
+                            <s:checkbox
+                                label="Copy all email setting."
+                                name="emailCheck"
+                                value="emailCheck"/>
+                                                        
                         <s:submit 
-                            value="Save"
+                            value="Copy"
                             cssClass="btn btn-primary"/>
                     </s:form>
                 </div>

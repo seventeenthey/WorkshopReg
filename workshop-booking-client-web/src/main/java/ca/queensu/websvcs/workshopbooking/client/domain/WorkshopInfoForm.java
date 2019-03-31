@@ -270,7 +270,6 @@ public class WorkshopInfoForm implements Serializable{
         String strTime =timeFormat.format(time);
         
         String datetimeStr = strDate + " " + strTime;
-        
         return datetimeStr;
     }
     

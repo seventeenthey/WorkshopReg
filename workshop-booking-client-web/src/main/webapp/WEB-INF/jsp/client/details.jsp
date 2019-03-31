@@ -130,12 +130,21 @@
                 </li>
                 
                 <!--Workshop Management-->
-                <div class="facilitator">
+                <div class="workshopCreator">
                     <li type="button" class="btn btn-primary">
                         <s:url action="functionLoadAction" var="functionUrl">
                             <s:param name="workshopId" value="workshopId"/>
                         </s:url>
                         <a href='<s:property value="functionUrl"/>' style="color:white">Advanced Options</a>
+                    </li>
+                </div>
+                    
+                <div class="facilitator">
+                    <li type="button" class="btn btn-primary">
+                        <s:url action="attendanceLoadAction" var="attendanceUrl">
+                            <s:param name="workshopId" value="workshopId"/>
+                        </s:url>
+                        <a href='<s:property value="attendanceUrl"/>' style="color:white">Manage Attendance</a>
                     </li>
                 </div>
                                 
