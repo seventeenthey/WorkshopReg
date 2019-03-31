@@ -89,7 +89,7 @@
             
             <h2>Registration Questionnaire</h2>
             
-            <s:form id="regQuestionnaire" action="questionnaireExeAction" 
+            <s:form id="regQuestionnaire" action="questionnaireExeAction?workshopId=%{workshopId}" 
                     theme="bootstrap" method="post" cssClass="form-vertical">
                 <s:fielderror theme="bootstrap"/>
                 

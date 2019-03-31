@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Waitlist.findAll", query = "SELECT w FROM Waitlist w")
     , @NamedQuery(name = "Waitlist.findByWorkshopId", query = "SELECT w FROM Waitlist w WHERE w.waitlistPK.workshopId = :workshopId")
+    , @NamedQuery(name = "Waitlist.findByWorkshopAndNetId", query = "SELECT w FROM Waitlist w WHERE w.waitlistPK.workshopId = :workshopId AND w.waitlistPK.netId = :netId")
     , @NamedQuery(name = "Waitlist.findByNetId", query = "SELECT w FROM Waitlist w WHERE w.waitlistPK.netId = :netId")
     , @NamedQuery(name = "Waitlist.findByDatetimeApplied", query = "SELECT w FROM Waitlist w WHERE w.datetimeApplied = :datetimeApplied")})
 public class Waitlist implements Serializable {

@@ -5,6 +5,7 @@
  */
 package ca.queensu.websvcs.workshopbooking.client.action;
 
+import ca.queensu.uis.sso.tools.common.SSOConstants;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -14,8 +15,11 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
 /**
@@ -29,6 +33,9 @@ public class QuestionnaireAction extends ActionSupport implements Preparable{
 
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
+    
+    private Integer workshopId;
+    private String netId;
     
     public QuestionnaireAction() {
         System.out.println("### QuestionnaireAction constructor running");
@@ -44,6 +51,11 @@ public class QuestionnaireAction extends ActionSupport implements Preparable{
         try {
             System.out.println("### FunctionAction prepare running");
 //            Todo: Add Load Workshop Name from Previous Page
+            
+            HttpServletRequest request = ServletActionContext.getRequest();
+            HttpSession session = request.getSession();
+            
+            netId = (String) session.getAttribute(SSOConstants.NET_ID);
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -75,11 +87,10 @@ public class QuestionnaireAction extends ActionSupport implements Preparable{
         try {
             // Check if the attendee successful registered in workshop or not
 //            Todo: May be need a input bean here to update
-            boolean saveSuccessful = ejb.registerIn();
-            if(saveSuccessful){
+            boolean saveSuccessful = ejb.addParticipant(workshopId, netId);
+            if (saveSuccessful) {
                 addActionMessage("Successfully registered in workshop");
-            }
-            else {
+            } else {
                 addActionError("Data was not saved.");
             }
             System.out.println("### QuestionnaireAction execute running");
@@ -107,5 +118,21 @@ public class QuestionnaireAction extends ActionSupport implements Preparable{
         String msgAppend = " This error occurred at: " + now.toString() + ". Please note the date and time that this error occurred and take a screenshot of this message. Thank you.";
 
         return customMessage + msgAppend;
+    }
+    
+    public Integer getWorkshopId() {
+        return workshopId;
+    }
+
+    public void setWorkshopId(Integer workshopId) {
+        this.workshopId = workshopId;
+    }
+    
+    public String getNetId() {
+        return netId;
+    }
+
+    public void setNetId(String netId) {
+        this.netId = netId;
     }
 }
