@@ -77,4 +77,7 @@ public interface WorkshopBookingSessionBeanLocal {
     public List<Waitlist> getWaitlist(Integer workshopId);
     public boolean addToWaitlist(Integer workshopId, String netId);
     public boolean removeFromWaitlist(Integer workshopId, String netId);
+    public boolean isOnWaitlist(Integer workshopId, String netId);
+    public boolean isRegistered(Integer workshopId, String netId);
+    
 }

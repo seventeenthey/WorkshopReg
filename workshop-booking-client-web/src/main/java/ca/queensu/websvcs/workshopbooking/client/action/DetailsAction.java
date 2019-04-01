@@ -39,6 +39,7 @@ public class DetailsAction extends ActionSupport implements Preparable {
     private String workshopId;
     private Workshops workshop;
     private Person person;
+    private String registeredStatus;
   
     public DetailsAction() {
         System.out.println("### DetailsAction constructor running");
@@ -62,10 +63,28 @@ public class DetailsAction extends ActionSupport implements Preparable {
         try {
             System.out.println("### DetailsAction execute running");
             
-            System.out.println("");
-            System.out.println(workshopId);
+            workshop = ejb.findByWorkshopId(workshopId);
+            findRegisteredStatus();
+        } 
+        catch (Exception e) {
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
+            addActionError(createErrorMessage("Exception occurred while granting access to the application. Please contact the Archetype Client for assistance."));
+            log.error("***************Exception occurred in execute method " + e.getMessage());
+            log.error(out);
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+    
+    public String unregister() throws Exception {
+        try {
+            System.out.println("### DetailsAction unregister running");
             
             workshop = ejb.findByWorkshopId(workshopId);
+            System.out.println(workshop.getWorkshopId());
+            ejb.removeParticipant(workshop.getWorkshopId(), person.getNetId());
+            findRegisteredStatus();
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -82,6 +101,7 @@ public class DetailsAction extends ActionSupport implements Preparable {
         try {
             System.out.println("### DetailsAction load running");
             workshop = ejb.findByWorkshopId(workshopId);
+            findRegisteredStatus();
         } 
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -139,5 +159,21 @@ public class DetailsAction extends ActionSupport implements Preparable {
     public void setPerson(Person person) {
         this.person = person;
     }
+
+    public String getRegisteredStatus() {
+        return registeredStatus;
+    }
+
+    public void setRegisteredStatus(String registeredStatus) {
+        this.registeredStatus = registeredStatus;
+    }
     
+    public void findRegisteredStatus(){
+        if(ejb.isOnWaitlist(Integer.valueOf(workshopId), person.getNetId()))
+            registeredStatus = "WaitListed";
+        else if (ejb.isRegistered(Integer.valueOf(workshopId), person.getNetId()))
+            registeredStatus = "Registered";
+        else
+            registeredStatus = "Not Registered";
+    }
 }

@@ -440,5 +440,31 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.remove(waitlist);
         return true;
     }
-
+    
+    public boolean isOnWaitlist(Integer workshopId, String netId){
+        List<Waitlist> waitList = getWaitlist(workshopId);
+        List<String> netIds = new ArrayList();
+        for(Waitlist w : waitList)
+            netIds.add(w.getPerson().getNetId());
+        
+        for(String n : netIds)
+            if(n.equals(netId))
+                return true;
+        
+        return false;
+    }
+    
+    public boolean isRegistered(Integer workshopId, String netId){
+        List<Person> registrants = getParticipantsForWorkshop(workshopId);
+        
+        List<String> netIds = new ArrayList();
+        for(Person p : registrants)
+            netIds.add(p.getNetId());
+        
+        for(String n : netIds)
+            if(n.equals(netId))
+                return true;
+        
+        return false;
+    }
 }
