@@ -80,4 +80,5 @@ public interface WorkshopBookingSessionBeanLocal {
     public boolean isOnWaitlist(Integer workshopId, String netId);
     public boolean isRegistered(Integer workshopId, String netId);
     
+    public boolean workshopHasPast(Integer workshopId);
 }

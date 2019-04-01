@@ -85,6 +85,7 @@
                             <h4  class="card-header">Start Time & Date: </h4>
                             <div class="card-body text-white">
                                 <p><s:property value="workshop.dateToString()"/></p>
+                                <p id="startDate"><s:property value="workshop.getEventStart().toString()"/></p>
                             </div>
                         </div>
                     </div>
@@ -133,6 +134,14 @@
                     <a href='<s:property value="unregisterUrl"/>' style="color:white">Cancel Registration</a>
                 </li>
 
+                <!--Workshop Review-->
+                <li type="button" class="btn btn-primary" id="reviewBtn" style="display:none">
+                    <s:url action="detailsLoadAction" var="loadUrl" >
+                        <s:param name="workshopId" value="workshopId"/>
+                    </s:url>
+                    <a href='<s:property value="loadUrl"/>' style="color:white">Leave Review</a>
+                </li>
+                
                 <!--Workshop Management-->
                 <div class="workshopCreator">
                     <li type="button" class="btn btn-primary">

@@ -467,4 +467,8 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         
         return false;
     }
+    
+     public boolean workshopHasPast(Integer workshopId){
+         return findByWorkshopId(workshopId).getEventStart().before(new Date());
+     }
 }
