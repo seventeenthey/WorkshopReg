@@ -110,7 +110,7 @@
                 <div class="col-md-9">
                     <s:actionmessage theme="bootstrap"/>
 
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-bordered table-striped table-hover" id="facilList">
                         <thead>
                             <tr>
                                 <th>Facilitator ID</th>
@@ -130,6 +130,8 @@
                             </s:iterator>
                         </tbody>
                     </table>
+                    
+                    <div id="nofacilMsg" style="display:none">No facilitator works for the workshop.</div>
 
 
                     <s:form id="facilitatorEditForm" action="facilitatorExeAction?workshopId=%{workshopId}"
@@ -163,6 +165,7 @@
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/searchBar.js"></script>
+        <script src="js/functionTableManager.js"></script>
         <!-- End JS -->
     </body>
 </html>

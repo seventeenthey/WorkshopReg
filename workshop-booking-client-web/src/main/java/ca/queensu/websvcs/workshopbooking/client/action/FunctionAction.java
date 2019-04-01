@@ -60,6 +60,7 @@ public class FunctionAction extends ActionSupport implements Preparable{
             System.out.println("### FunctionAction prepare running");
             statusList = ejb.findstatusList();
             locationList = ejb.findlocationList();
+            locationList.add("Add New Location");
             
             HttpServletRequest request = ServletActionContext.getRequest();
             HttpSession session = request.getSession();
