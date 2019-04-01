@@ -8,10 +8,12 @@
  */
 
 var role = document.getElementById("role").innerText;
-var creatorAuth = document.getElementById("creatorAuth").innerText;
-console.log("creatorAuth "+creatorAuth);
-var facilAuth = document.getElementById("facilAuth").innerText;
-console.log("facilAuth "+facilAuth);
+console.log("role Id "+role);
+if (document.getElementById("creatorAuth") !== null && document.getElementById("facilAuth")!== null){
+    var creatorAuth = document.getElementById("creatorAuth").innerText;
+    var facilAuth = document.getElementById("facilAuth").innerText;
+    console.log("facilAuth "+facilAuth);
+}
 
 var superAdminElements = $('.superAdmin');
 var departmentalAdminElements = $('.departmentalAdmin');
@@ -21,18 +23,23 @@ var creatorIdElements = $('.creatorIdCheck');
 var facilIdElements = $('.facilIdCheck');
 
 //if role is less than super admin, hide super admin elements
-if (role < 5)
+if (role < 5){
     hideElementsByRole(superAdminElements,5);
-
-if (role < 4)
+    }
+    
+if (role < 4){
     hideElementsByRole(departmentalAdminElements,4);
-
-if (role < 3)
+    }
+    
+if (role < 3){
+    console.log("Hide Creator Element ");
     hideElementsByRole(workshopCreatorElements,3);
+    }
 
-if (role < 2)
+if (role < 2){
     hideElementsByRole(facilitatorElements,2);
-
+    }
+    
 function hideElementsByRole(elements, minRole){
     if(role < minRole)
         for(var i = 0; i < elements.length; i++)
