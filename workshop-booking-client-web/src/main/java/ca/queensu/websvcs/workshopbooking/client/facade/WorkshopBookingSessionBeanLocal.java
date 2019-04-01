@@ -19,15 +19,12 @@ import javax.ejb.Local;
 @Local
 public interface WorkshopBookingSessionBeanLocal {
 
-    public List<StudentDataBean> findStudentList();
-    public StudentDataBean findStudentByPk(String studentPk);
-    public boolean updateStudent(StudentDataBean studentBean);
-
     // function.jsp
     public List<String> findstatusList();
     public List<String> findlocationList();
     public boolean createWorkshop(Person creator, Workshops workshop, WorkshopInfoForm workshopForm);
     public boolean updateWorkshop(Integer workshopId, Workshops workshop, WorkshopInfoForm workshopForm);
+    public Integer copyWorkshop(Integer workshopId, Integer copyStrategy);
     //
 
     // emailedit.jsp
@@ -51,8 +48,6 @@ public interface WorkshopBookingSessionBeanLocal {
 
     public List<facilitatorDataBean> findFacilitatorList(Integer workshopId);
     public List<String> findFacilitatorNetidList(Integer workshopId);
-
-
 
     public List<Workshops> getUpcomingWorkshopsByPerson(Person p);
     public List<Workshops> getPastWorkshopsByPerson(Person p);
