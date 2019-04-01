@@ -182,7 +182,7 @@ INSERT INTO PERSON VALUES ("D_Krieger", 88888888, "Dr. Krieger", "krieger@queens
 INSERT INTO PERSON VALUES ("Creator", 77777777, "Cheryl Tunt", "cheryl@queensu.ca", 3, 4);
 INSERT INTO PERSON VALUES ("HostLana", 66666666, "Lana Kane", "lana.k@queensu.ca", 2, 4);
 
-INSERT INTO WORKSHOPS VALUES (NULL, "emmah", 3, "How to Stay Awake in Class", "Learn to stay focused!", "Walter Light Hall", 100, 20, '2019-01-05 10:00:00', '2019-01-05 11:30:00', '2019-02-05 10:00:00', '2019-02-05 11:30:00', "Archived", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
+INSERT INTO WORKSHOPS VALUES (NULL, "Creator", 3, "How to Stay Awake in Class", "Learn to stay focused!", "Walter Light Hall", 100, 20, '2019-01-05 10:00:00', '2019-01-05 11:30:00', '2019-02-05 10:00:00', '2019-02-05 11:30:00', "Archived", "Hello Workshop1", "Confirm Message Workshop1", "Wait Message Workshop1", "Cancel Message Workshop1", "Eval Message Workshop1");
 INSERT INTO WORKSHOPS VALUES (NULL, "emmah", 1, "How to Study Effectively", "Learn how to study effectively!", "Dunning Hall", 100, 30, '2019-04-01 14:00:00', '2019-04-15 16:00:00', '2019-04-16 14:00:00', '2019-04-16 16:00:00', "Posted", "Hello Name", "Confirm Message", "Wait Message", "Cancel Message", "Eval Message");
 INSERT INTO WORKSHOPS VALUES (NULL, "emmah", 2, "How to Make New Friends", "Get lots of friends!", "Goodes Hall", 100, 27, '2019-04-12 18:30:00', '2019-04-17 20:00:00', '2019-04-18 18:30:00', '2019-04-18 20:00:00', "Posted", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
 INSERT INTO WORKSHOPS VALUES (NULL, "15dny", 1, "How to Think Smart", "Think less, learn more", "Goodes Hall", 100, 28, '2019-04-02 15:45:00', '2019-04-08 17:30:00', '2019-04-09 15:45:00', '2019-04-09 17:30:00', "Posted", DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
@@ -219,3 +219,4 @@ INSERT INTO FACILITATORS VALUES (2, "HostForAll");
 INSERT INTO FACILITATORS VALUES (3, "HostForAll");
 INSERT INTO FACILITATORS VALUES (4, "HostForAll");
 INSERT INTO FACILITATORS VALUES (5, "HostForAll");
+INSERT INTO FACILITATORS VALUES (5,"HostLana");

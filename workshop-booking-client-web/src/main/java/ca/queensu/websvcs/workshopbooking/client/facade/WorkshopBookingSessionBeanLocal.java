@@ -50,6 +50,7 @@ public interface WorkshopBookingSessionBeanLocal {
     public Workshops findByWorkshopId(String id);
 
     public List<facilitatorDataBean> findFacilitatorList(Integer workshopId);
+    public List<String> findFacilitatorNetidList(Integer workshopId);
 
 
 
@@ -69,8 +70,6 @@ public interface WorkshopBookingSessionBeanLocal {
     public boolean addAttendee(Integer workshopId, String netId);
     public boolean editAttendeeStatus(Integer workshopId, String netId, boolean status);
 
-
-    public boolean updateAttendance(List<Attendance> attendance);
     public List<Reviews> getReviews(Integer workshopId);
     public boolean addReview(Integer workshopId, String netId, String review);
     public boolean editReview(Integer workshopId, String netId, String editedReview);
@@ -79,4 +78,8 @@ public interface WorkshopBookingSessionBeanLocal {
     public List<Waitlist> getWaitlist(Integer workshopId);
     public boolean addToWaitlist(Integer workshopId, String netId);
     public boolean removeFromWaitlist(Integer workshopId, String netId);
+    public boolean isOnWaitlist(Integer workshopId, String netId);
+    public boolean isRegistered(Integer workshopId, String netId);
+    
+    public boolean workshopHasPast(Integer workshopId);
 }

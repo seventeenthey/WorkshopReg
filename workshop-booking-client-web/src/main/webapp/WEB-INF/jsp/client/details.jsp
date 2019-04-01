@@ -71,7 +71,7 @@
                     <div class="col-sm-4 my-2">
                         <div class="card bg-info">
                             <h4 class="card-header">Registered Status: </h4>
-                            <p class='card-body text-white' id="registeredStatus">Not Registered</p> <!--This needs to say: "Registered", "Not Registered", or "WaitListed" -->
+                            <p class='card-body text-white' id="registeredStatus"><s:property value="registeredStatus"/></p> <!--This needs to say: "Registered", "Not Registered", or "WaitListed" -->
                         </div>
                     </div>
                     <div class="col-sm-4 my-2">
@@ -85,6 +85,7 @@
                             <h4  class="card-header">Start Time & Date: </h4>
                             <div class="card-body text-white">
                                 <p><s:property value="workshop.dateToString()"/></p>
+                                <p id="startDate"><s:property value="workshop.getEventStart().toString()"/></p>
                             </div>
                         </div>
                     </div>
@@ -127,12 +128,22 @@
 
                 <!--Workshop Unregister-->
                 <li type="button" class="btn btn-primary" id="unRegisterBtn">
-                    <s:url action="personalDetailAction" var="personalDetailUrl" />
-                    <a href='<s:property value="personalDetailUrl"/>' style="color:white">Cancel Registration</a>
+                    <s:url action="detailsUnregisterAction" var="unregisterUrl" >
+                        <s:param name="workshopId" value="workshopId"/>
+                    </s:url>
+                    <a href='<s:property value="unregisterUrl"/>' style="color:white">Cancel Registration</a>
                 </li>
-                
+
+                <!--Workshop Review-->
+                <li type="button" class="btn btn-primary" id="reviewBtn" style="display:none">
+                    <s:url action="detailsLoadAction" var="loadUrl" >
+                        <s:param name="workshopId" value="workshopId"/>
+                    </s:url>
+                    <a href='<s:property value="loadUrl"/>' style="color:white">Leave Review</a>
+                </li>
+
                 <!--Workshop Management-->
-                <div class="workshopCreator">
+                <div class="workshopCreator creatorIdCheck">
                     <li type="button" class="btn btn-primary">
                         <s:url action="functionLoadAction" var="functionUrl">
                             <s:param name="workshopId" value="workshopId"/>
@@ -140,8 +151,9 @@
                         <a href='<s:property value="functionUrl"/>' style="color:white">Advanced Options</a>
                     </li>
                 </div>
-                    
-                <div class="facilitator">
+
+                <!--Attendance Management-->
+                <div class="facilitator facilIdCheck">
                     <li type="button" class="btn btn-primary">
                         <s:url action="attendanceLoadAction" var="attendanceUrl">
                             <s:param name="workshopId" value="workshopId"/>
@@ -149,7 +161,7 @@
                         <a href='<s:property value="attendanceUrl"/>' style="color:white">Manage Attendance</a>
                     </li>
                 </div>
-                    
+
                 <div class="facilitator">
                     <li type="button" class="btn btn-primary">
                         <s:url action="ViewReviewLoadAction" var="viewReviewUrl">
@@ -158,7 +170,7 @@
                         <a href='<s:property value="viewReviewUrl"/>' style="color:white">review</a>
                     </li>
                 </div>
-                                
+
                 <!--Todo: Add a Review Form for Attendee to fill out after the workshop ends-->
 
             </ul>
@@ -173,6 +185,8 @@
         <!--Controls Visibility -->
         <!--This control needs to be after all other elements AND any other .js that affect visibility, and these two lines need to be in this order-->
         <div id="role" style="display:none"><s:property value="person.roleId.roleId"/></div>
+        <div id="creatorAuth" style="display:none"><s:property value="creatorAuth"/></div>
+        <div id="facilAuth" style="display:none"><s:property value="facilAuth"/></div>
         <script src="js/visibility.js"></script>
         <!--End Visibility Control-->
         <!-- End JS -->

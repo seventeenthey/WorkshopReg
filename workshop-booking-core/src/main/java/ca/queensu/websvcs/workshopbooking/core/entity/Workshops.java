@@ -453,4 +453,12 @@ public class Workshops implements Serializable {
         System.out.println(output);
         return output;
     }
+    
+    public boolean isRegistered(Workshops workshop, Person person){
+        for(int i = 0; i < myRegistrants.size(); i++)
+            if (myRegistrants.get(i).getNetId() == person.getNetId())
+                return true;
+        
+        return false;
+    }
 }

@@ -137,7 +137,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public boolean addParticipant(Integer workshopId, String netId) {
         Workshops workshop = findByWorkshopId(workshopId);
         Person p = getPersonByNetId(netId);
-        System.out.println("hello15");
         if (getParticipantsForWorkshop(workshopId).size() < workshop.getMaxParticipants()) {
             System.out.println("registered!");
             workshop.addRegistrant(p);
@@ -172,7 +171,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     @Transactional
     public boolean createWorkshop(Person creator, Workshops workshop, WorkshopInfoForm workshopForm) {
-
         workshop.setWorkshopCreatorId(creator);
         workshop.setDepartmentId(creator.getDepartmentId());
         workshop.setEmailNotificationName("");
@@ -180,7 +178,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         workshop.setEmailWaitlistMsg("");
         workshop.setEmailCancellationMsg("");
         workshop.setEmailEvaluationMsg("");
-
+        if (workshopForm.getLocation() != null && !workshopForm.getLocation().isEmpty()) {
+            workshop.setLocation(workshopForm.getLocation());
+        }
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             workshop.setRegistrationStart(formatter.parse(workshopForm.getRgStDateTime()));
@@ -199,7 +199,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     @Transactional
     public boolean updateWorkshop(Integer workshopId, Workshops workshop, WorkshopInfoForm workshopForm) {
-
         Workshops oldWorkshop = findByWorkshopId(workshopId);
         workshop.setWorkshopId(workshopId);
         workshop.setWorkshopCreatorId(oldWorkshop.getWorkshopCreatorId());
@@ -209,7 +208,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         workshop.setEmailWaitlistMsg(oldWorkshop.getEmailWaitlistMsg());
         workshop.setEmailCancellationMsg(oldWorkshop.getEmailCancellationMsg());
         workshop.setEmailEvaluationMsg(oldWorkshop.getEmailEvaluationMsg());
-
+        if (workshopForm.getLocation() != null && !workshopForm.getLocation().isEmpty()) {
+            workshop.setLocation(workshopForm.getLocation());
+        }
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             workshop.setRegistrationStart(formatter.parse(workshopForm.getRgStDateTime()));
@@ -315,6 +316,21 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
     }
 
+    @Override    
+    public List<String> findFacilitatorNetidList(Integer workshopId){
+        try {
+            Workshops w = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", workshopId).getSingleResult();
+            List<String> facilitatorNetIdList = new ArrayList<>();
+            for (Person p: w.getMyFacilitators()) {
+                facilitatorNetIdList.add(p.getNetId());
+            }
+            return facilitatorNetIdList;
+        }
+        catch(Exception e) {
+            throw  new EJBException(e);
+        }
+    }
+
     // find all workshops that person is attending
     @Override
     public List<Workshops> getWorkshopsForPerson(Person p) {
@@ -385,17 +401,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
 
     @Override
-
-    public boolean updateAttendance(List<Attendance> attendance) {
-        try {
-            return true;
-        }
-        catch(Exception e) {
-            throw  new EJBException(e);
-        }
-    }
-
-    @Override
     public List<Reviews> getReviews(Integer workshopId) {
         List<Reviews> myReviews = em.createNamedQuery("Reviews.findByWorkshopId", Reviews.class).setParameter("workshopId", workshopId).getResultList();
         return myReviews;
@@ -451,5 +456,35 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.remove(waitlist);
         return true;
     }
-
+    
+    public boolean isOnWaitlist(Integer workshopId, String netId){
+        List<Waitlist> waitList = getWaitlist(workshopId);
+        List<String> netIds = new ArrayList();
+        for(Waitlist w : waitList)
+            netIds.add(w.getPerson().getNetId());
+        
+        for(String n : netIds)
+            if(n.equals(netId))
+                return true;
+        
+        return false;
+    }
+    
+    public boolean isRegistered(Integer workshopId, String netId){
+        List<Person> registrants = getParticipantsForWorkshop(workshopId);
+        
+        List<String> netIds = new ArrayList();
+        for(Person p : registrants)
+            netIds.add(p.getNetId());
+        
+        for(String n : netIds)
+            if(n.equals(netId))
+                return true;
+        
+        return false;
+    }
+    
+     public boolean workshopHasPast(Integer workshopId){
+         return findByWorkshopId(workshopId).getEventStart().before(new Date());
+     }
 }

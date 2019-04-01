@@ -129,11 +129,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <s:iterator value="attendance" var="attend">
+                            <s:iterator value="attendance" var="attend" status="status">
                                 <tr>
                                     <td><s:property value="person.netId"/></td>
                                     <td><s:property value="person.commonName"/></td>
-                                    <td><s:checkbox name="attended" value="attended"/></td>
+                                    <td><s:checkbox name="attendance[%{#status.index}].attended" value="attended"/></td>
                                 </tr>
                             </s:iterator>
                         </tbody>

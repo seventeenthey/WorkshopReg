@@ -30,6 +30,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -40,18 +41,14 @@ public class AttendanceAction extends ActionSupport implements Preparable{
     private static final long serialVersionUID = 1L;
     private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.client.action.AttendanceAction.class);
 
-
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
 
-    //List<StudentDataBean> studentBeanList;
-    List<Person> participants;
+    List<Attendance> participants;
     List<Attendance> attendance;
     private Integer workshopId;
     private Workshops workshop;
     private Person person;
-
-
 
     public AttendanceAction() {
         System.out.println("### AttendanceAction constructor running");
@@ -86,6 +83,7 @@ public class AttendanceAction extends ActionSupport implements Preparable{
 
               if (workshopId != null){
                 workshop = ejb.findByWorkshopId(workshopId);
+                participants = ejb.getAttendance(workshopId);
                 attendance = ejb.getAttendance(workshopId);
               }
         }
@@ -104,22 +102,11 @@ public class AttendanceAction extends ActionSupport implements Preparable{
     public String execute() throws Exception {
         try {
             System.out.println("### AttendanceAction execute running");
-            attendance = ejb.getAttendance(workshopId);
-            Attendance attend;
+            participants = ejb.getAttendance(workshopId);
             for (int i = 0; i < attendance.size(); i++) {
-                attend = attendance.get(i);
-                System.out.println(attend.getAttended());
-                ejb.editAttendeeStatus(workshopId, attend.getPerson().getNetId(),attend.getAttended());
+                ejb.editAttendeeStatus(workshopId, participants.get(i).getPerson().getNetId(),attendance.get(i).getAttended());
             }
-
             attendance = ejb.getAttendance(workshopId);
-            boolean saveSuccessful = ejb.updateAttendance(attendance);
-            if(saveSuccessful){
-                addActionMessage("Attendance Successfully saved");
-            }
-            else {
-                addActionError("Attendance was not saved.");
-            }
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -155,11 +142,11 @@ public class AttendanceAction extends ActionSupport implements Preparable{
         this.ejb = ejb;
     }
 
-    public List<Person> getParticipants() {
+    public List<Attendance> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(List<Person> participants) {
+    public void setParticipants(List<Attendance> participants) {
         this.participants = participants;
     }
 
@@ -194,7 +181,4 @@ public class AttendanceAction extends ActionSupport implements Preparable{
     public void setPerson(Person person) {
         this.person = person;
     }
-
-
-
 }
