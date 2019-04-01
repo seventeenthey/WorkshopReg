@@ -275,5 +275,22 @@
             </result>       
         </action>
         
+        <action name="ViewReviewLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.ViewReviewAction" method="load">
+            <interceptor-ref name="baseValidationStack"></interceptor-ref>
+            <result name="success">WEB-INF/jsp/client/viewReview.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
+        </action>
+        
+        <action name="ViewReviewExeAction" class="ca.queensu.websvcs.workshopbooking.client.action.ViewReviewAction" method="execute">
+            <interceptor-ref name="baseValidationStack"></interceptor-ref>
+            <result name="input">WEB-INF/jsp/client/viewReview.jsp</result>
+            <result name="success">WEB-INF/jsp/client/viewReview.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
+        </action>
+        
     </package>
 </struts>

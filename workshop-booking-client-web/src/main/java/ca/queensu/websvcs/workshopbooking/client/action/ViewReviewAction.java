@@ -6,11 +6,10 @@
 package ca.queensu.websvcs.workshopbooking.client.action;
 
 import ca.queensu.uis.sso.tools.common.SSOConstants;
-import ca.queensu.websvcs.workshopbooking.client.domain.StudentDataBean;
-import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
 import ca.queensu.websvcs.workshopbooking.core.entity.Attendance;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
+import ca.queensu.websvcs.workshopbooking.core.entity.Reviews;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
@@ -19,48 +18,44 @@ import com.opensymphony.xwork2.Preparable;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
-import static jdk.nashorn.internal.objects.ArrayBufferView.length;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  *
- * @author dwesl
+ * @author dd123
  */
-public class AttendanceAction extends ActionSupport implements Preparable{
+public class ViewReviewAction extends ActionSupport implements Preparable{
 
     private static final long serialVersionUID = 1L;
-    private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.client.action.AttendanceAction.class);
-
+    private final Logger log = LogManager.getLogger(ca.queensu.websvcs.workshopbooking.client.action.ViewReviewAction.class);
 
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
 
-    //List<StudentDataBean> studentBeanList;
-    List<Person> participants;
-    List<Attendance> attendance;
+
+    List<Reviews> reviews;
+    private String reviewNew;
     private Integer workshopId;
     private Workshops workshop;
     private Person person;
 
 
 
-    public AttendanceAction() {
-        System.out.println("### AttendanceAction constructor running");
+    public ViewReviewAction() {
+        System.out.println("### ViewReviewAction constructor running");
     }
 
     @Override
     public void prepare() throws Exception {
         try {
-            System.out.println("### Attendance Action prepare running");
+            System.out.println("### ViewReviewAction  prepare running");
 
             HttpServletRequest request = ServletActionContext.getRequest();
             HttpSession session = request.getSession();
@@ -82,17 +77,17 @@ public class AttendanceAction extends ActionSupport implements Preparable{
     @SkipValidation
     public String load() throws Exception{
         try {
-            System.out.println("### AttendanceAction load running");
-
+            System.out.println("### ViewReviewAction load running");
+            
               if (workshopId != null){
                 workshop = ejb.findByWorkshopId(workshopId);
-                attendance = ejb.getAttendance(workshopId);
+                reviews = ejb.getReviews(workshopId);
               }
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
             e.printStackTrace(new PrintWriter(out));
-            addActionError(createErrorMessage("Exception occurred while loading attendance screen."));
+            addActionError(createErrorMessage("Exception occurred while loading view review screen."));
             log.error("***************Exception occurred in load method " + e.getMessage());
             log.error(out);
             return ERROR;
@@ -103,23 +98,17 @@ public class AttendanceAction extends ActionSupport implements Preparable{
     @Override
     public String execute() throws Exception {
         try {
-            System.out.println("### AttendanceAction execute running");
-            attendance = ejb.getAttendance(workshopId);
-            Attendance attend;
-            for (int i = 0; i < attendance.size(); i++) {
-                attend = attendance.get(i);
-                System.out.println(attend.getAttended());
-                ejb.editAttendeeStatus(workshopId, attend.getPerson().getNetId(),attend.getAttended());
-            }
-
-            attendance = ejb.getAttendance(workshopId);
-            boolean saveSuccessful = ejb.updateAttendance(attendance);
+            System.out.println("### ViewReviewAction execute running");
+            System.out.println("################################"+reviewNew);
+            Boolean saveSuccessful = ejb.addReview(workshopId, person.getNetId(), reviewNew);
+            reviews = ejb.getReviews(workshopId);
+            
             if(saveSuccessful){
                 addActionMessage("Attendance Successfully saved");
             }
             else {
                 addActionError("Attendance was not saved.");
-            }
+           }
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -132,12 +121,7 @@ public class AttendanceAction extends ActionSupport implements Preparable{
         return SUCCESS;
     }
 
-    /**
-     * Creates a custom error message to be used as an action error
-     *
-     * @param customMessage message to be used as the action error text
-     * @return the created error message
-     */
+
     private String createErrorMessage(String customMessage) {
         Date now = new Date();
 
@@ -155,20 +139,12 @@ public class AttendanceAction extends ActionSupport implements Preparable{
         this.ejb = ejb;
     }
 
-    public List<Person> getParticipants() {
-        return participants;
+    public List<Reviews> getReviews() {
+        return reviews;
     }
 
-    public void setParticipants(List<Person> participants) {
-        this.participants = participants;
-    }
-
-    public List<Attendance> getAttendance() {
-        return attendance;
-    }
-
-    public void setAttendance(List<Attendance> attendance) {
-        this.attendance = attendance;
+    public void setReviews(List<Reviews> reviews) {
+        this.reviews = reviews;
     }
 
     public Integer getWorkshopId() {
@@ -195,6 +171,14 @@ public class AttendanceAction extends ActionSupport implements Preparable{
         this.person = person;
     }
 
+    public String getReviewNew() {
+        return reviewNew;
+    }
 
-
+    public void setReviewNew(String reviewNew) {
+        this.reviewNew = reviewNew;
+    }
+    
+    
+    
 }
