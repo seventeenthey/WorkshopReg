@@ -137,7 +137,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     public boolean addParticipant(Integer workshopId, String netId) {
         Workshops workshop = findByWorkshopId(workshopId);
         Person p = getPersonByNetId(netId);
-        System.out.println("hello15");
         if (getParticipantsForWorkshop(workshopId).size() < workshop.getMaxParticipants()) {
             System.out.println("registered!");
             workshop.addRegistrant(p);
@@ -172,7 +171,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     @Transactional
     public boolean createWorkshop(Person creator, Workshops workshop, WorkshopInfoForm workshopForm) {
-
         workshop.setWorkshopCreatorId(creator);
         workshop.setDepartmentId(creator.getDepartmentId());
         workshop.setEmailNotificationName("");
@@ -180,7 +178,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         workshop.setEmailWaitlistMsg("");
         workshop.setEmailCancellationMsg("");
         workshop.setEmailEvaluationMsg("");
-
+        if (workshopForm.getLocation() != null && !workshopForm.getLocation().isEmpty()) {
+            workshop.setLocation(workshopForm.getLocation());
+        }
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             workshop.setRegistrationStart(formatter.parse(workshopForm.getRgStDateTime()));
@@ -199,7 +199,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     @Transactional
     public boolean updateWorkshop(Integer workshopId, Workshops workshop, WorkshopInfoForm workshopForm) {
-
         Workshops oldWorkshop = findByWorkshopId(workshopId);
         workshop.setWorkshopId(workshopId);
         workshop.setWorkshopCreatorId(oldWorkshop.getWorkshopCreatorId());
@@ -209,7 +208,9 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         workshop.setEmailWaitlistMsg(oldWorkshop.getEmailWaitlistMsg());
         workshop.setEmailCancellationMsg(oldWorkshop.getEmailCancellationMsg());
         workshop.setEmailEvaluationMsg(oldWorkshop.getEmailEvaluationMsg());
-
+        if (workshopForm.getLocation() != null && !workshopForm.getLocation().isEmpty()) {
+            workshop.setLocation(workshopForm.getLocation());
+        }
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             workshop.setRegistrationStart(formatter.parse(workshopForm.getRgStDateTime()));
