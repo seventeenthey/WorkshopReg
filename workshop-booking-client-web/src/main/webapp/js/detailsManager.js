@@ -10,8 +10,7 @@ var registeredStatus = document.getElementById("registeredStatus").innerText;
 //TODO register/unregister btn
 var registerBtn = document.getElementById("registerBtn");              
 var unRegisterBtn = document.getElementById("unRegisterBtn");         
-console.log(registerBtn.style);
-console.log(unRegisterBtn);
+var reviewBtn = document.getElementById("reviewBtn");     
 
 if (registeredStatus == "Registered" || registeredStatus == "WaitListed"){
     registerBtn.style.display="none";
@@ -21,4 +20,12 @@ if (registeredStatus == "Registered" || registeredStatus == "WaitListed"){
     unRegisterBtn.style.display="none";
 }
 
+var startDate = new Date(document.getElementById('startDate').innerText);
+var today = new Date();
+
+if (today > startDate){ //the event has past
+    registerBtn.style.display = "none";
+    unRegisterBtn.style.display = "none";
+    reviewBtn.style.display = "";
+}
 //TODO advanced options only shows if you are a facilitator OR a creator OF THIS WORKSHOP
