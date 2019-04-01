@@ -71,7 +71,7 @@
                     <div class="col-sm-4 my-2">
                         <div class="card bg-info">
                             <h4 class="card-header">Registered Status: </h4>
-                            <p class='card-body text-white' id="registeredStatus">Not Registered</p> <!--This needs to say: "Registered", "Not Registered", or "WaitListed" -->
+                            <p class='card-body text-white' id="registeredStatus"><s:property value="registeredStatus"/></p> <!--This needs to say: "Registered", "Not Registered", or "WaitListed" -->
                         </div>
                     </div>
                     <div class="col-sm-4 my-2">
@@ -127,10 +127,12 @@
 
                 <!--Workshop Unregister-->
                 <li type="button" class="btn btn-primary" id="unRegisterBtn">
-                    <s:url action="personalDetailAction" var="personalDetailUrl" />
-                    <a href='<s:property value="personalDetailUrl"/>' style="color:white">Cancel Registration</a>
+                    <s:url action="detailsUnregisterAction" var="unregisterUrl" >
+                        <s:param name="workshopId" value="workshopId"/>
+                    </s:url>
+                    <a href='<s:property value="unregisterUrl"/>' style="color:white">Cancel Registration</a>
                 </li>
-                
+
                 <!--Workshop Management-->
                 <div class="workshopCreator">
                     <li type="button" class="btn btn-primary">
@@ -140,7 +142,7 @@
                         <a href='<s:property value="functionUrl"/>' style="color:white">Advanced Options</a>
                     </li>
                 </div>
-                    
+
                 <div class="facilitator">
                     <li type="button" class="btn btn-primary">
                         <s:url action="attendanceLoadAction" var="attendanceUrl">
@@ -149,7 +151,7 @@
                         <a href='<s:property value="attendanceUrl"/>' style="color:white">Manage Attendance</a>
                     </li>
                 </div>
-                                
+
                 <!--Todo: Add a Review Form for Attendee to fill out after the workshop ends-->
 
             </ul>

@@ -187,6 +187,14 @@
             </result>       
         </action>
         
+        <action name="detailsUnregisterAction" class="ca.queensu.websvcs.workshopbooking.client.action.DetailsAction" method="unregister">
+            <interceptor-ref name="baseStack"></interceptor-ref>
+            <result name="success">WEB-INF/jsp/client/details.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">dashboard</param>
+            </result>       
+        </action>
+        
         <!-- Email Edit Page-->
         <action name="emaileditLoadAction" class="ca.queensu.websvcs.workshopbooking.client.action.EmailEditAction" method="load">
             <interceptor-ref name="baseStack"></interceptor-ref>
