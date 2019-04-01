@@ -134,14 +134,6 @@
                     <a href='<s:property value="unregisterUrl"/>' style="color:white">Cancel Registration</a>
                 </li>
 
-                <!--Workshop Review-->
-                <li type="button" class="btn btn-primary" id="reviewBtn" style="display:none">
-                    <s:url action="detailsLoadAction" var="loadUrl" >
-                        <s:param name="workshopId" value="workshopId"/>
-                    </s:url>
-                    <a href='<s:property value="loadUrl"/>' style="color:white">Leave Review</a>
-                </li>
-
                 <!--Workshop Management-->
                 <div class="workshopCreator creatorIdCheck">
                     <li type="button" class="btn btn-primary">
