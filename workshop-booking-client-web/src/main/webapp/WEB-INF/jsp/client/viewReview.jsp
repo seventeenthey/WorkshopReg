@@ -69,7 +69,7 @@
                     theme="bootstrap" method="post" cssClass="form-vertical">
                 <s:fielderror/>
                 <h2>Leave a review:</h2>
-                <s:textfield 
+                <s:textarea 
                     name="reviewNew"
                     cssClass="input-sm"
                     elementCssClass="col-sm-7"/>
