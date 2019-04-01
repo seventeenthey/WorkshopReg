@@ -64,6 +64,7 @@ public interface WorkshopBookingSessionBeanLocal {
     public List<Attendance> getAttendance(Integer workshopId);
     public boolean addAttendee(Integer workshopId, String netId);
     public boolean editAttendeeStatus(Integer workshopId, String netId, boolean status);
+    public boolean updateAttendance(Integer workshopId, Workshops workshopData, List<Attendance> attendance);
 
     public List<Reviews> getReviews(Integer workshopId);
     public List<String> getIdReviews(Integer workshopId);    

@@ -107,6 +107,14 @@ public class AttendanceAction extends ActionSupport implements Preparable{
                 ejb.editAttendeeStatus(workshopId, participants.get(i).getPerson().getNetId(),attendance.get(i).getAttended());
             }
             attendance = ejb.getAttendance(workshopId);
+            
+            boolean saveSuccessful = ejb.updateAttendance(workshopId, workshop, attendance);
+            if(saveSuccessful){
+                addActionMessage("Attendance Successfully saved");
+            }
+            else {
+                addActionError("Data was not saved.");
+            }
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();

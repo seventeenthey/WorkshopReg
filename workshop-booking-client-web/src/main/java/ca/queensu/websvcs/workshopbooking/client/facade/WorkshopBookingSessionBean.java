@@ -365,6 +365,12 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.persist(a);
         return true;
     }
+    
+    @Override
+    @Transactional
+    public boolean updateAttendance(Integer workshopId, Workshops workshopData, List<Attendance> attendance) {
+        return true;
+    }
 
     @Override
     @Transactional
