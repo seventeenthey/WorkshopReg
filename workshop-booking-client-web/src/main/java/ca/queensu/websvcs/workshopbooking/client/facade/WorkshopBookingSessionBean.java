@@ -315,6 +315,21 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
     }
 
+    @Override    
+    public List<String> findFacilitatorNetidList(Integer workshopId){
+        try {
+            Workshops w = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", workshopId).getSingleResult();
+            List<String> facilitatorNetIdList = new ArrayList<>();
+            for (Person p: w.getMyFacilitators()) {
+                facilitatorNetIdList.add(p.getNetId());
+            }
+            return facilitatorNetIdList;
+        }
+        catch(Exception e) {
+            throw  new EJBException(e);
+        }
+    }
+
     // find all workshops that person is attending
     @Override
     public List<Workshops> getWorkshopsForPerson(Person p) {

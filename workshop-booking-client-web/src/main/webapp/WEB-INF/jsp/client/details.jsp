@@ -132,7 +132,7 @@
                 </li>
                 
                 <!--Workshop Management-->
-                <div class="workshopCreator">
+                <div class="workshopCreator creatorIdCheck">
                     <li type="button" class="btn btn-primary">
                         <s:url action="functionLoadAction" var="functionUrl">
                             <s:param name="workshopId" value="workshopId"/>
@@ -140,8 +140,9 @@
                         <a href='<s:property value="functionUrl"/>' style="color:white">Advanced Options</a>
                     </li>
                 </div>
-                    
-                <div class="facilitator">
+                
+                <!--Attendance Management-->
+                <div class="facilitator facilIdCheck">
                     <li type="button" class="btn btn-primary">
                         <s:url action="attendanceLoadAction" var="attendanceUrl">
                             <s:param name="workshopId" value="workshopId"/>
@@ -164,6 +165,8 @@
         <!--Controls Visibility -->
         <!--This control needs to be after all other elements AND any other .js that affect visibility, and these two lines need to be in this order-->
         <div id="role" style="display:none"><s:property value="person.roleId.roleId"/></div>
+        <div id="creatorAuth" style="display:none"><s:property value="creatorAuth"/></div>
+        <div id="facilAuth" style="display:none"><s:property value="facilAuth"/></div>
         <script src="js/visibility.js"></script>
         <!--End Visibility Control-->
         <!-- End JS -->

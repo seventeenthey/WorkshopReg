@@ -50,6 +50,7 @@ public interface WorkshopBookingSessionBeanLocal {
     public Workshops findByWorkshopId(String id);
 
     public List<facilitatorDataBean> findFacilitatorList(Integer workshopId);
+    public List<String> findFacilitatorNetidList(Integer workshopId);
 
 
 
