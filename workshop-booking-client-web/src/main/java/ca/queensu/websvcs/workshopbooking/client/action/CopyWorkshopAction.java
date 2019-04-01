@@ -105,12 +105,15 @@ public class CopyWorkshopAction extends ActionSupport implements Preparable{
             System.out.println("### FunctionAction execute running");
 
             boolean successful = false;
+            Integer copyStrategy = 0;
             if (workshopId != null) {
-                if (basicCheck = true){ //
-    //                Todo: Add create new workshop with same basic info and different workshopId here
-                      // workshopId = createRandomWorkshopId();
-    //                successful = ejb.createWorkshop(person, workshop, workshopForm);
-                      successful = true;            
+                if (basicCheck){ //
+                    if (emailCheck) {
+                        copyStrategy = 1;
+                    }
+                workshopId = ejb.copyWorkshop(workshopId, copyStrategy);
+                workshop = ejb.findByWorkshopId(workshopId);
+                successful = true;
                 }
             } else {
                 successful = false;

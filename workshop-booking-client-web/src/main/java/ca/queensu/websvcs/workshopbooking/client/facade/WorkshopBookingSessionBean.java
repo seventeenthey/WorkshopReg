@@ -55,51 +55,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Inject
     QueensEmailInterface emailStub;// = new CaQueensuUisWebservicesEmailStub();
 
-
-@Override
-    public List<StudentDataBean> findStudentList() {
-        try {
-            List<StudentDataBean> studBeanList = new ArrayList<>();
-            for(int i = 0; i < 20; i++) {
-                StudentDataBean studBean = generateStudentBean(i);
-                studBeanList.add(studBean);
-            }
-            return studBeanList;
-        }
-        catch(Exception e) {
-            throw  new EJBException(e);
-        }
-    }
-
-    private StudentDataBean generateStudentBean(int studentNum) {
-        StudentDataBean studBean = new StudentDataBean();
-        studBean.setStudentID(String.valueOf(studentNum));
-        studBean.setStudentFirstName("Jane");
-        studBean.setStudentLastName("Doe" + studentNum);
-        return studBean;
-    }
-
-    @Override
-    public StudentDataBean findStudentByPk(String studentPk) {
-        try {
-            StudentDataBean stuBean = generateStudentBean(Integer.valueOf(studentPk));
-            return stuBean;
-        }
-        catch(Exception e) {
-            throw  new EJBException(e);
-        }
-    }
-
-    @Override
-    public boolean updateStudent(StudentDataBean studentBean) {
-        try {
-            return true;
-        }
-        catch(Exception e) {
-            throw  new EJBException(e);
-        }
-    }
-
 /**
  * function.jsp
  * @return statusList; locationList; submit condition
@@ -224,6 +179,26 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
 
         em.merge(workshop);
         return true;
+    }
+    
+    @Override
+    @Transactional
+    public Integer copyWorkshop(Integer workshopId, Integer copyStrategy) {
+        Workshops toCopy = findByWorkshopId(workshopId);
+        em.detach(toCopy);
+        toCopy.setWorkshopId(null);
+        EventStatus newStatus = new EventStatus("Not Posted");
+        toCopy.setEventStatus(newStatus);
+        if (copyStrategy == 0) {
+            toCopy.setEmailNotificationName("");
+            toCopy.setEmailConfirmationMsg("");
+            toCopy.setEmailWaitlistMsg("");
+            toCopy.setEmailCancellationMsg("");
+            toCopy.setEmailEvaluationMsg("");
+        }
+        em.persist(toCopy);
+        em.flush();
+        return toCopy.getWorkshopId();
     }
 
 /**
