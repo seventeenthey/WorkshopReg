@@ -405,6 +405,18 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         List<Reviews> myReviews = em.createNamedQuery("Reviews.findByWorkshopId", Reviews.class).setParameter("workshopId", workshopId).getResultList();
         return myReviews;
     }
+    
+    @Override
+    public List<String> getIdReviews(Integer workshopId) {
+        List<Reviews> myReviews = em.createNamedQuery("Reviews.findByWorkshopId", Reviews.class).setParameter("workshopId", workshopId).getResultList();
+        List<String> myIdReviews = new ArrayList<>();
+        Reviews temp;
+        for (int i = 0; i<myReviews.size(); i++){
+            temp = myReviews.get(i);
+            myIdReviews.add(temp.getPerson().getNetId());
+        }
+        return myIdReviews;
+    }    
 
     @Override
     @Transactional

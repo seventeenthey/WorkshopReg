@@ -41,11 +41,12 @@ public class ViewReviewAction extends ActionSupport implements Preparable{
 
 
     List<Reviews> reviews;
+    List<String> reviewsId;
     private String reviewNew;
     private Integer workshopId;
     private Workshops workshop;
     private Person person;
-
+    
 
 
     public ViewReviewAction() {
@@ -82,6 +83,11 @@ public class ViewReviewAction extends ActionSupport implements Preparable{
               if (workshopId != null){
                 workshop = ejb.findByWorkshopId(workshopId);
                 reviews = ejb.getReviews(workshopId);
+                
+//                reviewsId = ejb.getIdReviews(workshopId);
+//                String userId = person.getNetId();
+//                addActionMessage("ReviewIdEquals "+reviewsId + " " + userId);
+                
               }
         }
         catch (Exception e) {
@@ -119,6 +125,27 @@ public class ViewReviewAction extends ActionSupport implements Preparable{
             return ERROR;
         }
         return SUCCESS;
+    }
+
+    
+    @Override
+    public void validate() {
+        try {
+
+            System.out.println("### StudentEditAction validate running");
+            reviews = ejb.getReviews(workshopId);
+            reviewsId = ejb.getIdReviews(workshopId);
+            if (reviewsId.contains(person.getNetId())){
+                addFieldError("userId","Cannot Add Review to Same Workshop Twice.");
+            }
+        }
+        catch (Exception e) {
+            StringWriter out = new StringWriter();
+            e.printStackTrace(new PrintWriter(out));
+            addActionError(createErrorMessage("Exception occurred while validating student data."));
+            log.error("***************Exception occurred in validate method " + e.getMessage());
+            log.error(out);
+        }
     }
 
 
@@ -177,6 +204,14 @@ public class ViewReviewAction extends ActionSupport implements Preparable{
 
     public void setReviewNew(String reviewNew) {
         this.reviewNew = reviewNew;
+    }
+
+    public List<String> getReviewsId() {
+        return reviewsId;
+    }
+
+    public void setReviewsId(List<String> reviewsId) {
+        this.reviewsId = reviewsId;
     }
     
     
