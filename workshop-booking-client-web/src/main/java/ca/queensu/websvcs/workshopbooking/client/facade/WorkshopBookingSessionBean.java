@@ -385,17 +385,6 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     }
 
     @Override
-
-    public boolean updateAttendance(List<Attendance> attendance) {
-        try {
-            return true;
-        }
-        catch(Exception e) {
-            throw  new EJBException(e);
-        }
-    }
-
-    @Override
     public List<Reviews> getReviews(Integer workshopId) {
         List<Reviews> myReviews = em.createNamedQuery("Reviews.findByWorkshopId", Reviews.class).setParameter("workshopId", workshopId).getResultList();
         return myReviews;

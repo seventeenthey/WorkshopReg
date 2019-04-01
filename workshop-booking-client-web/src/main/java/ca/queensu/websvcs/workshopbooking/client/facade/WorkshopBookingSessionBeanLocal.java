@@ -69,8 +69,6 @@ public interface WorkshopBookingSessionBeanLocal {
     public boolean addAttendee(Integer workshopId, String netId);
     public boolean editAttendeeStatus(Integer workshopId, String netId, boolean status);
 
-
-    public boolean updateAttendance(List<Attendance> attendance);
     public List<Reviews> getReviews(Integer workshopId);
     public boolean addReview(Integer workshopId, String netId, String review);
     public boolean editReview(Integer workshopId, String netId, String editedReview);
