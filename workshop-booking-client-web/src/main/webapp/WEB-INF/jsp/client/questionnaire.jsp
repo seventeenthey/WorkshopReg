@@ -25,6 +25,10 @@
         <!-- Bootstrap core CSS -->
         <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom styles for this template -->
+        
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
         <link href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/css?family=Arvo|Playfair+Display|Raleway|Roboto" rel="stylesheet">
@@ -111,16 +115,9 @@
             </s:form>
         </div>
 
-        <footer class="footer" id="footer">
-            <div class="container-fluid copyright navbar fixed-bottom">
-                <div class="container text-right">
-                    <p>Report an Issue</p>
-                    <p>Queen's Information & Technology Services</p>
-                </div>
-            </div>
-        </footer>
 
         <script src="js/searchBar.js"></script>
+        <div id="role" style="display:none"><s:property value="person.roleId.roleId"/></div> 
         <script src="js/visibility.js"></script>
     </body>
 </html>
