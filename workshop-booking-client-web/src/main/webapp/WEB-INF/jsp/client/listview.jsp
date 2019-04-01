@@ -125,10 +125,11 @@
                             <td><s:property value="registrationEnd"/></td>
                             <td><s:property value="departmentId.departmentName"/></td>
                             <td>
-                                <s:url action="detailsLoadAction" var="detailsUrl">
-                                    <s:param name="workshopId" value="workshopId" />
+                                <s:url action="ViewReviewLoadAction" var="viewReviewUrl">
+                                    <s:param name="workshopId" value="workshopId"/>
                                 </s:url>
-                                <a href='<s:property value="detailsUrl"/>'>Leave a Review</a>
+                                <a href='<s:property value="viewReviewUrl"/>'>Leave a Review</a>
+
                             </td>
                         </tr>
                     </s:iterator>
