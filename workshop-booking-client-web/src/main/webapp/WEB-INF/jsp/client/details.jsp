@@ -85,7 +85,7 @@
                             <h4  class="card-header">Start Time & Date: </h4>
                             <div class="card-body text-white">
                                 <p><s:property value="workshop.dateToString()"/></p>
-                                <p id="startDate"><s:property value="workshop.getEventStart().toString()"/></p>
+                                <p id="startDate" style="display:none"><s:property value="workshop.getEventStart().toString()"/></p>
                             </div>
                         </div>
                     </div>
