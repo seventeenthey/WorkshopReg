@@ -116,6 +116,7 @@ public class EmailEditAction extends ActionSupport implements Preparable{
         try {
             System.out.println("### EmailEdit validate running");
             
+            /**
             if(workshop.getEmailNotificationName().isEmpty()){
                 addFieldError("notifyFromName", "[Notification Email From Name] is required.");
             }
@@ -135,6 +136,7 @@ public class EmailEditAction extends ActionSupport implements Preparable{
             if(workshop.getEmailEvaluationMsg().isEmpty()){
                 addFieldError("evalMsg", "[Evaluation Message] is required.");
             }
+            **/
             
             //Todo: Add validation for [Internal Notification Options]
         } 
