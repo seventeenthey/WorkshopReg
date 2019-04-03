@@ -33,6 +33,7 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     private WorkshopBookingSessionBeanLocal ejb;
 
     List<facilitatorDataBean> facilBeanList;
+    
     private String addFacilId;
     private String delFacilId;  // Facilitator ID will be deleted
     private Integer workshopId;
@@ -115,7 +116,9 @@ public class FacilitatorAction extends ActionSupport implements Preparable{
     public void validate() {
         try {
 
-            System.out.println("### StudentEditAction validate running");
+            System.out.println("### FacilitatorAction validate running");
+            
+            //Cannot modify facilitator if the workshop is not created
             if (workshopId == null){
                 addFieldError("addFacil","Unable to modify facilitator.");
             }

@@ -48,7 +48,7 @@ public class AccessControlAction extends ActionSupport {
     @Override
     public String execute() throws Exception {
         
-        log.info("Entering access control action");
+        log.info("Entering Access Control Execute Action");
         
         dash = "";
 

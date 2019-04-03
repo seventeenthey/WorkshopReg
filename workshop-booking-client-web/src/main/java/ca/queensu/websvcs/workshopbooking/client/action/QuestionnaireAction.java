@@ -34,7 +34,7 @@ public class QuestionnaireAction extends ActionSupport implements Preparable {
 
     @EJB(mappedName = "WorkshopBookingSessionBean")
     private WorkshopBookingSessionBeanLocal ejb;
-
+    
     private Integer workshopId;
     private String netId;
     private Person person;
@@ -53,11 +53,11 @@ public class QuestionnaireAction extends ActionSupport implements Preparable {
     public void prepare() throws Exception {
         try {
             System.out.println("### QuestionnaireAction prepare running");
-//            Todo: Add Load Workshop Name from Previous Page
 
             HttpServletRequest request = ServletActionContext.getRequest();
             HttpSession session = request.getSession();
-
+            
+            //get user's netIid
             netId = (String) session.getAttribute(SSOConstants.NET_ID);
             person = ejb.getPersonByNetId(netId);
         } catch (Exception e) {
@@ -93,12 +93,12 @@ public class QuestionnaireAction extends ActionSupport implements Preparable {
     @Override
     public String execute() throws Exception {
         try {
-            // Check if the attendee successful registered in workshop or not
-//            Todo: May be need a input bean here to update
+            System.out.println("### QuestionnaireAction execute running");
             HttpServletRequest request = ServletActionContext.getRequest();
             HttpSession session = request.getSession();
             netId = (String) session.getAttribute(SSOConstants.NET_ID);
             
+            // Check if the attendee successful registered in workshop or not
             boolean saveSuccessful = ejb.addWorkshopRegistrant(workshopId, netId);
             if (saveSuccessful) {
                 addActionMessage("Successfully registered in workshop");

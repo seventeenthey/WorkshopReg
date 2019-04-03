@@ -45,10 +45,11 @@ public class FunctionAction extends ActionSupport implements Preparable{
     // This list populates the radio buttons for workshop status
     private List<String> statusList;
     private List<String> locationList;
-
+    
+    // Basic workshop information
     private Integer workshopId;
     private Workshops workshop;
-    private Person person;
+    private Person person;  // login user
     
     public FunctionAction() {
         System.out.println("### FunctionAction constructor running");
@@ -58,6 +59,7 @@ public class FunctionAction extends ActionSupport implements Preparable{
     public void prepare() throws Exception {
         try {
             System.out.println("### FunctionAction prepare running");
+            //prepare list for status and location
             statusList = ejb.getStatusList();
             locationList = ejb.getLocationList();
             locationList.add("Add New Location");
@@ -97,10 +99,6 @@ public class FunctionAction extends ActionSupport implements Preparable{
         }
         return SUCCESS;
     }
-    
-//    public String populate(){
-//        
-//    }
 
     @Override
     public String execute() throws Exception {
@@ -109,16 +107,19 @@ public class FunctionAction extends ActionSupport implements Preparable{
 
             boolean successful = false;
             if (workshopId != null) {
+                //update workshop
                 successful = ejb.updateWorkshop(workshopId, workshop, workshopForm);
+                //reload new workshop information to jsp page
                 workshop = ejb.getWorkshopById(workshopId);
             } else {
+                //create workshop if no worokshop exists
                 successful = ejb.createWorkshop(person, workshop, workshopForm);
             }
 
             if (successful) {
-                addActionMessage("Workshop Information Successfully saved");
+                addActionMessage("Workshop Basic Information Successfully saved.");
             } else {
-                addActionError("Data was not saved.");
+                addActionError("Workshop Creation Failed.");
             }
             
         }
@@ -138,12 +139,8 @@ public class FunctionAction extends ActionSupport implements Preparable{
     public void validate() {
         try {
 
-            System.out.println("### StudentEditAction validate running");
-
-//            if(workshop.getEventStatus().getEventStatus().isEmpty()) {
-//                addFieldError("status", "Status is required.");
-//            }
-
+            System.out.println("### FunctionAction validate running");
+            
             if(workshop.getTitle().isEmpty()) {
                 addFieldError("eventTitle", "Event Title is required.");
             }else if(workshop.getTitle().length() > 30){

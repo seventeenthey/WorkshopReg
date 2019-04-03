@@ -49,7 +49,7 @@ public class EmailEditAction extends ActionSupport implements Preparable{
     @Override
     public void prepare() throws Exception {
         try {
-            System.out.println("### FunctionAction prepare running");
+            System.out.println("### EmailEditAction prepare running");
         }
         catch (Exception e) {
             StringWriter out = new StringWriter();
@@ -116,6 +116,7 @@ public class EmailEditAction extends ActionSupport implements Preparable{
         try {
             System.out.println("### EmailEdit validate running");
             
+            //Todo: Uncomment this part if validation on email notification is needed
             /**
             if(workshop.getEmailNotificationName().isEmpty()){
                 addFieldError("notifyFromName", "[Notification Email From Name] is required.");

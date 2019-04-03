@@ -11,7 +11,6 @@ import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBe
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.websvcs.workshopbooking.core.entity.Workshops;
-//import ca.queensu.websvcs.workshopbooking.core.entity.EventStatus;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
@@ -50,13 +49,13 @@ public class CopyWorkshopAction extends ActionSupport implements Preparable{
     private Boolean emailCheck;
     
     public CopyWorkshopAction() {
-        System.out.println("### FunctionAction constructor running");
+        System.out.println("### CopyWorkshopAction constructor running");
     }
 
     @Override
     public void prepare() throws Exception {
         try {
-            System.out.println("### FunctionAction prepare running");
+            System.out.println("### CopyWorkshopAction prepare running");
             
             HttpServletRequest request = ServletActionContext.getRequest();
             HttpSession session = request.getSession();
@@ -77,7 +76,7 @@ public class CopyWorkshopAction extends ActionSupport implements Preparable{
     @SkipValidation
     public String load() throws Exception{
         try {
-            System.out.println("### FunctionAction load running");
+            System.out.println("### CopyWorkshopAction load running");
 
             if (workshopId != null){
                 workshop = ejb.getWorkshopById(workshopId);
@@ -102,7 +101,7 @@ public class CopyWorkshopAction extends ActionSupport implements Preparable{
     @Override
     public String execute() throws Exception {
         try {
-            System.out.println("### FunctionAction execute running");
+            System.out.println("### CopyWorkshopAction execute running");
 
             boolean successful = false;
             Integer copyStrategy = 0;
@@ -142,11 +141,9 @@ public class CopyWorkshopAction extends ActionSupport implements Preparable{
     public void validate() {
         try {
 
-            System.out.println("### StudentEditAction validate running");
-
-//            if(workshop.getEventStatus().getEventStatus().isEmpty()) {
-//                addFieldError("status", "Status is required.");
-//            }
+            System.out.println("### CopyWorkshopAction validate running");
+            
+            //Cannot copy workshop if the workshop doesn't exist
             if (workshopId == null){
                 addFieldError("workshopId","No workshop exists.");
             }
