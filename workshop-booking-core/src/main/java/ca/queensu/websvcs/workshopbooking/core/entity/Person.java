@@ -56,29 +56,37 @@ public class Person implements Serializable {
     @Column(name = "email")
     private String email;
     
+	// Joins department_id column in two different tables
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     @ManyToOne(optional = false)
     private Departments departmentId;
     
+	// Joins role_id column in two different tables
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     @ManyToOne(optional = false)
     private Roles roleId;
     
+	// Creates a table of person to their registered workshops
     @ManyToMany(mappedBy = "myRegistrants", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Workshops> myWorkshops;
     
+	// Creates a table of any creator to their own workshops
     @ManyToMany(mappedBy = "myFacilitators", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Workshops> myOwnedWorkshops;
     
+	// Creates a table of any person to their attended workshops
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Attendance> myWorkshopAttendance;
     
+	// Creates a table of anyperson to their waitlisted workshops
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Waitlist> myWorkshopWaitlist;
     
+	// Creates a table of any person to their reviews
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Reviews> myWorkshopReviews;
 
+	// Getters and setters for the EJBs
     public Person() {
     }
 

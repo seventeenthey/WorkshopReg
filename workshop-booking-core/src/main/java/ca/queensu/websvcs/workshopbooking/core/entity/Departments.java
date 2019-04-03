@@ -49,6 +49,7 @@ public class Departments implements Serializable {
     public Departments() {
     }
 
+	// Gets and sets for the EJBs
     public Departments(Integer departmentId) {
         this.departmentId = departmentId;
     }
@@ -89,6 +90,7 @@ public class Departments implements Serializable {
     }
     **/
 
+	// Takes the department ID number, if there is one, then returns the name of the department in its place
     @Override
     public int hashCode() {
         int hash = 0;
@@ -96,6 +98,7 @@ public class Departments implements Serializable {
         return hash;
     }
 
+	// Ensure that the object is of type department and isn't the ID for something else
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -110,6 +113,7 @@ public class Departments implements Serializable {
     }
 
     @Override
+	// Forms all the data into readable text
     public String toString() {
         return "ca.queensu.websvcs.workshopbooking.core.entity.Departments[ departmentId=" + departmentId + " ]";
     }
