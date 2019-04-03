@@ -1,6 +1,5 @@
 package ca.queensu.websvcs.workshopbooking.client.facade;
 
-import ca.queensu.websvcs.workshopbooking.client.domain.StudentDataBean;
 import ca.queensu.websvcs.workshopbooking.client.domain.WorkshopInfoForm;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
 import ca.queensu.uis.services.email.ws.QueensEmailInterface;
@@ -14,8 +13,6 @@ import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import ca.queensu.websvcs.workshopbooking.core.entity.Reviews;
 import ca.queensu.websvcs.workshopbooking.core.entity.Roles;
 import ca.queensu.websvcs.workshopbooking.core.entity.Waitlist;
-import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,8 +29,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.util.Random;
-import static java.util.stream.Collectors.toList;
 import javax.transaction.Transactional;
 
 /**
@@ -55,13 +50,11 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Inject
     QueensEmailInterface emailStub;// = new CaQueensuUisWebservicesEmailStub();
 
-/**
- * function.jsp
- * @return statusList; locationList; submit condition
- */
+    /**
+     * @return a list of all possible statuses for a workshop
+     */
     @Override
-    public List<String> findstatusList(){
-//      List of possible status for workshops
+    public List<String> getStatusList() {
         List<String> statusList = new ArrayList<>();
         for (EventStatus eventStatus: em.createNamedQuery("EventStatus.findAll", EventStatus.class).getResultList()) {
             statusList.add(eventStatus.getEventStatus());
@@ -69,60 +62,128 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return statusList;
     }
 
+    /**
+     * @return a list of locations on Queen's campus
+     */
     @Override
-    public List<String> findlocationList(){
-//      List of all possible locations to hold a workshop
+    public List<String> getLocationList(){
         List<String> locationList = new ArrayList<>();
         for (Locations location: em.createNamedQuery("Locations.findAll", Locations.class).getResultList()) {
             locationList.add(location.getLocationName());
         }
         return locationList;
     }
+    
+    /**
+     * @return a list of all Queen's departments
+     */
+    @Override
+    public List<String> getDepartmentList() {
+        List<String> departmentList = new ArrayList<>();
+        for (Departments department: em.createNamedQuery("Departments.findAll", Departments.class).getResultList()) {
+            departmentList.add(department.getDepartmentName());
+        }
+        return departmentList;
+    }
+    
+    /**
+     * @return the list of all possible user roles
+     */
+    @Override
+    public List<String> getRoleList(){
+        List<String> roleList = new ArrayList<>();
+        for (Roles role: em.createNamedQuery("Roles.findAll", Roles.class).getResultList()) {
+            roleList.add(role.getRoleName());
+        }
+        return roleList;
+    }
+    
+    /**
+     * @return a list of all workshops
+     */
+    @Override
+    public List<Workshops> getWorkshopsList() {
+        try {
+            List<Workshops> workshopList = em.createNamedQuery("Workshops.findAll", Workshops.class).getResultList();
+            return workshopList;
+        }
+        catch(Exception e) {
+            throw  new EJBException(e);
+        }
+    }
 
+    /**
+     * @param workshopId
+     * @return all registrants for a workshop
+     */
     @Override
     @Transactional
-    public List<Person> getParticipantsForWorkshop(Integer workshopId){
+    public List<Person> getWorkshopRegistrants(Integer workshopId) {
         // Get all participants in a workshop
         Workshops w = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", workshopId).getSingleResult();
         return w.getMyRegistrants();
     }
 
+    /**
+     * @param workshopId
+     * @param netId
+     * @return boolean: whether a user was added to a workshop, wait list, or not
+     * 
+     * Registers a user into a workshop. If full, add them to a wait list (returns true for both of these cases)
+     * If the wait list is full, return false
+     */
     @Override
     @Transactional
-    public boolean addParticipant(Integer workshopId, String netId) {
-        Workshops workshop = findByWorkshopId(workshopId);
+    public boolean addWorkshopRegistrant(Integer workshopId, String netId) {
+        Workshops workshop = WorkshopBookingSessionBean.this.getWorkshopById(workshopId);
         Person p = getPersonByNetId(netId);
-        if (getParticipantsForWorkshop(workshopId).size() < workshop.getMaxParticipants()) {
+        if (getWorkshopRegistrants(workshopId).size() < workshop.getMaxParticipants()) {
             System.out.println("registered!");
             workshop.addRegistrant(p);
+            addAttendee(workshopId, netId);
         } else if (getWaitlist(workshopId).size() < workshop.getWaitlistLimit()) { // add to waitlist if it's not full
             System.out.println("added to waitlist!");
             addToWaitlist(workshopId, netId);
         } else { // waitlist full!
             System.out.println("waitlist full...");
-            return true;
+            return false;
         }
         return true;
     }
 
+    /**
+     * @param workshopId
+     * @param netId
+     * @return boolean: whether a user was removed or not
+     * 
+     * Removes a user's registration for a workshop
+     */
     @Override
     @Transactional
-    public boolean removeParticipant(Integer workshopId, String netId) {
-        Workshops workshop = findByWorkshopId(workshopId);
+    public boolean removeWorkshopRegistrant(Integer workshopId, String netId) {
+        Workshops workshop = WorkshopBookingSessionBean.this.getWorkshopById(workshopId);
         Person p = getPersonByNetId(netId);
         workshop.removeRegistrant(p);
+        removeAttendee(workshopId, netId);
 
         List<Waitlist> waitlist = getWaitlist(workshopId);
         if (waitlist.size() > 0) {
             waitlist.sort(Comparator.comparing(Waitlist::getDatetimeApplied));
             String nextPersonId = waitlist.get(0).getPerson().getNetId();
             removeFromWaitlist(workshopId, nextPersonId);
-            addParticipant(workshopId, nextPersonId);
+            addWorkshopRegistrant(workshopId, nextPersonId);
         }
         return true;
     }
 
-
+    /**
+     * @param creator
+     * @param workshop
+     * @param workshopForm
+     * @return boolean: whether a workshop was created or not
+     * 
+     * Creates a new workshop
+     */
     @Override
     @Transactional
     public boolean createWorkshop(Person creator, Workshops workshop, WorkshopInfoForm workshopForm) {
@@ -151,10 +212,18 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return true;
     }
 
+    /**
+     * @param workshopId
+     * @param workshop
+     * @param workshopForm
+     * @return boolean: whether a workshop was updated or not
+     * 
+     * Changes a workshop's details
+     */
     @Override
     @Transactional
     public boolean updateWorkshop(Integer workshopId, Workshops workshop, WorkshopInfoForm workshopForm) {
-        Workshops oldWorkshop = findByWorkshopId(workshopId);
+        Workshops oldWorkshop = WorkshopBookingSessionBean.this.getWorkshopById(workshopId);
         workshop.setWorkshopId(workshopId);
         workshop.setWorkshopCreatorId(oldWorkshop.getWorkshopCreatorId());
         workshop.setDepartmentId(oldWorkshop.getDepartmentId());
@@ -181,10 +250,17 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return true;
     }
     
+    /**
+     * @param workshopId
+     * @param copyStrategy
+     * @return boolean: whether a workshop was copied or not
+     * 
+     * Copies a workshop's details and makes a new one with a different workshopID
+     */
     @Override
     @Transactional
     public Integer copyWorkshop(Integer workshopId, Integer copyStrategy) {
-        Workshops toCopy = findByWorkshopId(workshopId);
+        Workshops toCopy = WorkshopBookingSessionBean.this.getWorkshopById(workshopId);
         em.detach(toCopy);
         toCopy.setWorkshopId(null);
         EventStatus newStatus = new EventStatus("Not Posted");
@@ -201,17 +277,18 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return toCopy.getWorkshopId();
     }
 
-/**
- * emailedit.jsp
-    * @param workshopId
-    * @param workshopData
-    * @param emailForm
-    * @return
- */
+    /**
+     * @param workshopId
+     * @param workshopData
+     * @param emailForm
+     * @return boolean: whether the email settings were changed or not
+     * 
+     * Changes the email settings of a workshop
+     */
     @Override
     @Transactional
     public boolean updateEmailForm(Integer workshopId, Workshops workshopData, EmailInfoForm emailForm) {
-        Workshops workshop = findByWorkshopId(workshopId);
+        Workshops workshop = WorkshopBookingSessionBean.this.getWorkshopById(workshopId);
         workshop.setEmailNotificationName(workshopData.getEmailNotificationName());
         workshop.setEmailConfirmationMsg(workshopData.getEmailConfirmationMsg());
         workshop.setEmailWaitlistMsg(workshopData.getEmailWaitlistMsg());
@@ -220,64 +297,56 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.merge(workshop);
         return true;
     }
-
+    
+    /**
+     * @param p
+     * @return boolean: whether a person was saved or not
+     * 
+     * Updates a person's details
+     */
     @Override
-    public List<String> finddepartmentList(){
-//      List of all possible locations to hold a workshop
-        List<String> departmentList = new ArrayList<>();
-        for (Departments department: em.createNamedQuery("Departments.findAll", Departments.class).getResultList()) {
-            departmentList.add(department.getDepartmentName());
-        }
-        return departmentList;
+    @Transactional
+    public boolean savePerson(Person p) {
+        em.merge(p);
+        em.flush();
+        return true;
     }
 
-    @Override
-    public List<String> findroleList(){
-//      List of all possible locations to hold a workshop
-        List<String> roleList = new ArrayList<>();
-        for (Roles role: em.createNamedQuery("Roles.findAll", Roles.class).getResultList()) {
-            roleList.add(role.getRoleName());
-        }
-        return roleList;
-    }
-
-    @Override
-    public List<Workshops> findWorkshopList() {
-        try {
-            List<Workshops> workshopList = em.createNamedQuery("Workshops.findAll", Workshops.class).getResultList();
-            return workshopList;
-        }
-        catch(Exception e) {
-            throw  new EJBException(e);
-        }
-    }
-
+    /**
+     * @param netId
+     * @return a specific person from the database
+     */
     @Override
     public Person getPersonByNetId(String netId) {
         Person person = em.createNamedQuery("Person.findByNetId", Person.class).setParameter("netId", netId).getSingleResult();
         return person;
     }
 
+    /**
+     * @param id
+     * @return a workshop using a workshopID
+     */
     @Override
-    @Transactional
-    public void savePerson(Person p) {
-        em.merge(p);
-        em.flush();
-    }
-
-    @Override
-    public Workshops findByWorkshopId(Integer id) {
+    public Workshops getWorkshopById(Integer id) {
         Workshops workshop = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", id).getSingleResult();
         return workshop;
     }
 
+    /**
+     * @param id
+     * @return a workshop using a string type of workshopID
+     */
     @Override
-    public Workshops findByWorkshopId(String id) {
-        return findByWorkshopId(Integer.valueOf(id));
+    public Workshops getWorkshopById(String id) {
+        return WorkshopBookingSessionBean.this.getWorkshopById(Integer.valueOf(id));
     }
 
+    /**
+     * @param workshopId
+     * @return a list of facilitators for a workshop
+     */
     @Override
-    public List<facilitatorDataBean> findFacilitatorList(Integer workshopId) {
+    public List<facilitatorDataBean> getFacilitatorList(Integer workshopId) {
         try {
             Workshops w = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", workshopId).getSingleResult();
             List<facilitatorDataBean> facilitatorList = new ArrayList<>();
@@ -291,10 +360,14 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
     }
 
-    @Override    
-    public List<String> findFacilitatorNetidList(Integer workshopId){
+    /**
+     * @param workshopId
+     * @return a list of netIDs of facilitators for a workshop
+     */
+    @Override
+    public List<String> getFacilitatorListOfNetIds(Integer workshopId){
         try {
-            Workshops w = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", workshopId).getSingleResult();
+            Workshops w = getWorkshopById(workshopId);
             List<String> facilitatorNetIdList = new ArrayList<>();
             for (Person p: w.getMyFacilitators()) {
                 facilitatorNetIdList.add(p.getNetId());
@@ -306,58 +379,92 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         }
     }
 
-    // find all workshops that person is attending
+    /**
+     * @param p
+     * @return a list of workshops that a user is registered for
+     */
     @Override
     public List<Workshops> getWorkshopsForPerson(Person p) {
         return p.getAllWorkshops();
     }
 
-    // find all workshops that person has created
+    /**
+     * @param p
+     * @return a list of workshops that a user is hosting
+     */
     @Override
     public List<Workshops> getWorkshopsHostedByPerson(Person p) {
         List<Workshops> workshops = em.createNamedQuery("Workshops.findByWorkshopCreatorId", Workshops.class).setParameter("netId", p.getNetId()).getResultList();
         return workshops;
     }
 
+    /**
+     * @param p
+     * @return a list of ended workshops that a user has registered for
+     */
     @Override
     public List<Workshops> getPastWorkshopsByPerson(Person p) {
         return p.getPastWorkshops();
     }
 
+    /**
+     * @param p
+     * @return a list of upcoming workshops that a user has registered for
+     */
     @Override
     public List<Workshops> getUpcomingWorkshopsByPerson(Person p) {
         return p.getUpcomingWorkshops();
     }
 
-    // questionaire.jsp
-    public boolean registerIn(){
-        return true;
-    }
-
+    /**
+     * @param workshopId
+     * @param netId
+     * @return boolean: whether a facilitator was added or not
+     * 
+     * Adds a new facilitator for a workshop
+     */
     @Override
     @Transactional
     public boolean addFacilitator(Integer workshopId, String netId) {
-        Workshops workshop = findByWorkshopId(workshopId);
+        Workshops workshop = WorkshopBookingSessionBean.this.getWorkshopById(workshopId);
         Person p = getPersonByNetId(netId);
         workshop.addFacilitator(p);
         return true;
     }
 
+    /**
+     * @param workshopId
+     * @param netId
+     * @return boolean: whether a facilitator was removed or not
+     * 
+     * Removes a facilitator for a workshop
+     */
     @Override
     @Transactional
     public boolean removeFacilitator(Integer workshopId, String netId) {
-        Workshops workshop = findByWorkshopId(workshopId);
+        Workshops workshop = WorkshopBookingSessionBean.this.getWorkshopById(workshopId);
         Person p = getPersonByNetId(netId);
         workshop.removeFacilitator(p);
         return true;
     }
 
+    /**
+     * @param workshopId
+     * @return a list of all registrants for a workshop
+     */
     @Override
     public List<Attendance> getAttendance(Integer workshopId) {
         List<Attendance> attendance = em.createNamedQuery("Attendance.findByWorkshopId", Attendance.class).setParameter("workshopId", workshopId).getResultList();
         return attendance;
     }
 
+    /**
+     * @param workshopId
+     * @param netId
+     * @return boolean: whether a user's attendance status was updated or not
+     * 
+     * Adds a registrant to a workshop's attendance list
+     */
     @Override
     @Transactional
     public boolean addAttendee(Integer workshopId, String netId) {
@@ -366,12 +473,14 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return true;
     }
     
-    @Override
-    @Transactional
-    public boolean updateAttendance(Integer workshopId, Workshops workshopData, List<Attendance> attendance) {
-        return true;
-    }
-
+    /**
+     * @param workshopId
+     * @param netId
+     * @param status
+     * @return boolean: whether an attendee's status was changed
+     * 
+     * Changes the attendance of a workshop registrant
+     */
     @Override
     @Transactional
     public boolean editAttendeeStatus(Integer workshopId, String netId, boolean status) {
@@ -380,25 +489,54 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.merge(a);
         return true;
     }
+    
+    /**
+     * @param workshopId
+     * @param netId
+     * @return boolean: whether an attendee was removed or not
+     * 
+     * Removes a registrant from the attendance list
+     */
+    @Override
+    @Transactional
+    public boolean removeAttendee(Integer workshopId, String netId) {
+        Attendance attendee = em.createNamedQuery("Attendance.findByWorkshopAndNetId", Attendance.class).setParameter("workshopId", workshopId).setParameter("netId", netId).getSingleResult();
+        em.remove(attendee);
+        return true;
+    }
 
+    /**
+     * @param workshopId
+     * @return a list of reviews for a workshop
+     */
     @Override
     public List<Reviews> getReviews(Integer workshopId) {
         List<Reviews> myReviews = em.createNamedQuery("Reviews.findByWorkshopId", Reviews.class).setParameter("workshopId", workshopId).getResultList();
         return myReviews;
     }
     
+    /**
+     * @param workshopId
+     * @return a list of netIDs that have written reviews for a specific workshop
+     */
     @Override
     public List<String> getIdReviews(Integer workshopId) {
-        List<Reviews> myReviews = em.createNamedQuery("Reviews.findByWorkshopId", Reviews.class).setParameter("workshopId", workshopId).getResultList();
+        List<Reviews> myReviews = getReviews(workshopId);
         List<String> myIdReviews = new ArrayList<>();
-        Reviews temp;
-        for (int i = 0; i<myReviews.size(); i++){
-            temp = myReviews.get(i);
-            myIdReviews.add(temp.getPerson().getNetId());
+        for (int i = 0; i < myReviews.size(); i++) {
+            myIdReviews.add(myReviews.get(i).getPerson().getNetId());
         }
         return myIdReviews;
     }    
 
+    /**
+     * @param workshopId
+     * @param netId
+     * @param review
+     * @return boolean: whether a review was added for a workshop or not
+     * 
+     * Adds a review for a workshop
+     */
     @Override
     @Transactional
     public boolean addReview(Integer workshopId, String netId, String review) {
@@ -408,6 +546,14 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return true;
     }
 
+    /**
+     * @param workshopId
+     * @param netId
+     * @param editedReview
+     * @return boolean: whether a review was edited or not
+     * 
+     * Changes a review for a workshop
+     */
     @Override
     @Transactional
     public boolean editReview(Integer workshopId, String netId, String editedReview) {
@@ -418,6 +564,13 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
 
     }
 
+    /**
+     * @param workshopId
+     * @param netId
+     * @return boolean: whether a review was deleted or not
+     * 
+     * Deletes a review for a workshop
+     */
     @Override
     @Transactional
     public boolean removeReview(Integer workshopId, String netId) {
@@ -426,6 +579,11 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return true;
     }
 
+    
+    /**
+     * @param workshopId
+     * @return a wait list for a workshop
+     */
     @Override
     @Transactional
     public List<Waitlist> getWaitlist(Integer workshopId) {
@@ -433,6 +591,13 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return waitlist;
     }
 
+    /**
+     * @param workshopId
+     * @param netId
+     * @return boolean: whether a user was added to a wait list or not
+     * 
+     * Adds a user to a workshop's wait list
+     */
     @Override
     @Transactional
     public boolean addToWaitlist(Integer workshopId, String netId) {
@@ -442,6 +607,13 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return true;
     }
 
+    /**
+     * @param workshopId
+     * @param netId
+     * @return boolean: whether a user was removed from a wait list or not
+     * 
+     * Removes a user from a workshop's wait list
+     */
     @Override
     @Transactional
     public boolean removeFromWaitlist(Integer workshopId, String netId) {
@@ -450,6 +622,12 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return true;
     }
     
+    /**
+     * @param workshopId
+     * @param netId
+     * @return boolean: whether a user is on a specific workshop's wait list or not
+     */
+    @Override
     public boolean isOnWaitlist(Integer workshopId, String netId){
         List<Waitlist> waitList = getWaitlist(workshopId);
         List<String> netIds = new ArrayList();
@@ -463,8 +641,14 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return false;
     }
     
+    /**
+     * @param workshopId
+     * @param netId
+     * @return boolean: whether a user is registered for a workshop or not
+     */
+    @Override
     public boolean isRegistered(Integer workshopId, String netId){
-        List<Person> registrants = getParticipantsForWorkshop(workshopId);
+        List<Person> registrants = getWorkshopRegistrants(workshopId);
         
         List<String> netIds = new ArrayList();
         for(Person p : registrants)
@@ -477,7 +661,12 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return false;
     }
     
-     public boolean workshopHasPast(Integer workshopId){
-         return findByWorkshopId(workshopId).getEventStart().before(new Date());
+    /**
+     * @param workshopId
+     * @return boolean: whether a workshop has already ended or not
+     */
+    @Override
+     public boolean workshopHasPast(Integer workshopId) {
+         return getWorkshopById(workshopId).getEventStart().before(new Date());
      }
 }

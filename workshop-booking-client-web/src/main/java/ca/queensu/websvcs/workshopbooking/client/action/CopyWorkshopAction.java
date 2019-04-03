@@ -80,7 +80,7 @@ public class CopyWorkshopAction extends ActionSupport implements Preparable{
             System.out.println("### FunctionAction load running");
 
             if (workshopId != null){
-                workshop = ejb.findByWorkshopId(workshopId);
+                workshop = ejb.getWorkshopById(workshopId);
                 basicCheck = true;
             }
         }
@@ -112,7 +112,7 @@ public class CopyWorkshopAction extends ActionSupport implements Preparable{
                         copyStrategy = 1;
                     }
                 workshopId = ejb.copyWorkshop(workshopId, copyStrategy);
-                workshop = ejb.findByWorkshopId(workshopId);
+                workshop = ejb.getWorkshopById(workshopId);
                 successful = true;
                 }
             } else {

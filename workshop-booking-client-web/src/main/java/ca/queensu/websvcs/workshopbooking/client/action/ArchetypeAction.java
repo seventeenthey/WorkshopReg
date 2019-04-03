@@ -52,7 +52,7 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
      */
     @Override
     public void prepare() throws Exception {
-        //workshopBeanList = ejb.findWorkshopList();
+        //workshopBeanList = ejb.getWorkshopsList();
     }
 
     /**
@@ -73,7 +73,7 @@ public class ArchetypeAction extends ActionSupport implements Preparable {
 
         try {
 
-            workshopBeanList = ejb.findWorkshopList();
+            workshopBeanList = ejb.getWorkshopsList();
 
             try {   //try to get student data
             String studentId = (String) session.getAttribute(SSOConstants.EMPL_ID);

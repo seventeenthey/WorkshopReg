@@ -81,7 +81,7 @@ public class ViewReviewAction extends ActionSupport implements Preparable{
             System.out.println("### ViewReviewAction load running");
             
               if (workshopId != null){
-                workshop = ejb.findByWorkshopId(workshopId);
+                workshop = ejb.getWorkshopById(workshopId);
                 reviews = ejb.getReviews(workshopId);
                 
 //                reviewsId = ejb.getIdReviews(workshopId);

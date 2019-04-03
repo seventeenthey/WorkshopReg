@@ -58,8 +58,8 @@ public class FunctionAction extends ActionSupport implements Preparable{
     public void prepare() throws Exception {
         try {
             System.out.println("### FunctionAction prepare running");
-            statusList = ejb.findstatusList();
-            locationList = ejb.findlocationList();
+            statusList = ejb.getStatusList();
+            locationList = ejb.getLocationList();
             locationList.add("Add New Location");
             
             HttpServletRequest request = ServletActionContext.getRequest();
@@ -84,7 +84,7 @@ public class FunctionAction extends ActionSupport implements Preparable{
             System.out.println("### FunctionAction load running");
 
             if (workshopId != null){
-                workshop = ejb.findByWorkshopId(workshopId);
+                workshop = ejb.getWorkshopById(workshopId);
             }
         }
         catch (Exception e) {
@@ -110,7 +110,7 @@ public class FunctionAction extends ActionSupport implements Preparable{
             boolean successful = false;
             if (workshopId != null) {
                 successful = ejb.updateWorkshop(workshopId, workshop, workshopForm);
-                workshop = ejb.findByWorkshopId(workshopId);
+                workshop = ejb.getWorkshopById(workshopId);
             } else {
                 successful = ejb.createWorkshop(person, workshop, workshopForm);
             }

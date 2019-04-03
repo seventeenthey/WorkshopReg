@@ -66,7 +66,7 @@ public class DetailsAction extends ActionSupport implements Preparable {
         try {
             System.out.println("### DetailsAction execute running");
 
-            workshop = ejb.findByWorkshopId(workshopId);
+            workshop = ejb.getWorkshopById(workshopId);
             findRegisteredStatus();
         }
         catch (Exception e) {
@@ -84,9 +84,9 @@ public class DetailsAction extends ActionSupport implements Preparable {
         try {
             System.out.println("### DetailsAction unregister running");
 
-            workshop = ejb.findByWorkshopId(workshopId);
+            workshop = ejb.getWorkshopById(workshopId);
             System.out.println(workshop.getWorkshopId());
-            ejb.removeParticipant(workshop.getWorkshopId(), person.getNetId());
+            ejb.removeWorkshopRegistrant(workshop.getWorkshopId(), person.getNetId());
             findRegisteredStatus();
         }
         catch (Exception e) {
@@ -107,13 +107,13 @@ public class DetailsAction extends ActionSupport implements Preparable {
             System.out.println("");
             System.out.println(workshopId);
 
-            workshop = ejb.findByWorkshopId(workshopId);
+            workshop = ejb.getWorkshopById(workshopId);
 
             String creatorId = workshop.getWorkshopCreatorId().getNetId();
             System.out.println("### CreatorID for the Workshop "+creatorId);
             String userId = person.getNetId();
             System.out.println("### UserofSystem for the Workshop "+userId);
-            List<String> facilNetIdList = ejb.findFacilitatorNetidList(Integer.parseInt(workshopId));
+            List<String> facilNetIdList = ejb.getFacilitatorListOfNetIds(Integer.parseInt(workshopId));
             System.out.println("### FacilitatorNetIds for the Workshop "+facilNetIdList);
 
             if (userId.equals(creatorId)){

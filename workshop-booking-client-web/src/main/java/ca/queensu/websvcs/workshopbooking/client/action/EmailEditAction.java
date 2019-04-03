@@ -67,7 +67,7 @@ public class EmailEditAction extends ActionSupport implements Preparable{
             System.out.println("### EmailEditAction load running");
 
             if (workshopId != null){
-                workshop = ejb.findByWorkshopId(workshopId);
+                workshop = ejb.getWorkshopById(workshopId);
             }
         }
         catch (Exception e) {
@@ -96,7 +96,7 @@ public class EmailEditAction extends ActionSupport implements Preparable{
                 addActionError("Data was not saved.");
             }
             
-            workshop = ejb.findByWorkshopId(workshopId);
+            workshop = ejb.getWorkshopById(workshopId);
             
         } 
         catch (Exception e) {

@@ -43,8 +43,8 @@ public class personalDetailAction extends ActionSupport implements Preparable {
     public void prepare() throws Exception {
         try {
             System.out.println("### personalDetailAction prepare running");
-            departmentList = ejb.finddepartmentList();
-            roleList = ejb.findroleList();
+            departmentList = ejb.getDepartmentList();
+            roleList = ejb.getRoleList();
 
         } 
         catch (Exception e) {

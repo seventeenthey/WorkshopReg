@@ -99,7 +99,7 @@ public class QuestionnaireAction extends ActionSupport implements Preparable {
             HttpSession session = request.getSession();
             netId = (String) session.getAttribute(SSOConstants.NET_ID);
             
-            boolean saveSuccessful = ejb.addParticipant(workshopId, netId);
+            boolean saveSuccessful = ejb.addWorkshopRegistrant(workshopId, netId);
             if (saveSuccessful) {
                 addActionMessage("Successfully registered in workshop");
             } else {

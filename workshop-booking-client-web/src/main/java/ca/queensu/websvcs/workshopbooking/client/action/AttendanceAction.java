@@ -82,7 +82,7 @@ public class AttendanceAction extends ActionSupport implements Preparable{
             System.out.println("### AttendanceAction load running");
 
               if (workshopId != null){
-                workshop = ejb.findByWorkshopId(workshopId);
+                workshop = ejb.getWorkshopById(workshopId);
                 participants = ejb.getAttendance(workshopId);
                 attendance = ejb.getAttendance(workshopId);
               }

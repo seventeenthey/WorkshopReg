@@ -42,51 +42,52 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @Column(name = "net_id")
     private String netId;
+    
     @Basic(optional = false)
     @Column(name = "empl_id")
     private int emplId;
+    
     @Basic(optional = false)
     @Column(name = "common_name")
     private String commonName;
+    
     @Basic(optional = false)
     @Column(name = "email")
     private String email;
     
-	// Joins department_id column in two different tables
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     @ManyToOne(optional = false)
     private Departments departmentId;
     
-	// Joins role_id column in two different tables
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     @ManyToOne(optional = false)
     private Roles roleId;
     
-	// Creates a table of person to their registered workshops
+    // a list of all workshops that this person is registered for
     @ManyToMany(mappedBy = "myRegistrants", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Workshops> myWorkshops;
     
-	// Creates a table of any creator to their own workshops
+    // a list of all workshops that this person is facilitating
     @ManyToMany(mappedBy = "myFacilitators", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Workshops> myOwnedWorkshops;
     
-	// Creates a table of any person to their attended workshops
+    // tracks all workshops that this person is on the attendance of
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Attendance> myWorkshopAttendance;
     
-	// Creates a table of anyperson to their waitlisted workshops
+    // tracks all workshops that this person is on the wait list of
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Waitlist> myWorkshopWaitlist;
     
-	// Creates a table of any person to their reviews
+    // a list of all reviews that this person has made
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Reviews> myWorkshopReviews;
 
-	// Getters and setters for the EJBs
     public Person() {
     }
 
@@ -240,7 +241,9 @@ public class Person implements Serializable {
         this.myWorkshopReviews = myWorkshopReviews;
     }
 
-    
+    /**
+     * @return a list of all future workshops that this person is registered for
+     */
     public List<Workshops> getUpcomingWorkshops(){
         Date today = new Date();
         List<Workshops> allWorkshops = getAllWorkshops();
@@ -253,6 +256,9 @@ public class Person implements Serializable {
         return upcoming;
     }
     
+    /**
+     * @return a list of all ended workshops that this person has registered for
+     */
     public List<Workshops> getPastWorkshops(){
         Date today = new Date();
         List<Workshops> allWorkshops = getAllWorkshops();
