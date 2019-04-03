@@ -78,8 +78,8 @@ public class AssignRolesAction extends ActionSupport {
         log.info("Entering execute of AssignRolesAction");
         try {            
             allPeople = ejb.getAllPeople();
-            allRoles = ejb.findroleList();
-            allDepartments = ejb.findDepartmentList();
+            allRoles = ejb.getRoleList();
+            allDepartments = ejb.getDepartmentList();
         } catch (Exception e) {
             
             // hmm  may not need this
@@ -101,8 +101,8 @@ public class AssignRolesAction extends ActionSupport {
             ejb.updateRole(netId, roleName, department);          //update the role
             
             allPeople = ejb.getAllPeople();
-            allRoles = ejb.findroleList();
-            allDepartments = ejb.findDepartmentList();
+            allRoles = ejb.getRoleList();
+            allDepartments = ejb.getDepartmentList();
         } catch (Exception e){
             log.error("AssignRolesAction updateRole: exception\n {}",e.toString());
         }

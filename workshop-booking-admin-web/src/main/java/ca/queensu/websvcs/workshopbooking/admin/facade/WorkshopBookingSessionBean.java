@@ -6,9 +6,7 @@ import ca.queensu.uis.services.email.ws.QueensEmailInterface;
 import ca.queensu.websvcs.workshopbooking.core.entity.Departments;
 import ca.queensu.websvcs.workshopbooking.core.entity.Locations;
 import ca.queensu.websvcs.workshopbooking.core.entity.Roles;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -19,7 +17,6 @@ import javax.persistence.PersistenceContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
-import javax.persistence.NamedQuery;
 import javax.transaction.Transactional;
 
 /**
@@ -42,60 +39,10 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     QueensEmailInterface emailStub;// = new CaQueensuUisWebservicesEmailStub();
     
     /**
-     * {@inheritDoc}
-     *
-     * Returns a list of people in the archetype database.
+     * @return the list of all possible user roles
      */
     @Override
-    public Person getPersonByNetId(String netId) {
-        
-        //example gather data from the archetype DB
-        
-        Person person = em.createNamedQuery("Person.findByNetId", Person.class).setParameter("netId", netId).getSingleResult();
-        return person;
-    }
-    
-    @Override
-    public List<Person> getAllPeople(){
-        List<Person> allPeople = em.createNamedQuery("Person.findAll", Person.class).getResultList();
-        return allPeople;
-    }
-    
-    @Override
-    @Transactional
-    public void savePerson(Person p) {
-        em.persist(p);
-        em.flush();
-    }
-    
-    @Override
-    public Workshops findByWorkshopId(Integer id) {
-        Workshops workshop = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", id).getSingleResult();
-        return workshop;
-    }
-    
-    @Override
-    public List<Workshops> getAllWorkshops() {
-        List<Workshops> workshop = em.createNamedQuery("Workshops.findAll", Workshops.class).getResultList();
-        return workshop;
-    }
-
-    @Override
-    @Transactional
-    public void removeWorkshopById(Integer workshopId){
-        Workshops workshop = findByWorkshopId(workshopId);
-        em.remove(workshop);
-    }
-    
-    @Override
-    @Transactional
-    public void removeWorkshopById(String id){
-        removeWorkshopById(Integer.valueOf(id));
-    }
-    
-    @Override
-    public List<String> findroleList(){
-//      List of all possible locations to hold a workshop
+    public List<String> getRoleList() {
         List<String> roleList = new ArrayList<>();
         for (Roles role: em.createNamedQuery("Roles.findAll", Roles.class).getResultList()) {
             roleList.add(role.getRoleName());
@@ -103,14 +50,79 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return roleList;
     }
     
+    /**
+     * @return a list of all Queen's departments
+     */
     @Override 
-    public List<String> findDepartmentList(){
+    public List<String> getDepartmentList() {
         List<String> departmentList = new ArrayList();
         for (Departments dep: em.createNamedQuery("Departments.findAll", Departments.class).getResultList())
             departmentList.add(dep.getDepartmentName());
         return departmentList;
     }
     
+    /**
+     * @return a list of all people in the database
+     */
+    @Override
+    public List<Person> getAllPeople(){
+        List<Person> allPeople = em.createNamedQuery("Person.findAll", Person.class).getResultList();
+        return allPeople;
+    }
+    
+    /**
+     * @param netId
+     * @return a specific person from the database
+     */
+    @Override
+    public Person getPersonByNetId(String netId) {
+        Person person = em.createNamedQuery("Person.findByNetId", Person.class).setParameter("netId", netId).getSingleResult();
+        return person;
+    }
+    
+    @Override
+    public List<Workshops> getAllWorkshops() {
+        List<Workshops> workshop = em.createNamedQuery("Workshops.findAll", Workshops.class).getResultList();
+        return workshop;
+    }
+    
+    /**
+     * @param id
+     * @return a workshop using a workshopID
+     */
+    @Override
+    public Workshops getWorkshopById(Integer id) {
+        Workshops workshop = em.createNamedQuery("Workshops.findByWorkshopId", Workshops.class).setParameter("workshopId", id).getSingleResult();
+        return workshop;
+    }
+
+    /**
+     * @param workshopId 
+     * Deletes a workshop from the database using a workshopID
+     */
+    @Override
+    @Transactional
+    public void removeWorkshopById(Integer workshopId) {
+        Workshops workshop = getWorkshopById(workshopId);
+        em.remove(workshop);
+    }
+    
+    /**
+     * @param id 
+     * Deletes a workshop from the database using a string type workshopID
+     */
+    @Override
+    @Transactional
+    public void removeWorkshopById(String id) {
+        removeWorkshopById(Integer.valueOf(id));
+    }
+    
+    /**
+     * @param locationName
+     * @return boolean: whether a location was added or not
+     * 
+     * Adds a new location to the database
+     */
     @Override
     @Transactional
     public boolean addLocation(String locationName) {
@@ -120,6 +132,13 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         return true;
     }
     
+    /**
+     * @param netId
+     * @param roleId
+     * @param department 
+     * 
+     * Updates a user's role and department
+     */
     @Override
     @Transactional
     public void updateRole(String netId, int roleId, String department) {
@@ -131,6 +150,13 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
         em.merge(p);
     }
     
+    /**
+     * @param netId
+     * @param roleName
+     * @param department 
+     * 
+     * Updates a user's role and department
+     */
     @Override
     @Transactional
     public void updateRole(String netId, String roleName, String department) {

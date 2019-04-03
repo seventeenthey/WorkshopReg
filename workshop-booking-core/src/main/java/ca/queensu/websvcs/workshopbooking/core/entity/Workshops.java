@@ -13,7 +13,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +23,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -67,47 +65,62 @@ public class Workshops implements Serializable {
     @Basic(optional = false)
     @Column(name = "workshop_id")
     private Integer workshopId;
+    
     @Basic(optional = false)
     @Column(name = "title")
     private String title;
+    
     @Basic(optional = false)
     @Column(name = "details")
     private String details;
+    
     @Basic(optional = false)
     @Column(name = "location")
     private String location;
+    
     @Basic(optional = false)
     @Column(name = "max_participants")
     private Integer maxParticipants;
+    
     @Basic(optional = false)
     @Column(name = "waitlist_limit")
     private Integer waitlistLimit;
+    
     @Basic(optional = false)
     @Column(name = "registration_start")
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationStart;
+    
     @Basic(optional = false)
     @Column(name = "registration_end")
     @Temporal(TemporalType.TIMESTAMP)
     private Date registrationEnd;
+    
     @Basic(optional = false)
     @Column(name = "event_start")
     @Temporal(TemporalType.TIMESTAMP)
     private Date eventStart;
+    
     @Basic(optional = false)
     @Column(name = "event_end")
     @Temporal(TemporalType.TIMESTAMP)
     private Date eventEnd;
+    
     @Column(name = "email_notification_name")
     private String emailNotificationName;
+    
     @Column(name = "email_confirmation_msg")
     private String emailConfirmationMsg;
+    
     @Column(name = "email_waitlist_msg")
     private String emailWaitlistMsg;
+    
     @Column(name = "email_cancellation_msg")
     private String emailCancellationMsg;
+    
     @Column(name = "email_evaluation_msg")
     private String emailEvaluationMsg;
+    
     @JoinTable(name = "waitlist", joinColumns = {
         @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id")}, inverseJoinColumns = {
         @JoinColumn(name = "net_id", referencedColumnName = "net_id")})
@@ -126,27 +139,33 @@ public class Workshops implements Serializable {
     @ManyToOne(optional = false)
     private Person workshopCreatorId;
     
+    // a list of people who are registered for this workshop
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "REGISTRATIONS", joinColumns = {
         @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id")}, inverseJoinColumns = {
         @JoinColumn(name = "net_id", referencedColumnName = "net_id")})
     private List<Person> myRegistrants;
     
+    // a list of facilitators for this workshop
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "FACILITATORS", joinColumns = {
         @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id")}, inverseJoinColumns = {
         @JoinColumn(name = "facilitator_id", referencedColumnName = "net_id")})
     private List<Person> myFacilitators;
     
+    // an attendance for this workshop
     @OneToMany(mappedBy = "workshops", cascade = CascadeType.ALL)
     private List<Attendance> myAttendance;
     
+    // a wait list for this workshop
     @OneToMany(mappedBy = "workshops", cascade = CascadeType.ALL)
     private List<Waitlist> myWaitlist;
     
+    // a list of reviews for this workshop
     @OneToMany(mappedBy = "workshops", cascade = CascadeType.ALL)
     private List<Reviews> myReviews;
 
+    
     public Workshops() {
     }
 
@@ -421,44 +440,4 @@ public class Workshops implements Serializable {
         this.myReviews = myReviews;
     }
     
-    
-    public String startTimeToString(){
-        String output = "";
-        //String[] startTime = rgStTime.split(",");
-        
-        int hours = eventStart.getHours(); //Integer.parseInt(startTime[0]);
-        int minutes = eventStart.getMinutes(); //Integer.parseInt(startTime[1]);
-        
-        if(minutes == 0)
-            output += ":00";
-        else
-            output += ":" + minutes;
-        
-        
-        if (hours > 12){
-            hours -= 12;
-            output = hours + output + " PM";
-        }
-        else
-            output = hours + output + " AM";
-
-        return output;
-    }
-    
-    //date.toString() does not have exactly the output that we would like
-    public String dateToString(){
-        String[] dateInfo = eventStart.toString().split(" ");
-        String output = dateInfo[0] + " " + dateInfo[1] + " " + dateInfo[2] + " " + startTimeToString() + " " + dateInfo[5];
-        System.out.println("DATE");
-        System.out.println(output);
-        return output;
-    }
-    
-    public boolean isRegistered(Workshops workshop, Person person){
-        for(int i = 0; i < myRegistrants.size(); i++)
-            if (myRegistrants.get(i).getNetId() == person.getNetId())
-                return true;
-        
-        return false;
-    }
 }

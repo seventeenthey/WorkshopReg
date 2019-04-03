@@ -6,8 +6,6 @@
 package ca.queensu.websvcs.workshopbooking.client.action;
 
 import ca.queensu.uis.sso.tools.common.SSOConstants;
-import ca.queensu.websvcs.workshopbooking.client.domain.StudentDataBean;
-import ca.queensu.websvcs.workshopbooking.client.domain.facilitatorDataBean;
 import ca.queensu.websvcs.workshopbooking.client.facade.WorkshopBookingSessionBeanLocal;
 import ca.queensu.websvcs.workshopbooking.core.entity.Attendance;
 import ca.queensu.websvcs.workshopbooking.core.entity.Person;
@@ -20,17 +18,13 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
 import javax.ejb.EJB;
-import static jdk.nashorn.internal.objects.ArrayBufferView.length;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  *

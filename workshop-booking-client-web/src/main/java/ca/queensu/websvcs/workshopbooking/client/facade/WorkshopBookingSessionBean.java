@@ -223,7 +223,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     @Transactional
     public boolean updateWorkshop(Integer workshopId, Workshops workshop, WorkshopInfoForm workshopForm) {
-        Workshops oldWorkshop = WorkshopBookingSessionBean.this.getWorkshopById(workshopId);
+        Workshops oldWorkshop = getWorkshopById(workshopId);
         workshop.setWorkshopId(workshopId);
         workshop.setWorkshopCreatorId(oldWorkshop.getWorkshopCreatorId());
         workshop.setDepartmentId(oldWorkshop.getDepartmentId());
@@ -260,7 +260,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     @Transactional
     public Integer copyWorkshop(Integer workshopId, Integer copyStrategy) {
-        Workshops toCopy = WorkshopBookingSessionBean.this.getWorkshopById(workshopId);
+        Workshops toCopy = getWorkshopById(workshopId);
         em.detach(toCopy);
         toCopy.setWorkshopId(null);
         EventStatus newStatus = new EventStatus("Not Posted");
@@ -288,7 +288,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     @Transactional
     public boolean updateEmailForm(Integer workshopId, Workshops workshopData, EmailInfoForm emailForm) {
-        Workshops workshop = WorkshopBookingSessionBean.this.getWorkshopById(workshopId);
+        Workshops workshop = getWorkshopById(workshopId);
         workshop.setEmailNotificationName(workshopData.getEmailNotificationName());
         workshop.setEmailConfirmationMsg(workshopData.getEmailConfirmationMsg());
         workshop.setEmailWaitlistMsg(workshopData.getEmailWaitlistMsg());
@@ -338,7 +338,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
      */
     @Override
     public Workshops getWorkshopById(String id) {
-        return WorkshopBookingSessionBean.this.getWorkshopById(Integer.valueOf(id));
+        return getWorkshopById(Integer.valueOf(id));
     }
 
     /**
@@ -426,7 +426,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     @Transactional
     public boolean addFacilitator(Integer workshopId, String netId) {
-        Workshops workshop = WorkshopBookingSessionBean.this.getWorkshopById(workshopId);
+        Workshops workshop = getWorkshopById(workshopId);
         Person p = getPersonByNetId(netId);
         workshop.addFacilitator(p);
         return true;
@@ -442,7 +442,7 @@ public class WorkshopBookingSessionBean implements WorkshopBookingSessionBeanLoc
     @Override
     @Transactional
     public boolean removeFacilitator(Integer workshopId, String netId) {
-        Workshops workshop = WorkshopBookingSessionBean.this.getWorkshopById(workshopId);
+        Workshops workshop = getWorkshopById(workshopId);
         Person p = getPersonByNetId(netId);
         workshop.removeFacilitator(p);
         return true;
